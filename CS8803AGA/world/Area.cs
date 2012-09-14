@@ -144,14 +144,24 @@ namespace CS8803AGA
                                     // town
                                     /*10=> */"house1",
                                     // trees
-                                    /*11=> */"tree1",     /*12=>*/"tree2"
+                                    /*11=> */"tree1",     /*12=> */"tree2",
+                                    // characters
+                                    /*13=> */"DarkKnight",/*14=> */"Jason",       /*15=> */"Ness",
+                                    /*16=> */"Salsa"
                                    };
             int[,] doodads = AreaDefinitions.doodadsAt(location);
             for (int i = 0; i < WIDTH_IN_TILES; i++)
             {
                 for (int j = 0; j < HEIGHT_IN_TILES; j++)
                 {
-                    if (doodads[i, j] != 0)
+                    if (doodads[i, j] >= 13)
+                    {
+                        CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+doodadIndex[doodads[i, j]]);
+                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
+                        CharacterController cc = CharacterController.construct(ci, pos);
+                        a.add(cc);
+                    }
+                    else if (doodads[i, j] != 0)
                     {
                         Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
                         Decoration d;
