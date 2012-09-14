@@ -16,15 +16,20 @@ namespace CS8803AGA.engine
         public static EngineStateGameplay GameplayState { get; set; }
 
         public static PlayerController Player { get { return playerController; } }
+        public static CompanionController Companion { get { return companionController; } }
+
         private static PlayerController playerController = null;
+
+        private static CompanionController companionController = null;
 
         public static Area ActiveArea { get { return activeArea; } }
         private static Area activeArea = null;
 
-        public static void initialize(EngineStateGameplay esg, PlayerController pc, Area startArea)
+        public static void initialize(EngineStateGameplay esg, PlayerController pc, CompanionController cc, Area startArea)
         {
             GameplayState = esg;
             playerController = pc;
+            companionController = cc;
             activeArea = startArea;
 
             activeArea.add(pc);
@@ -43,6 +48,7 @@ namespace CS8803AGA.engine
                 return;
 
             departingArea.remove(GameplayManager.Player);
+            departingArea.remove(GameplayManager.Companion);
 
             Rectangle targetRectangle = arrivingArea.getTileRectangle(targetTile.X, targetTile.Y);
             Vector2 newPos = new Vector2(
@@ -50,8 +56,10 @@ namespace CS8803AGA.engine
                 targetRectangle.Y + arrivingArea.TileSet.tileHeight / 2);
 
             Player.getCollider().move(newPos - Player.getCollider().Bounds.Center());
+            Companion.getCollider().move(newPos - Companion.getCollider().Bounds.Center());
 
             arrivingArea.add(GameplayManager.Player);
+            arrivingArea.add(GameplayManager.Companion);
 
             activeArea = arrivingArea;
         }

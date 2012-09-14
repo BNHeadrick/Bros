@@ -26,14 +26,25 @@ namespace CS8803AGA.engine
                 throw new Exception("Only one EngineStateGameplay allowed at once!");
              
 
-            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Salsa");
+            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Jason");
 
             PlayerController player =
-                (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), true);
+                (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), Constants.CharType.PLAYERCHAR);
+
+            CharacterInfo compCi = GlobalHelper.loadContent<CharacterInfo>(@"Characters/DarkKnight");
+
+            CompanionController compC =
+                (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR);
+
+            /*
+            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/DarkKnight");
+            Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
+            CharacterController cc = CharacterController.construct(ci, pos);
+            */
 
             Point startPoint = new Point(0, 0);
             Area.makeTestArea(startPoint);
-            GameplayManager.initialize(this, player, WorldManager.GetArea(startPoint));
+            GameplayManager.initialize(this, player, compC, WorldManager.GetArea(startPoint));
         }
 
         /// <summary>

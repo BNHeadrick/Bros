@@ -4,6 +4,7 @@ using CS8803AGAGameLibrary;
 using CS8803AGA.collision;
 using CS8803AGA.engine;
 using CS8803AGA.actions;
+using CS8803AGA;
 
 namespace CS8803AGA.controllers
 {
@@ -18,6 +19,8 @@ namespace CS8803AGA.controllers
 
         protected float m_previousAngle;
 
+        
+
         /// <summary>
         /// Factory method to create CharacterControllers
         /// </summary>
@@ -25,20 +28,27 @@ namespace CS8803AGA.controllers
         /// <param name="startpos">Where in the Area the character should be placed</param>
         /// <param name="playerControlled">True if the character should be a PC, false if NPC</param>
         /// <returns>Constructed CharacterController</returns>
-        public static CharacterController construct(CharacterInfo ci, Vector2 startpos, bool playerControlled)
+        public static CharacterController construct(CharacterInfo ci, Vector2 startpos, Constants.CharType typeOfChar)
         {
+
             CharacterController cc;
             ColliderType type;
-            if (playerControlled)
+            if (typeOfChar == Constants.CharType.PLAYERCHAR)
             {
                 cc = new PlayerController();
                 type = ColliderType.PC;
             }
-            else
+            else if (typeOfChar == Constants.CharType.NPCHAR)
             {
                 cc = new CharacterController();
                 type = ColliderType.NPC;
             }
+            else
+            {
+                cc = new CompanionController();
+                type = ColliderType.PC;
+            }
+
 
             cc.m_position = startpos;
 
@@ -63,7 +73,7 @@ namespace CS8803AGA.controllers
         /// </summary>
         public static CharacterController construct(CharacterInfo ci, Vector2 startpos)
         {
-            return construct(ci, startpos, false);
+            return construct(ci, startpos, Constants.CharType.NPCHAR);
         }
 
         /// <summary>

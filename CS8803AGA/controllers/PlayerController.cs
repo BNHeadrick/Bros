@@ -54,8 +54,8 @@ namespace CS8803AGA.controllers
             }
             else
             {
-                //testing for obtaining absolutte x/y position
-                Console.WriteLine("dx " + dx + " dy" + dy + " pos x/y is " + getAbsPosVec().X + " " + getAbsPosVec().Y);
+                //testing for obtaining absolute x/y position
+                //Console.WriteLine("dx " + dx + " dy" + dy + " pos x/y is " + getAbsPosVec().X + " " + getAbsPosVec().Y);
             }
 
             float angle =
