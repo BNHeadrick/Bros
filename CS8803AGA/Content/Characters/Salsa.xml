@@ -1,0 +1,9 @@
+﻿<XnaContent>
+  <Asset Type="CS8803AGAGameLibrary.CharacterInfo">
+    <animationTexturePath>Animation/Textures/Salsa_Walk</animationTexturePath>
+    <animationDataPath>Animation/Data/Salsa</animationDataPath>
+    <collisionBox>-14 11 28 10</collisionBox>
+    <speed>5</speed>
+    <scale>2</scale>
+  </Asset>
+</XnaContent>

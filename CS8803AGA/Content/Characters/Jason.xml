@@ -4,7 +4,7 @@
     <animationTexturePath>Animation/Textures/mask</animationTexturePath>
     <animationDataPath>Animation/Data/Jason</animationDataPath>
     <collisionBox>-14 22 28 10</collisionBox>
-    <speed>15</speed>
+    <speed>5</speed>
     <scale>2</scale>
   </Asset>
 </XnaContent>

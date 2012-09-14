@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using CSharpQuadTree;
 using CS8803AGA.controllers;
 using CS8803AGA.collision;
+using CS8803AGA.world;
 
 namespace CS8803AGA
 {
@@ -100,31 +101,7 @@ namespace CS8803AGA
             // whoever came up with this map format was drunk, 
             // it's stored rotated counter-clockwise 90 degrees AND THEN horizontally flipped
             // what the shit, right?
-            a.Tiles = new int[,] {{3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0},
-                                  {3,0,0,0,0,0,0,0,0,0,0,0,0}
-                                 };
+            a.Tiles = AreaDefinitions.areaAt(location);
 
             a.initializeTileColliders();
             a.initializeAreaTransitions(null, null, null, null);
@@ -152,73 +129,24 @@ namespace CS8803AGA
         /// <returns></returns>
         public static Area makeTestArea(string tileSetpath, Point location)
         {
+            Console.WriteLine("making location: " + location);
+
             Area a = makeEmptyArea(tileSetpath, location);
 
-            DecorationSet ds = DecorationSet.construct(@"World/graveyard");
-
-            /*for (int i = 0; i < WIDTH_IN_TILES; ++i)
-            {
-                for (int j = 0; j < HEIGHT_IN_TILES; ++j)
-                {
-                    // sample trees
-                    if (RandomManager.get().NextDouble() < 0.025 &&
-                        i > 0 && j > 0 && i < WIDTH_IN_TILES - 1 && j < HEIGHT_IN_TILES - 1)
-                    {
-                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
-                        Decoration d = ds.makeDecoration("tombstone1", pos);
-                        a.CollisionDetector.register(d.getCollider());
-                        a.GameObjects.Add(d);
-                    }
-                    else if (RandomManager.get().NextDouble() < 0.025 &&
-                        i > 0 && j > 0 && i < WIDTH_IN_TILES - 1 && j < HEIGHT_IN_TILES - 1)
-                    {
-                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
-                        Decoration d = ds.makeDecoration("tombstone3", pos);
-                        a.CollisionDetector.register(d.getCollider());
-                        a.GameObjects.Add(d);
-                    }
-
-                    // sample chars
-                    if (RandomManager.get().NextDouble() < 0.001 &&
-                        i > 0 && j > 0 && i < WIDTH_IN_TILES - 1 && j < HEIGHT_IN_TILES - 1)
-                    {
-                        CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/DarkKnight");
-                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
-                        CharacterController cc = CharacterController.construct(ci, pos);
-                        a.add(cc);
-                    }
-                }
-            }*/
-            // remember, this is drunk map format
-            string[] doodadIndex = {/*0 => */ "NONE",      /*1 => */"tree1",      /*2 => */"tree2", 
+            DecorationSet ds1 = DecorationSet.construct(@"World/graveyard");
+            DecorationSet ds2 = DecorationSet.construct(@"World/town");
+            DecorationSet ds3 = DecorationSet.construct(@"World/trees");
+            string[] doodadIndex = {// graveyard
+                                    /*0 => */ "NONE",      /*1 => */"tree1",      /*2 => */"tree2", 
                                     /*3 => */"tombstone1", /*4 => */"tombstone2", /*5 => */"tombstone3", 
                                     /*6 => */"tombstone4", /*7 => */"obelisk",    /*8 => */ "bigstone1", 
-                                    /*9 => */"bigstone2"};
-            int[,] doodads = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,1,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,2,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,3,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,4,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,5,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,6,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,7,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,8,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,9,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                         {0,0,0,0,0,0,0,0,0,0,0,0,0}
-                                        };
+                                    /*9 => */"bigstone2",
+                                    // town
+                                    /*10=> */"house1",
+                                    // trees
+                                    /*11=> */"tree1",     /*12=>*/"tree2"
+                                   };
+            int[,] doodads = AreaDefinitions.doodadsAt(location);
             for (int i = 0; i < WIDTH_IN_TILES; i++)
             {
                 for (int j = 0; j < HEIGHT_IN_TILES; j++)
@@ -226,7 +154,19 @@ namespace CS8803AGA
                     if (doodads[i, j] != 0)
                     {
                         Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
-                        Decoration d = ds.makeDecoration(doodadIndex[doodads[i, j]], pos);
+                        Decoration d;
+                        if (doodads[i, j] < 10)
+                        {
+                            d = ds1.makeDecoration(doodadIndex[doodads[i, j]], pos);
+                        }
+                        else if (doodads[i, j] < 11)
+                        {
+                            d = ds2.makeDecoration(doodadIndex[doodads[i, j]], pos);
+                        }
+                        else
+                        {
+                            d = ds3.makeDecoration(doodadIndex[doodads[i, j]], pos);
+                        }
                         a.CollisionDetector.register(d.getCollider());
                         a.GameObjects.Add(d);
                     }
@@ -235,6 +175,16 @@ namespace CS8803AGA
             
             a.initializeTileColliders();
             a.initializeAreaTransitions(null, null, null, null);
+
+            // add special transitions for this map
+            int[] transitions = AreaDefinitions.transitionsAt(location);
+            if (transitions != null)
+            {
+                for (int i = 0; i < transitions.Length; i += 6)
+                {
+                    a.addAreaTransitionTrigger(transitions[i], transitions[i + 1], null, AreaSideEnum.Other, new Point(transitions[i + 2], transitions[i + 3]), new Point(transitions[i + 4], transitions[i + 5]));
+                }
+            }
 
             return a;
         }
@@ -440,6 +390,19 @@ namespace CS8803AGA
         {
             AreaTransitionTrigger att =
                 new AreaTransitionTrigger(this, target, new Point(tileX, tileY), side);
+            add(att);
+        }
+        /// <summary>
+        /// Place a new area transition trigger in the Area; handles registering collision box
+        /// </summary>
+        /// <param name="tileX"></param>
+        /// <param name="tileY"></param>
+        /// <param name="target"></param>
+        /// <param name="side"></param>
+        public void addAreaTransitionTrigger(int tileX, int tileY, Area target, AreaSideEnum side, Point globalTarget, Point destTile)
+        {
+            AreaTransitionTrigger att =
+                new AreaTransitionTrigger(this, target, new Point(tileX, tileY), side, globalTarget, destTile);
             add(att);
         }
 

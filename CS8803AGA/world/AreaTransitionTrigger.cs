@@ -28,6 +28,10 @@ namespace CS8803AGA
 
         private AreaSideEnum m_side;      // used to determine where to place the PC in the target Area
 
+        private bool m_hasGlobalTarget;   // whether or not we have the global target point
+        private Point m_globalTarget;     // the specified target location to go to
+        private Point m_destTile;         // coordinate of the destination tile
+
         public AreaTransitionTrigger(Area owner, Area target, Point tilePos, AreaSideEnum side)
             : base(calculateBounds(owner, tilePos, side))
         {
@@ -37,6 +41,16 @@ namespace CS8803AGA
             this.m_tilePos = tilePos;
 
             this.m_side = side;
+
+            this.m_hasGlobalTarget = false;
+        }
+
+        public AreaTransitionTrigger(Area owner, Area target, Point tilePos, AreaSideEnum side, Point globalTarget, Point destTile)
+            : this(owner, target, tilePos, side)
+        {
+            m_hasGlobalTarget = true;
+            m_globalTarget = globalTarget;
+            m_destTile = destTile;
         }
 
         /// <summary>
@@ -99,25 +113,31 @@ namespace CS8803AGA
                 // remove this code once maps are pre-generated and area transition triggers already contain references
                 //  to their targets -- or, we might decide its just easier this way
                 Point targetGlobalLocation;
-                switch (m_side)
+                if (m_hasGlobalTarget)
                 {
-                    case AreaSideEnum.Top:
-                        targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X, this.m_owner.GlobalLocation.Y - 1);
-                        break;
-                    case AreaSideEnum.Bottom:
-                        targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X, this.m_owner.GlobalLocation.Y + 1);
-                        break;
-                    case AreaSideEnum.Left:
-                        targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X - 1, this.m_owner.GlobalLocation.Y);
-                        break;
-                    case AreaSideEnum.Right:
-                        targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X + 1, this.m_owner.GlobalLocation.Y);
-                        break;
-                    case AreaSideEnum.Other:
-                        throw new Exception("AreaTransitions on non-edges not fully impled");
-                        break;
-                    default:
-                        throw new Exception("Unknown value for AreaSideEnum");
+                    targetGlobalLocation = m_globalTarget;
+                }
+                else
+                {
+                    switch (m_side)
+                    {
+                        case AreaSideEnum.Top:
+                            targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X, this.m_owner.GlobalLocation.Y - 1);
+                            break;
+                        case AreaSideEnum.Bottom:
+                            targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X, this.m_owner.GlobalLocation.Y + 1);
+                            break;
+                        case AreaSideEnum.Left:
+                            targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X - 1, this.m_owner.GlobalLocation.Y);
+                            break;
+                        case AreaSideEnum.Right:
+                            targetGlobalLocation = new Point(this.m_owner.GlobalLocation.X + 1, this.m_owner.GlobalLocation.Y);
+                            break;
+                        case AreaSideEnum.Other:
+                            throw new Exception("AreaTransitions on non-edges not fully impled");
+                        default:
+                            throw new Exception("Unknown value for AreaSideEnum");
+                    }
                 }
                 if (m_target == null)
                 {
@@ -133,28 +153,33 @@ namespace CS8803AGA
 
                 // This code stays
                 Point targetTile; // tile on other map on which player should arrive
-                switch (m_side)
+                if (m_hasGlobalTarget)
                 {
-                    case AreaSideEnum.Top:
-                        targetTile = new Point(this.m_tilePos.X, Area.HEIGHT_IN_TILES - 1);
-                        break;
-                    case AreaSideEnum.Bottom:
-                        targetTile = new Point(this.m_tilePos.X, 0);
-                        break;
-                    case AreaSideEnum.Left:
-                        targetTile = new Point(Area.WIDTH_IN_TILES - 1, this.m_tilePos.Y);
-                        break;
-                    case AreaSideEnum.Right:
-                        targetTile = new Point(0, this.m_tilePos.Y);
-                        break;
-                    case AreaSideEnum.Other:
-                        throw new Exception("AreaTransitions on non-edges not fully impled");
-                    default:
-                        throw new Exception("Unknown value for AreaSideEnum");
+                    targetTile = m_destTile;
                 }
-
+                else
+                {
+                    switch (m_side)
+                    {
+                        case AreaSideEnum.Top:
+                            targetTile = new Point(this.m_tilePos.X, Area.HEIGHT_IN_TILES - 1);
+                            break;
+                        case AreaSideEnum.Bottom:
+                            targetTile = new Point(this.m_tilePos.X, 0);
+                            break;
+                        case AreaSideEnum.Left:
+                            targetTile = new Point(Area.WIDTH_IN_TILES - 1, this.m_tilePos.Y);
+                            break;
+                        case AreaSideEnum.Right:
+                            targetTile = new Point(0, this.m_tilePos.Y);
+                            break;
+                        case AreaSideEnum.Other:
+                            throw new Exception("AreaTransitions on non-edges not fully impled");
+                        default:
+                            throw new Exception("Unknown value for AreaSideEnum");
+                    }
+                }
                 GameplayManager.changeActiveArea(this.m_target, targetTile);
-                
             }
         }
 

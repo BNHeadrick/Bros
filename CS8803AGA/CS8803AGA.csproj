@@ -153,6 +153,7 @@
     <Compile Include="utilities\RandomManager.cs" />
     <Compile Include="global\Settings.cs" />
     <Compile Include="world\Area.cs" />
+    <Compile Include="world\AreaDefinitions.cs" />
     <Compile Include="world\AreaTransitionTrigger.cs" />
     <Compile Include="world\Decoration.cs" />
     <Compile Include="world\DecorationSet.cs" />
