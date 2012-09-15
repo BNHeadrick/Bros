@@ -31,6 +31,11 @@ namespace CS8803AGA.dialog
 
         }
 
+        public Dialog(string text)
+            : this(text, false, DEFAULT_COLOR)
+        {
+        }
+
         public Dialog add(string text, bool drunk, Color color)
         {
             for (int i = 60; i < text.Length; i += 60)
@@ -52,6 +57,11 @@ namespace CS8803AGA.dialog
         public Dialog add(string text, bool drunk)
         {
             return add(text, drunk, DEFAULT_COLOR);
+        }
+
+        public Dialog add(string text)
+        {
+            return add(text, false, DEFAULT_COLOR);
         }
 
         public string getText()

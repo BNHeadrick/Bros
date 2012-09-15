@@ -7,6 +7,7 @@ using CSharpQuadTree;
 using CS8803AGA.collision;
 using CS8803AGA.controllers;
 using CS8803AGA.engine;
+using CS8803AGA.dialog;
 
 namespace CS8803AGA
 {
@@ -179,6 +180,8 @@ namespace CS8803AGA
                             throw new Exception("Unknown value for AreaSideEnum");
                     }
                 }
+                // load the dialogs
+                DialogManager.load(targetGlobalLocation);
                 GameplayManager.changeActiveArea(this.m_target, targetTile);
             }
         }

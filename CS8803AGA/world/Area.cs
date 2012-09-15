@@ -19,7 +19,11 @@ namespace CS8803AGA
     public class Area
     {
         public static Point START = new Point(0, 0);
+        public static Point START_SOUTH = new Point(0, 1);
+        public static Point START_WEST = new Point(-1, 0);
+        public static Point START_EAST = new Point(1, 0);
         public static Point HOUSE = new Point(0, -1);
+        public static Point LIQUOR_STORE = new Point(0, -50);
 
         #region Constants and Members
 
@@ -150,7 +154,7 @@ namespace CS8803AGA
                     {
                         Console.WriteLine("doodad: " + doodads[i, j] + "x"+Constants.doodadIntToString(doodads[i, j]));
                         CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(doodads[i, j]));
-                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
+                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y+8);
                         CharacterController cc = CharacterController.construct(ci, pos);
                         cc.setDoodadIndex(doodads[i, j]);
                         a.add(cc);
@@ -189,9 +193,6 @@ namespace CS8803AGA
                     a.addAreaTransitionTrigger(transitions[i], transitions[i + 1], null, AreaSideEnum.Other, new Point(transitions[i + 2], transitions[i + 3]), new Point(transitions[i + 4], transitions[i + 5]));
                 }
             }
-
-            // load the dialogs
-            DialogManager.load(location);
 
             return a;
         }
