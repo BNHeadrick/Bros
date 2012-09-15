@@ -26,7 +26,7 @@ namespace CS8803AGA.engine
                 throw new Exception("Only one EngineStateGameplay allowed at once!");
              
 
-            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Hero1");
+            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Hero2");
 
             PlayerController player =
                 (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), Constants.CharType.PLAYERCHAR);
