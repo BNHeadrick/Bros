@@ -99,10 +99,7 @@
     <Compile Include="collision\QuadTree.cs" />
     <Compile Include="collision\Collider.cs" />
     <Compile Include="collision\CollisionDetector.cs" />
-    <Compile Include="questcontent\BaseQuest.cs" />
-    <Compile Include="questcontent\GetIntoParty.cs" />
-    <Compile Include="questcontent\ProtectCompanion.cs" />
-    <Compile Include="questcontent\QuestManager.cs" />
+    <Compile Include="questcontent\Quest.cs" />
     <Compile Include="controllers\CompanionController.cs" />
     <Compile Include="controllers\TestingCont.cs" />
     <Compile Include="controllers\DamageTrigger.cs" />
@@ -128,7 +125,6 @@
     <Compile Include="math\Line.cs" />
     <Compile Include="math\LineSegment.cs" />
     <Compile Include="math\Ray2.cs" />
-    <Compile Include="questcontent\GetCompanion.cs" />
     <Compile Include="rendering\Camera.cs" />
     <Compile Include="rendering\fonts\FontDrawCommand.cs" />
     <Compile Include="rendering\LineDrawer.cs" />

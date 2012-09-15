@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CS8803AGA.controllers;
-using CS8803AGA.questcontent;
 
 namespace CS8803AGA.engine
 {
@@ -18,22 +17,19 @@ namespace CS8803AGA.engine
 
         public static PlayerController Player { get { return playerController; } }
         public static CompanionController Companion { get { return companionController; } }
-        public static QuestManager QuestManager { get { return questManager; } }
 
         private static PlayerController playerController = null;
         private static CompanionController companionController = null;
-        private static QuestManager questManager = null;
 
         public static Area ActiveArea { get { return activeArea; } }
         private static Area activeArea = null;
 
-        public static void initialize(EngineStateGameplay esg, PlayerController pc, CompanionController cc, Area startArea, QuestManager qm)
+        public static void initialize(EngineStateGameplay esg, PlayerController pc, CompanionController cc, Area startArea)
         {
             GameplayState = esg;
             playerController = pc;
             companionController = cc;
             activeArea = startArea;
-            questManager = qm;
 
             activeArea.add(cc);
             activeArea.add(pc);

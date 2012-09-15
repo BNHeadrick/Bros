@@ -22,7 +22,7 @@ namespace CS8803AGA
         public static Point START_SOUTH = new Point(0, 1);
         public static Point START_WEST = new Point(-1, 0);
         public static Point START_EAST = new Point(1, 0);
-        public static Point HOUSE = new Point(0, -1);
+        public static Point PARTYHOOD = new Point(0, -1);
         public static Point LIQUOR_STORE = new Point(0, -50);
 
         #region Constants and Members

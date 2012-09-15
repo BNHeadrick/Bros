@@ -18,14 +18,12 @@ namespace CS8803AGA.dialog
         {
             Dictionary<int, Dialog> dialog = new Dictionary<int, Dialog>();
 
-            if (location == Area.HOUSE)
+            if (location == Area.PARTYHOOD)
             {
-                dialog.Add(Constants.COMPANION, new Dialog("I have become drunk!", true));
-                dialog.Add(181, new Dialog("Here, try this drink, I put some special stuff in it", false));
-                dialog.Add(243, new Dialog("I am bunny girl", false));
-                dialog.Add(271, new Dialog("I am king of all you see", false));
-                dialog.Add(331, new Dialog("Talk to me again", false, Color.LightGoldenrodYellow).add(
-                                           "This is a test of a really long dialog to see if we can't do anything special with super duper long dialog, ideally it will line break all on it's own", false));
+                dialog.Add(301, new Dialog("I will never let anyone into this party. This is my life's goal."));
+                dialog.Add(157, new Dialog("There's a pretty cool party going in this place.").add(
+                                           "I wish I could sneak in myself!").add(
+                                           "But you could never get past me. You're better off going to Brewtopia"));
             }
             else if (location == Area.LIQUOR_STORE)
             {
