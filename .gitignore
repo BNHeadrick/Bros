@@ -41,6 +41,8 @@ local.properties
 *.user
 *.sln.docstates
 *.cachefile
+CS8803AGA.csproj.Debug.cachefile
+
 
 # Build results
 [Dd]ebug/
