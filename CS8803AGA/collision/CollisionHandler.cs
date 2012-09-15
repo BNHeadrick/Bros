@@ -30,7 +30,7 @@ namespace CS8803AGA.collision
             {
                 case ColliderType.PC:
                     return handlePCMovement(mover, other, deltaPosition, out allowedMovement);
-                    break;
+                    //break;
                 //case ColliderType.NPC:
                 //    break;
                 //case ColliderType.Effect:
@@ -40,7 +40,7 @@ namespace CS8803AGA.collision
                 default:
                     throw new Exception("Something's moving that shouldn't be");
             }
-            return false;
+            //return false;
         }
 
         /// <summary>

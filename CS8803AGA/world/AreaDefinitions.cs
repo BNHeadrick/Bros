@@ -17,7 +17,7 @@ namespace CS8803AGA.world
         {
             int[] tiles;
 
-            if (location == new Point(0, 0))
+            if (location == Area.START)
             { // map 0x0
                 tiles = new int[]{
                      3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -78,7 +78,7 @@ namespace CS8803AGA.world
             */
             int[] doodads;
 
-            if (location == new Point(0, 0))
+            if (location == Area.START)
             { // map 0x0
                 doodads = new int[] {
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,
@@ -96,7 +96,7 @@ namespace CS8803AGA.world
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                 };
             }
-            else if (location == new Point(0, -1))
+            else if (location == Area.HOUSE)
             { // map 0x-1 inside the house!
                 doodads = new int[] {
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -155,7 +155,7 @@ namespace CS8803AGA.world
             int[] transitions = null;
             // x, y, globalTargetX, globalTargetY, destTileX, destTileY
 
-            if (location == new Point(0, 0))
+            if (location == Area.START)
             { // map 0x0
                 transitions = new int[]{
                         /*house door */8, 11, 0, -1, 20, 4

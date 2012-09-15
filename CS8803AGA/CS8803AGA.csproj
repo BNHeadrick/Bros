@@ -108,6 +108,9 @@
     <Compile Include="controllers\GameObject.cs" />
     <Compile Include="controllers\PlayerController.cs" />
     <Compile Include="controllers\Trigger.cs" />
+    <Compile Include="dialog\Dialog.cs" />
+    <Compile Include="dialog\DialogDefinitions.cs" />
+    <Compile Include="dialog\DialogManager.cs" />
     <Compile Include="engine\EngineManager.cs" />
     <Compile Include="engine\EngineStateAbstract.cs" />
     <Compile Include="engine\EngineStateDialogue.cs" />

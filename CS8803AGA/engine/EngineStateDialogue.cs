@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CS8803AGA.devices;
+using CS8803AGA.dialog;
 
 namespace CS8803AGA.engine
 {
@@ -15,17 +16,18 @@ namespace CS8803AGA.engine
 
         private GameTexture m_baseImage;
 
-        private string m_text;
         private bool m_button4_released;
+
+        private Dialog m_dialog;
 
         #endregion
 
-        public EngineStateDialogue()
+        public EngineStateDialogue(int character)
             : base(EngineManager.Engine)
         {
             m_baseImage = new GameTexture(@"Sprites/RPG/PopupScreen");
 
-            m_text = "This is dialog text";
+            m_dialog = DialogManager.get(character);
             m_button4_released = false;
         }
 
@@ -59,7 +61,10 @@ namespace CS8803AGA.engine
 
             WorldManager.DrawMap(new Vector2(300, 100), 600, 500, Constants.DepthDialogueText);*/
 
-            FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(m_text, new Vector2(0, 0), Color.MistyRose, 0, Vector2.Zero, 1.0f, SpriteEffects.FlipHorizontally, 1.0f);
+            if (m_dialog != null)
+            {
+                FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(m_dialog.getText(), new Vector2(50, 300), m_dialog.getColor(), 0, Vector2.Zero, 0.5f, m_dialog.getDrunk() ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1.0f);
+            }
         }
     }
 }

@@ -26,12 +26,12 @@ namespace CS8803AGA.engine
                 throw new Exception("Only one EngineStateGameplay allowed at once!");
              
 
-            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Pirate1");
+            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(Constants.PLAYER));
 
             PlayerController player =
                 (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), Constants.CharType.PLAYERCHAR, null);
 
-            CharacterInfo compCi = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Boss5");
+            CharacterInfo compCi = GlobalHelper.loadContent<CharacterInfo>(@"Characters/" + Constants.doodadIntToString(Constants.COMPANION));
 
             CompanionController compC =
                 (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR, player);

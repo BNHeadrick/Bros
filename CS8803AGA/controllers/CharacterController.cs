@@ -19,7 +19,17 @@ namespace CS8803AGA.controllers
 
         protected float m_previousAngle;
 
-        
+        private int m_doodadIndex;
+
+        public int getDoodadIndex()
+        {
+            return m_doodadIndex;
+        }
+
+        public void setDoodadIndex(int doodadIndex)
+        {
+            m_doodadIndex = doodadIndex;
+        }
 
         /// <summary>
         /// Factory method to create CharacterControllers
@@ -30,7 +40,6 @@ namespace CS8803AGA.controllers
         /// <returns>Constructed CharacterController</returns>
         public static CharacterController construct(CharacterInfo ci, Vector2 startpos, Constants.CharType typeOfChar, PlayerController p)
         {
-
             CharacterController cc;
             ColliderType type;
             if (typeOfChar == Constants.CharType.PLAYERCHAR)
@@ -49,7 +58,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
             }
 
-
+            cc.m_doodadIndex = 0;
             cc.m_position = startpos;
 
             cc.AnimationController = new AnimationController(ci.animationDataPath, ci.animationTexturePath);
