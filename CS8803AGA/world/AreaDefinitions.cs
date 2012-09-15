@@ -74,18 +74,7 @@ namespace CS8803AGA.world
         public static int[,] doodadsAt(Point location)
         {
             /* doodads
-            // graveyard
-            0 =>  "NONE",      1 => "tree1",      2 => "tree2", 
-            3 => "tombstone1", 4 => "tombstone2", 5 => "tombstone3", 
-            6 => "tombstone4", 7 => "obelisk",    8 => "bigstone1", 
-            9 => "bigstone2",
-            // town
-            10=> "house1",
-            // trees
-            11=> "tree1",      12=> "tree2"
-            // characters
-            13=> "DarkKnight", 14=> "Jason",      15=> "Ness",
-            16=> "Salsa"
+            // see Area.makeTestArea for what each doodad index is
             */
             int[] doodads;
 
@@ -114,7 +103,7 @@ namespace CS8803AGA.world
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,13,14,15,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,181,243,271,331,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

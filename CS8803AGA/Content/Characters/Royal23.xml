@@ -1,0 +1,9 @@
+﻿<XnaContent>
+  <Asset Type="CS8803AGAGameLibrary.CharacterInfo">
+    <animationTexturePath>Animation/Textures/22 - Royal</animationTexturePath>
+    <animationDataPath>Animation/Data/Hero3</animationDataPath>
+    <collisionBox>-14 16 28 10</collisionBox>
+    <speed>5</speed>
+    <scale>2</scale>
+  </Asset>
+</XnaContent>

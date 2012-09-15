@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="CS8803AGAGameLibrary.AnimationSet">
+    <anims>
+      <Item>
+        <name>right</name>
+        <sprites>
+          <Item>
+            <box>0 192 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 192 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 192 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>left</name>
+        <sprites>
+          <Item>
+            <box>0 160 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 160 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 160 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>up</name>
+        <sprites>
+          <Item>
+            <box>0 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>down</name>
+        <sprites>
+          <Item>
+            <box>0 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>upright</name>
+        <sprites>
+          <Item>
+            <box>0 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>downleft</name>
+        <sprites>
+          <Item>
+            <box>0 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>upleft</name>
+        <sprites>
+          <Item>
+            <box>0 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 224 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+      <Item>
+        <name>downright</name>
+        <sprites>
+          <Item>
+            <box>0 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>24 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+          <Item>
+            <box>48 128 24 32</box>
+            <duration>5</duration>
+            <action Null="true" />
+            <offset>0 0</offset>
+          </Item>
+        </sprites>
+        <priority>0</priority>
+        <loops>true</loops>
+        <idleFrame>0</idleFrame>
+        <whenDone>idle</whenDone>
+      </Item>
+    </anims>
+  </Asset>
+</XnaContent>

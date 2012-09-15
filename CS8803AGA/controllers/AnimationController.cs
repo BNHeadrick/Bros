@@ -199,7 +199,9 @@ namespace CS8803AGA.controllers
                 }
                 ++i;
             }
-            throw new Exception(String.Format("Animation '{0}' not found", animName));
+            // system is set up for more animations than we actually want to use
+            return m_currentSpriteIdx;
+            //throw new Exception(String.Format("Animation '{0}' not found", animName));
         }
 
         /// <summary>
