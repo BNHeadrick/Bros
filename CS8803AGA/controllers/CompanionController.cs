@@ -82,13 +82,13 @@ namespace CS8803AGA.controllers
 
             if (dx == 0 && dy == 0)
             {
-                Console.WriteLine("stopped!");
+                //Console.WriteLine("stopped!");
                 return;
                 
             }
             else
             {
-                Console.WriteLine("MOVING!");
+                //Console.WriteLine("MOVING!");
                 //testing for obtaining absolute x/y position
                 //Console.WriteLine("COMPANION!");
             }
