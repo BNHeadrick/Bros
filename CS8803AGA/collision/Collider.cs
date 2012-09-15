@@ -25,6 +25,7 @@ namespace CS8803AGA.collision
         /// Area the collider takes up.
         /// </summary>
         private DoubleRect m_bounds;
+        private DoubleRect m_bounds2;
 
         /// <summary>
         /// Object whose area is represented by this collider.
@@ -36,11 +37,18 @@ namespace CS8803AGA.collision
         /// </summary>
         public ColliderType m_type;
 
+        /// <summary>
+        /// The collider that we are currently colliding against
+        /// </summary>
+        public Collider m_other;
+
         public Collider(ICollidable owner, Rectangle bounds, ColliderType type)
         {
             this.m_owner = owner;
             this.m_bounds = new DoubleRect(bounds.X, bounds.Y, bounds.Width, bounds.Height);
+            this.m_bounds2 = new DoubleRect(bounds.X - 5, bounds.Y - 5, bounds.Width + 10, bounds.Height + 10);
             this.m_type = type;
+            this.m_other = null;
         }
 
         /// <summary>
@@ -74,6 +82,7 @@ namespace CS8803AGA.collision
         public void move(Vector2 dp)
         {
             m_bounds += dp;
+            m_bounds2 += dp;
             m_owner.DrawPosition += dp;
 
             RaiseBoundsChanged();
@@ -82,6 +91,11 @@ namespace CS8803AGA.collision
         public DoubleRect Bounds
         {
             get { return m_bounds; }
+        }
+
+        public DoubleRect Surroundings
+        {
+            get { return m_bounds2; }
         }
 
         /// <summary>

@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using CSharpQuadTree;
 using CS8803AGA.controllers;
+using CS8803AGA.devices;
+using CS8803AGA.engine;
 
 namespace CS8803AGA.collision
 {
@@ -113,6 +115,10 @@ namespace CS8803AGA.collision
                     allowedMovement = scaleBackVelocity(mover, other, deltaPosition);
                     return true;
                 case ColliderType.NPC:
+                    if (mover.m_type == ColliderType.PC)
+                    {
+                        mover.m_other = other;
+                    }
                     allowedMovement = scaleBackVelocity(mover, other, deltaPosition);
                     return true;
                 //case ColliderType.Effect:
