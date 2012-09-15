@@ -54,18 +54,19 @@ namespace CS8803AGA.controllers
             normPlayPos.Normalize();
             double chaseAngle = 0.0;
 
-            if ((InputSet.getInstance().getLeftDirectionalX() !=0 || InputSet.getInstance().getLeftDirectionalY() !=0 ) &&
+            if (
+                //(InputSet.getInstance().getLeftDirectionalX() ==0 && InputSet.getInstance().getLeftDirectionalY() ==0 ) &&
                 ((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) > 90) ||
                 (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) > 90)))
             {
-                dx = (player.getAbsPosVec().X - getAbsPosVec().X) * m_speed;
-                dy = (player.getAbsPosVec().Y - getAbsPosVec().Y) * m_speed;
+                dx = (player.getAbsPosVec().X - this.getAbsPosVec().X);
+                dy = (player.getAbsPosVec().Y - this.getAbsPosVec().Y);
 
                 //Console.WriteLine(player.getAbsPosVec().X + " " + player.getAbsPosVec().Y + " " +
                     //getAbsPosVec().X + " " + getAbsPosVec().X + " ");
 
-                chaseAngle = Math.Atan2(player.getAbsPosVec().Y - getAbsPosVec().Y, 
-                    player.getAbsPosVec().X - getAbsPosVec().X);
+                chaseAngle = Math.Atan2(player.getAbsPosVec().Y - this.getAbsPosVec().Y, 
+                    player.getAbsPosVec().X - this.getAbsPosVec().X);
 
                 //Console.WriteLine(chaseAngle);
 
@@ -96,7 +97,7 @@ namespace CS8803AGA.controllers
                 CommonFunctions.getAngle(new Vector2(dx, dy));*/
             float angle = (float)chaseAngle;
 
-            string animName = angleTo4WayAnimation(angle);
+            string animName = angleTo4WayAnimation(-angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
             if (true )
