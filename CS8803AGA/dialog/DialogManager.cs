@@ -22,10 +22,12 @@ namespace CS8803AGA.dialog
          */
         public static Dialog get(int character)
         {
+            
             if (dialogs.ContainsKey(character))
             {
                 Dialog d = dialogs[character].getCurrent();
                 // maybe need to do something special to set next flag??
+
                 dialogs[character].next();
                 return d;
             }

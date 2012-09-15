@@ -29,6 +29,7 @@ namespace CS8803AGA
 
         public const int PLAYER = 261;
         public const int COMPANION = 55;
+        public const int LIQUERMERCH = 132;
 
 
         public const float DepthDebugLines = 1.0f;
