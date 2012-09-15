@@ -70,20 +70,23 @@ namespace CS8803AGA.controllers
             }
 
             m_previousAngle = angle;
+        }
 
+        /// <summary>
+        /// Checks if the player is colliding with NPC
+        /// </summary>
+        public void checkNPCCollision()
+        {
             // check for collision persistance
             if (m_collider.m_other != null)
             {
-                Console.WriteLine("There is collision");
-                if (!m_collider.Surroundings.IntersectsWith(m_collider.m_other.Bounds))
+                if (!m_collider.Surroundings.IntersectsWith(m_collider.m_other.Surroundings))
                 {
                     m_collider.m_other = null;
-                    Console.WriteLine("Collision has become ended");
                 }
                 // we are still colliding so check for dialog
                 else if (InputSet.getInstance().getButton(InputsEnum.BUTTON_4))
                 {
-                    Console.WriteLine("you push button");
                     EngineManager.pushState(new EngineStateDialogue());
                 }
             }

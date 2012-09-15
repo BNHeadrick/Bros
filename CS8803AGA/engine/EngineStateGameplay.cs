@@ -54,6 +54,8 @@ namespace CS8803AGA.engine
                 return;
             }
 
+            GameplayManager.Player.checkNPCCollision();
+
             Area area = GameplayManager.ActiveArea;
             area.GameObjects.ForEach(i => i.update());
             area.GameObjects.ForEach(i => { if (!i.isAlive() && i is ICollidable) ((ICollidable)i).getCollider().unregister(); });

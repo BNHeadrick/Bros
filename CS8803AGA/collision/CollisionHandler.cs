@@ -121,6 +121,13 @@ namespace CS8803AGA.collision
                     }
                     allowedMovement = scaleBackVelocity(mover, other, deltaPosition);
                     return true;
+                case ColliderType.PC:
+                    if (mover.m_type == ColliderType.PC)
+                    {
+                        mover.m_other = other;
+                    }
+                    allowedMovement = deltaPosition;
+                    return true;
                 //case ColliderType.Effect:
                 //    break;
                 //case ColliderType.Movable:
