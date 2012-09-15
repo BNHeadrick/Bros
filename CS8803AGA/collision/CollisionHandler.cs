@@ -7,6 +7,7 @@ using CSharpQuadTree;
 using CS8803AGA.controllers;
 using CS8803AGA.devices;
 using CS8803AGA.engine;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.collision
 {
@@ -126,7 +127,14 @@ namespace CS8803AGA.collision
                     {
                         mover.m_other = other;
                     }
-                    allowedMovement = deltaPosition;
+                    if (Quest.currentQuest == Quest.QUEST_TYPE.GET_COMPANION)
+                    { // if companion isn't in party, treat as NPC collider
+                        allowedMovement = scaleBackVelocity(mover, other, deltaPosition);
+                    }
+                    else
+                    { // allow movement through companion
+                        allowedMovement = deltaPosition;
+                    }
                     return true;
                 //case ColliderType.Effect:
                 //    break;
