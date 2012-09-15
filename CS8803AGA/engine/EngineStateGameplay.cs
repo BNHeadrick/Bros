@@ -7,6 +7,7 @@ using System;
 using CS8803AGA.collision;
 using CS8803AGA.devices;
 using CS8803AGA.controllers;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.engine
 {
@@ -36,9 +37,11 @@ namespace CS8803AGA.engine
             CompanionController compC =
                 (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR, player);
 
+            QuestManager qm = new QuestManager();
+
             Point startPoint = new Point(0, 0);
             Area.makeTestArea(startPoint);
-            GameplayManager.initialize(this, player, compC, WorldManager.GetArea(startPoint));
+            GameplayManager.initialize(this, player, compC, WorldManager.GetArea(startPoint), qm);
         }
 
         /// <summary>
