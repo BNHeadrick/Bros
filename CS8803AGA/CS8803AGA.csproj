@@ -99,6 +99,7 @@
     <Compile Include="collision\QuadTree.cs" />
     <Compile Include="collision\Collider.cs" />
     <Compile Include="collision\CollisionDetector.cs" />
+    <Compile Include="controllers\CompanionController.cs" />
     <Compile Include="controllers\TestingCont.cs" />
     <Compile Include="controllers\DamageTrigger.cs" />
     <Compile Include="controllers\AnimationController.cs" />

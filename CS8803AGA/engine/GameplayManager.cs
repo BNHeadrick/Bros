@@ -32,6 +32,7 @@ namespace CS8803AGA.engine
             companionController = cc;
             activeArea = startArea;
 
+            activeArea.add(cc);
             activeArea.add(pc);
         }
 

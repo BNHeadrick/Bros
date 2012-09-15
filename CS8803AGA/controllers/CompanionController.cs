@@ -41,6 +41,8 @@ namespace CS8803AGA.controllers
                 AnimationController.requestAnimation(dir, AnimationController.AnimationCommand.Play);
             }
             */
+
+            
             dx = InputSet.getInstance().getLeftDirectionalX() * m_speed;
             dy = InputSet.getInstance().getLeftDirectionalY() * m_speed;
 
@@ -51,7 +53,7 @@ namespace CS8803AGA.controllers
             else
             {
                 //testing for obtaining absolute x/y position
-                Console.WriteLine("COMPANION!");
+                //Console.WriteLine("COMPANION!");
             }
 
             float angle =
@@ -60,12 +62,13 @@ namespace CS8803AGA.controllers
             string animName = angleTo4WayAnimation(angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
-            if (true /* TODO - checks for paralysis, etc here */)
+            if (true )
             {
-                m_collider.handleMovement(new Vector2(dx, -dy));
+                //m_collider.handleMovement(new Vector2(dx, -dy));
             }
 
             m_previousAngle = angle;
+            
         }
 
     }

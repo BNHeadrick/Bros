@@ -47,6 +47,8 @@ namespace CS8803AGA.devices
         protected Keys BUTTON_4 = Keys.C;
         protected Keys LEFT_BUMPER = Keys.Q;
         protected Keys RIGHT_BUMPER = Keys.E;
+        protected Keys LEFT_TRIGGER = Keys.NumPad9;
+        protected Keys RIGHT_TRIGGER = Keys.NumPad4;
 
         /// <summary>
         /// Default constructor.

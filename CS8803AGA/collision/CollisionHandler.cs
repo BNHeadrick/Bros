@@ -124,7 +124,9 @@ namespace CS8803AGA.collision
                     ((ITrigger)other.m_owner).handleImpact(mover);
                     return true;
                 default:
-                    throw new Exception("PC moved into something it shouldn't have");
+                    allowedMovement = deltaPosition;
+                    return true;
+                    //throw new Exception("PC moved into something it shouldn't have");
             }
         }
     }
