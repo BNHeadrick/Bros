@@ -27,7 +27,7 @@ namespace CS8803AGA
     {
         // TODO: Also support loading constants from a file
 
-        public const float DepthDebugLines = 0.0f;
+        public const float DepthDebugLines = 1.0f;
 
         public const float DepthGameplayTiles = 0.19f;
         public const float DepthBaseGameplay = 0.2f;

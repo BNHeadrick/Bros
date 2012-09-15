@@ -56,8 +56,8 @@ namespace CS8803AGA.controllers
 
             if (
                 //(InputSet.getInstance().getLeftDirectionalX() ==0 && InputSet.getInstance().getLeftDirectionalY() ==0 ) &&
-                ((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) > 90) ||
-                (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) > 90)))
+                ((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) > 50) ||
+                (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) > 50)))
             {
                 dx = (player.getAbsPosVec().X - this.getAbsPosVec().X);
                 dy = (player.getAbsPosVec().Y - this.getAbsPosVec().Y);
@@ -68,7 +68,7 @@ namespace CS8803AGA.controllers
                 chaseAngle = Math.Atan2(player.getAbsPosVec().Y - this.getAbsPosVec().Y, 
                     player.getAbsPosVec().X - this.getAbsPosVec().X);
 
-                //Console.WriteLine(chaseAngle);
+                Console.WriteLine(chaseAngle);
 
 
             }
@@ -80,12 +80,19 @@ namespace CS8803AGA.controllers
 
             //Console.Write(playerPosX + " " + playerPosY);
 
+            /*
             if (dx == 0 && dy == 0)
             {
-                //Console.WriteLine("stopped!");
+                Console.WriteLine("stopped!");
                 return;
                 
             }
+            */
+            if((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) < 50) &&
+                (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) < 50)){
+                    return;
+            }
+
             else
             {
                 //Console.WriteLine("MOVING!");
