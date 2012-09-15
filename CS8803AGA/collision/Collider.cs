@@ -51,6 +51,11 @@ namespace CS8803AGA.collision
             this.m_other = null;
         }
 
+        public void setCollider(ColliderType t)
+        {
+            this.m_type = t;
+        }
+
         /// <summary>
         /// Find all Colliders which intersect the queried Area and are
         /// managed by this Collider's managing CollisionDetector.

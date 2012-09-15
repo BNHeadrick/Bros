@@ -37,7 +37,7 @@ namespace CS8803AGA
         public const int BREW_THIEF3 = 312;
 
 
-        public const float DepthDebugLines = 0.0f;
+        public const float DepthDebugLines = 1.0f;
 
         public const float DepthGameplayTiles = 0.19f;
         public const float DepthBaseGameplay = 0.2f;

@@ -35,7 +35,7 @@ namespace CS8803AGA.engine
             CharacterInfo compCi = GlobalHelper.loadContent<CharacterInfo>(@"Characters/" + Constants.doodadIntToString(Constants.COMPANION));
 
             CompanionController compC =
-                (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR, player);
+                (CompanionController)CharacterController.construct(compCi, new Vector2(500, 50), Constants.CharType.COMPANIONCHAR, player);
 
             Point startPoint = new Point(0, 0);
             Area.makeTestArea(startPoint);

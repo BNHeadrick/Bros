@@ -445,6 +445,21 @@ namespace CS8803AGA
             this.GameObjects.Remove(gameObject);
         }
 
+        //check if a GameObject exists in the area
+        public bool exists(IGameObject gameObject)
+        {
+            foreach (IGameObject gameObj in GameObjects)
+            {
+                if(gameObject.Equals(gameObj)){
+                    
+                    return true;
+
+                }
+            }
+            return false;
+                   
+        }
+
         /// <summary>
         /// Place a Collidable game object into the area; handles registering collision box
         /// </summary>

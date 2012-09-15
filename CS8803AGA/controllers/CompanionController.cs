@@ -26,6 +26,11 @@ namespace CS8803AGA.controllers
             return getMPos();
         }
 
+        public void setAbsPos(Vector2 pos)
+        {
+            m_position = pos;
+        }
+
         public CompanionController(PlayerController p)
         {
             // nch, should only be called by CharacterController.construct
@@ -36,78 +41,32 @@ namespace CS8803AGA.controllers
         {
             AnimationController.update();
 
-            /*
-            if (InputSet.getInstance().getButton(InputsEnum.BUTTON_1))
-            {
-                string dir = angleTo4WayAnimation(m_previousAngle);
-                dir = "attack" + dir;
-                AnimationController.requestAnimation(dir, AnimationController.AnimationCommand.Play);
-            }
-            */
-
-            
-            //dx = InputSet.getInstance().getLeftDirectionalX() * m_speed;
-            //dy = InputSet.getInstance().getLeftDirectionalY() * m_speed;
-
             Vector2 normPlayPos = player.getAbsPosVec();
 
             normPlayPos.Normalize();
             double chaseAngle = 0.0;
 
-            if (
-                //(InputSet.getInstance().getLeftDirectionalX() ==0 && InputSet.getInstance().getLeftDirectionalY() ==0 ) &&
-                ((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) > 50) ||
+            if (((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) > 50) ||
                 (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) > 50)))
             {
                 dx = (player.getAbsPosVec().X - this.getAbsPosVec().X);
                 dy = (player.getAbsPosVec().Y - this.getAbsPosVec().Y);
 
-                //Console.WriteLine(player.getAbsPosVec().X + " " + player.getAbsPosVec().Y + " " +
-                    //getAbsPosVec().X + " " + getAbsPosVec().X + " ");
-
                 chaseAngle = Math.Atan2(player.getAbsPosVec().Y - this.getAbsPosVec().Y, 
                     player.getAbsPosVec().X - this.getAbsPosVec().X);
-
-                Console.WriteLine(chaseAngle);
-
-
             }
             
-            //Console.WriteLine(normPlayPos.X + " " + normPlayPos.Y);
-
-            //int playerPosX = (int)player.getAbsPosVec().X;
-            //int playerPosY = (int)player.getAbsPosVec().Y;
-
-            //Console.Write(playerPosX + " " + playerPosY);
-
-            /*
-            if (dx == 0 && dy == 0)
-            {
-                Console.WriteLine("stopped!");
-                return;
-                
-            }
-            */
             if((Math.Abs(player.getAbsPosVec().X - getAbsPosVec().X) < 50) &&
                 (Math.Abs(player.getAbsPosVec().Y - getAbsPosVec().Y) < 50)){
                     return;
             }
 
-            else
-            {
-                //Console.WriteLine("MOVING!");
-                //testing for obtaining absolute x/y position
-                //Console.WriteLine("COMPANION!");
-            }
-
-            /*float angle =
-                CommonFunctions.getAngle(new Vector2(dx, dy));*/
             float angle = (float)chaseAngle;
 
             string animName = angleTo4WayAnimation(-angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
-            if (true )
+            if (false )
             {
                 //m_collider.handleMovement(new Vector2(dx, -dy));
                 m_collider.handleMovement(AngleToVector((float)chaseAngle));
