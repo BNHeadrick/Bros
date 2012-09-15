@@ -140,7 +140,12 @@ namespace CS8803AGA
                             throw new Exception("Unknown value for AreaSideEnum");
                     }
                 }
-                /*if (m_target == null)
+
+                if (targetGlobalLocation == Area.PARTYHOOD)
+                {
+                    m_target = Area.makeTestArea(targetGlobalLocation);
+                }
+                else if (m_target == null)
                 {
                     // check if it was created but we just don't have it
                     this.m_target = WorldManager.GetArea(targetGlobalLocation);
@@ -150,8 +155,8 @@ namespace CS8803AGA
                     {
                         m_target = Area.makeTestArea(targetGlobalLocation);
                     }
-                }*/
-                m_target = Area.makeTestArea(targetGlobalLocation);
+                }
+                
 
                 // This code stays
                 Point targetTile; // tile on other map on which player should arrive
