@@ -81,6 +81,10 @@ namespace CS8803AGA.dialog
 
         public Dialog getCurrent()
         {
+            if (m_current >= m_text.Count)
+            {
+                m_current = 0;
+            }
             return new Dialog(m_text[m_current], m_drunk[m_current], m_color[m_current]);
         }
 
@@ -91,6 +95,11 @@ namespace CS8803AGA.dialog
             {
                 m_current = 0;
             }
+        }
+
+        public void setDialog(int next)
+        {
+            m_current = next;
         }
     }
 }

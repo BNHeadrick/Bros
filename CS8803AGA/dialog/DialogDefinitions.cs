@@ -25,6 +25,23 @@ namespace CS8803AGA.dialog
                                            "I wish I could sneak in myself!").add(
                                            "But you could never get past me. You're better off going to Brewtopia"));
             }
+            else if (location == Area.PARTYHOOD_NORTH)
+            {
+                dialog.Add(Constants.STOLEN_BREW, new Dialog("One of these fools has stolen my precious Brew!").add(
+                                                             "Have you figured out who it was? Cool, go beat them up for me!").add(
+                                                             "What the hell, why'd you drink my brew?"));
+                dialog.Add(Constants.BREW_THIEF1, new Dialog("What do you want?").add(
+                                                             "You think I stole the brew? No way, it wasn't me. Let's go to Brewtopia together!").add(
+                                                             "Ha, ha, ha, fool! You fell for my trick, I'm going to leave you behind and go to Brewtopia all by myself."));
+                dialog.Add(Constants.BREW_THIEF2, new Dialog("What do you want?").add(
+                                                             "A brew? I don't even know what that is.").add(
+                                                             "You caught me, I took the brew. Here, you can have it back.*Companion shotgunned the brew.*\n").add(
+                                                             "Here, you can drink this other brew I stole too!\n*Companion shotgunned the brew.*"));
+                dialog.Add(Constants.BREW_THIEF3, new Dialog("Leave me alone, please").add(
+                                                             "I saw someone else take a brew. I think it was that guy down there.").add(
+                                                             "Uggghh, please take this legendary haunted key, just leave me alone!").add(
+                                                             "I am plagued by far less ghosts now that I no longer hold the haunted key. Thank you for mugging me."));
+            }
             else if (location == Area.LIQUOR_STORE)
             {
                 dialog.Add(132, new Dialog("Welcome to Brews 'R' Us"));

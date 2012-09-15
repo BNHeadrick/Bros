@@ -37,7 +37,8 @@ namespace CS8803AGA.engine
                 InputSet.getInstance().getButton(InputsEnum.BUTTON_2) ||
                 InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON) ||
                 InputSet.getInstance().getButton(InputsEnum.CANCEL_BUTTON) ||
-                (m_button4_released && InputSet.getInstance().getButton(InputsEnum.BUTTON_4)))
+                (m_button4_released && InputSet.getInstance().getButton(InputsEnum.BUTTON_4)) ||
+                m_dialog == null)
             {
                 EngineManager.popState();
                 InputSet.getInstance().setAllToggles();

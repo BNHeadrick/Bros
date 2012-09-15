@@ -27,9 +27,14 @@ namespace CS8803AGA
     {
         // TODO: Also support loading constants from a file
 
+        // important characters
         public const int PLAYER = 261;
         public const int COMPANION = 55;
         public const int LIQUERMERCH = 132;
+        public const int STOLEN_BREW = 338;
+        public const int BREW_THIEF1 = 197;
+        public const int BREW_THIEF2 = 292;
+        public const int BREW_THIEF3 = 312;
 
 
         public const float DepthDebugLines = 0.0f;

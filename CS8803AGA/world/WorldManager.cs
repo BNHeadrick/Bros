@@ -30,10 +30,11 @@ namespace CS8803AGA
 
         public static void RegisterArea(Point p, Area area)
         {
-            if (WorldMap.ContainsKey(p))
-                throw new Exception("Area at p already registered");
-
-            WorldMap[p] = area;
+            if (!WorldMap.ContainsKey(p))
+            {
+                //   throw new Exception("Area at p already registered");
+                WorldMap[p] = area;
+            }
         }
 
         /// <summary>
