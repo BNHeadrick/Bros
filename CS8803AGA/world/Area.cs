@@ -137,6 +137,7 @@ namespace CS8803AGA
         /// <returns></returns>
         public static Area makeTestArea(string tileSetpath, Point location)
         {
+            DialogManager.load(location);
             Console.WriteLine("making location: " + location);
 
             Area a = makeEmptyArea(tileSetpath, location);
