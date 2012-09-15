@@ -1,65 +1,104 @@
+Content\World\town.xnb
+Content\Sprites\RPG\FadeScreen2.xnb
+Content\World\graveyard.xnb
+Content\Sprites\RPG\GoldIcon.xnb
+Content\Sprites\TileSet1.xnb
+Content\Sprites\RPG\TitleBar.xnb
+Content\Animation\Textures\Ness_Walk.xnb
+Content\Sprites\RPG\CountShieldWithArrow.xnb
+Content\Sprites\reducedtown.xnb
+Content\Animation\Textures\05 - Fighter.xnb
+Content\Sprites\RPG\PopupScreen.xnb
+Content\Animation\Textures\35 - Vehicle.xnb
+Content\Animation\Data\DarkKnight.xnb
+Content\Animation\Textures\02 - Warrior.xnb
+Content\Animation\Textures\26 - Animal.xnb
+Content\Animation\Textures\31 - Monster.xnb
+Content\SpriteFonts\Pericles.xnb
+Content\Animation\Textures\DarkKnight.xnb
+Content\Characters\Salsa.xnb
+Content\Sprites\RPG\FadeScreen.xnb
+Content\Sprites\RPG\Caption.xnb
+Content\Animation\Textures\04 - Mage.xnb
+Content\Animation\Textures\Audio\waves1.xwb
+Content\SpriteFonts\Kootenay48.xnb
+Content\SpriteFonts\PescaderoBold.xnb
+Content\Sprites\RPG\GearScoreBoard.xnb
+Content\Sprites\RPG\LineBorder.xnb
+Content\Animation\Textures\mask.xnb
+Content\SpriteFonts\MiramonteBold.xnb
+Content\Characters\Jason.xnb
+Content\Animation\Textures\23 - Soldier.xnb
+Content\Animation\Textures\33 - Boss.xnb
+Content\Animation\Textures\28 - Flame.xnb
+Content\Animation\Textures\22 - Royal.xnb
+Content\SpriteFonts\PericlesLight.xnb
+Content\Animation\Textures\34 - Boss.xnb
+Content\Characters\Hero1.xnb
+Content\Animation\Textures\15 - Pirate.xnb
+Content\Sprites\splash.xnb
+Content\Animation\Textures\21 - Royal.xnb
+Content\Animation\Textures\17 - Elve.xnb
+Content\Sprites\RPG\CaptionBackGroundLarge.xnb
+Content\Animation\Data\Hero1.xnb
+Content\Animation\Textures\36 - Vehicle.xnb
+Content\Sprites\RPG\StatsBorderTable.xnb
+Content\Sprites\trees.xnb
+Content\Sprites\RPG\PlayerSelected.xnb
+Content\Sprites\RPG\ScoreBoard.xnb
+Content\Sprites\reducedtrees.xnb
+Content\Animation\Textures\25 - Student.xnb
+Content\Animation\Textures\Audio\sounds1.xsb
+Content\Animation\Textures\13 - Church.xnb
+Content\Animation\Textures\06 - Thief.xnb
+Content\Sprites\RPG\ScrollDown.xnb
+Content\Animation\Textures\27 - Animal.xnb
+Content\Characters\DarkKnight.xnb
+Content\Animation\Textures\09 - Adult.xnb
+Content\Animation\Textures\08 - Young.xnb
+Content\Sprites\RPG\HighlightLarge.xnb
+Content\Animation\Textures\10 - Old.xnb
+Content\Animation\Textures\Audio\effects\bang_3.xnb
+Content\Animation\Textures\20 - Fairy.xnb
 Content\Animation\Data\Jason.xnb
-Content\Characters\Ness.xnb
-Content\Sprites\RPG\SeparationLine.xnb
-Content\Sprites\RPG\CaptionBackGround.xnb
+Content\SpriteFonts\Miramonte.xnb
+Content\Animation\Textures\07 - Child.xnb
+Content\Animation\Textures\14 - Seer.xnb
+Content\Animation\Textures\32 - Dragon.xnb
+Content\Animation\Data\Ness.xnb
+Content\Sprites\town.xnb
+Content\Sprites\RPG\GameScreenBkgd.xnb
+Content\Animation\Textures\03 - Cleric.xnb
+Content\Sprites\RPG\InfoDisplay.xnb
+Content\Sprites\RPG\Highlight.xnb
+Content\Sprites\grassRock.xnb
+Content\Animation\Textures\11 - Employee.xnb
+Content\World\trees.xnb
+Content\SpriteFonts\Lindsey.xnb
+Content\SpriteFonts\Kootenay.xnb
 Content\Sprites\RPG\SelectionArrow.xnb
 Content\Sprites\RPG\ScrollButtons.xnb
-Content\Characters\Salsa.xnb
+Content\Sprites\RPG\SeparationLine.xnb
+Content\Animation\Textures\30 - Monster.xnb
+Content\Animation\Textures\50 - Template.xnb
 Content\Sprites\RPG\TickMark.xnb
-Content\Animation\Textures\Ness_Walk.xnb
-Content\SpriteFonts\MiramonteBold.xnb
-Content\Sprites\trees.xnb
-Content\Audio\sounds.xgs
-Content\SpriteFonts\Kootenay8.xnb
-Content\Sprites\blank.xnb
-Content\Audio\sounds1.xsb
-Content\World\graveyard.xnb
-Content\Animation\Data\Ness.xnb
-Content\Sprites\TileSet1.xnb
-Content\SpriteFonts\PericlesLight.xnb
-Content\Audio\effects\bang_3.xnb
-Content\Sprites\RPG\HighlightLarge.xnb
-Content\Sprites\splash.xnb
-Content\Sprites\RPG\CountShieldWithArrow.xnb
-Content\Sprites\RPG\LineBorder.xnb
-Content\Sprites\RPG\ScrollDown.xnb
-Content\World\trees.xnb
-Content\SpriteFonts\Kootenay.xnb
-Content\Sprites\RPG\Caption.xnb
-Content\Audio\waves1.xwb
-Content\Sprites\RPG\GearScoreBoard.xnb
-Content\Animation\Textures\Salsa_walk.xnb
-Content\Characters\DarkKnight.xnb
-Content\SpriteFonts\PescaderoBold.xnb
-Content\Animation\Data\Salsa.xnb
-Content\Sprites\RPG\GameScreenBkgd.xnb
-Content\Sprites\grassRock.xnb
-Content\Sprites\RPG\Highlight.xnb
-Content\Sprites\TitleScreen.xnb
-Content\World\town.xnb
-Content\Sprites\reducedtrees.xnb
-Content\Animation\Data\DarkKnight.xnb
-Content\SpriteFonts\Pescadero.xnb
-Content\Sprites\RPG\GoldIcon.xnb
-Content\Sprites\RPG\ScrollUp.xnb
-Content\Sprites\reducedtown.xnb
-Content\Sprites\RPG\FadeScreen2.xnb
-Content\Sprites\graveyard.xnb
-Content\Sprites\town.xnb
-Content\Sprites\RPG\PopupScreen.xnb
-Content\Sprites\RPG\FadeScreen.xnb
-Content\SpriteFonts\Pericles.xnb
-Content\Animation\Textures\mask.xnb
-Content\SpriteFonts\Lindsey.xnb
-Content\Sprites\RPG\CaptionBackGroundLarge.xnb
-Content\SpriteFonts\Kootenay48.xnb
-Content\Animation\Textures\DarkKnight.xnb
-Content\Sprites\RPG\TitleBar.xnb
-Content\Sprites\RPG\ConversationStrip.xnb
+Content\Characters\Ness.xnb
 Content\Sprites\RPG\PlayerUnSelected.xnb
-Content\Sprites\RPG\ScoreBoard.xnb
-Content\Sprites\RPG\StatsBorderTable.xnb
-Content\Sprites\RPG\InfoDisplay.xnb
-Content\SpriteFonts\Miramonte.xnb
-Content\Sprites\RPG\PlayerSelected.xnb
-Content\Characters\Jason.xnb
+Content\Sprites\RPG\ConversationStrip.xnb
+Content\Animation\Textures\12 - Merchant.xnb
+Content\SpriteFonts\Pescadero.xnb
+Content\Animation\Textures\Audio\sounds.xgs
+Content\Sprites\RPG\CaptionBackGround.xnb
+Content\Animation\Textures\29 - Monster.xnb
+Content\Sprites\RPG\ScrollUp.xnb
+Content\Animation\Data\Salsa.xnb
+Content\Animation\Textures\16 - BunnyGirl.xnb
+Content\Sprites\blank.xnb
+Content\SpriteFonts\Kootenay8.xnb
+Content\Animation\Textures\18 - Neko Girl.xnb
+Content\Sprites\TitleScreen.xnb
+Content\Sprites\graveyard.xnb
+Content\Animation\Textures\01 - Hero.xnb
+Content\Animation\Textures\Salsa_walk.xnb
+Content\Animation\Textures\19 - Cook.xnb
+Content\Animation\Textures\24 - Machine.xnb
