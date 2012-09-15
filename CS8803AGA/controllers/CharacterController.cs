@@ -28,7 +28,7 @@ namespace CS8803AGA.controllers
         /// <param name="startpos">Where in the Area the character should be placed</param>
         /// <param name="playerControlled">True if the character should be a PC, false if NPC</param>
         /// <returns>Constructed CharacterController</returns>
-        public static CharacterController construct(CharacterInfo ci, Vector2 startpos, Constants.CharType typeOfChar)
+        public static CharacterController construct(CharacterInfo ci, Vector2 startpos, Constants.CharType typeOfChar, PlayerController p)
         {
 
             CharacterController cc;
@@ -45,7 +45,7 @@ namespace CS8803AGA.controllers
             }
             else
             {
-                cc = new CompanionController();
+                cc = new CompanionController(p);
                 type = ColliderType.PC;
             }
 
@@ -73,7 +73,7 @@ namespace CS8803AGA.controllers
         /// </summary>
         public static CharacterController construct(CharacterInfo ci, Vector2 startpos)
         {
-            return construct(ci, startpos, Constants.CharType.NPCHAR);
+            return construct(ci, startpos, Constants.CharType.NPCHAR, null);
         }
 
         /// <summary>

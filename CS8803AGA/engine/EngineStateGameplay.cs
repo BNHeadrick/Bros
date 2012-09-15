@@ -29,18 +29,12 @@ namespace CS8803AGA.engine
             CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/Hero2");
 
             PlayerController player =
-                (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), Constants.CharType.PLAYERCHAR);
+                (PlayerController)CharacterController.construct(ci, new Vector2(600, 400), Constants.CharType.PLAYERCHAR, null);
 
             CharacterInfo compCi = GlobalHelper.loadContent<CharacterInfo>(@"Characters/DarkKnight");
 
             CompanionController compC =
-                (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR);
-
-            /*
-            CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/DarkKnight");
-            Vector2 pos = new Vector2(a.getTileRectangle(i, j).X, a.getTileRectangle(i, j).Y);
-            CharacterController cc = CharacterController.construct(ci, pos);
-            */
+                (CompanionController)CharacterController.construct(compCi, new Vector2(600, 350), Constants.CharType.COMPANIONCHAR, player);
 
             Point startPoint = new Point(0, 0);
             Area.makeTestArea(startPoint);

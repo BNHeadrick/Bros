@@ -75,6 +75,7 @@ Content\Animation\Textures\Audio\sounds.xgs
 Content\Sprites\grassRock.xnb
 Content\Animation\Textures\11 - Employee.xnb
 Content\World\trees.xnb
+Content\Characters\Hero2.xnb
 Content\SpriteFonts\Lindsey.xnb
 Content\SpriteFonts\Kootenay.xnb
 Content\Audio\sounds1.xsb
@@ -98,6 +99,7 @@ Content\Animation\Textures\16 - BunnyGirl.xnb
 Content\Sprites\blank.xnb
 Content\SpriteFonts\Kootenay8.xnb
 Content\Sprites\RPG\CaptionBackGround.xnb
+Content\Animation\Data\Hero2.xnb
 Content\Animation\Textures\18 - Neko Girl.xnb
 Content\Animation\Data\Salsa.xnb
 Content\Sprites\TitleScreen.xnb
