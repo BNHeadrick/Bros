@@ -285,18 +285,19 @@ namespace CS8803AGA.world
             }
             else if (location == Area.PARTY)
             {
-                int Y = 373;
-                int P = 267;
-                int D = 258;
-                int M = 223;
-                int G = 198;
-                int F = 161;
-                int H = 173;
-                int I = 175;
-                int A = 137;
-                int C = 101;
-                int B = 64;
-                int L = 27;
+                int A = Constants.BREW_MAIDEN;
+                int C = Constants.COOK;
+
+                int Y = Constants.PARTY_PEOPLE1;
+                int P = Constants.PARTY_PEOPLE2;
+                int D = Constants.PARTY_PEOPLE3;
+                int M = Constants.PARTY_PEOPLE4;
+                int G = Constants.PARTY_PEOPLE5;
+                int F = Constants.PARTY_PEOPLE6;
+                int H = Constants.PARTY_PEOPLE7;
+                int I = Constants.PARTY_PEOPLE8;
+                int B = Constants.PARTY_PEOPLE9;
+                int L = Constants.PARTY_PEOPLE10;
                 doodads = new int[] {
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -306,8 +307,8 @@ namespace CS8803AGA.world
                     0,0,0,0,0,0,0,0,0,0,0,0,F,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,0,0,0,0,0,A,0,0,0,0,0,0,0,0,0,0,0,0,M,0,0,0,0,
+                    0,0,0,A,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,M,0,0,0,0,
                     0,0,0,C,0,0,B,0,0,0,0,0,0,0,0,0,0,0,D,0,G,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

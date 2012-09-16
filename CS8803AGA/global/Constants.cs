@@ -35,6 +35,21 @@ namespace CS8803AGA
         public const int BREW_THIEF1 = 197;
         public const int BREW_THIEF2 = 292;
         public const int BREW_THIEF3 = 312;
+        public const int BREW_MAIDEN = 137;
+        public const int COOK = 101;
+
+        public const int PARTY_PEOPLE1 = 373;
+        public const int PARTY_PEOPLE2 = 267;
+        public const int PARTY_PEOPLE3 = 258;
+        public const int PARTY_PEOPLE4 = 223;
+        public const int PARTY_PEOPLE5 = 198;
+        public const int PARTY_PEOPLE6 = 161;
+        public const int PARTY_PEOPLE7 = 173;
+        public const int PARTY_PEOPLE8 = 175;
+        public const int PARTY_PEOPLE9 = 64;
+        public const int PARTY_PEOPLE10 = 27;
+
+        public const int DEBUG_PARTY_DIALOG = 999;
 
 
         public const float DepthDebugLines = 1.0f;

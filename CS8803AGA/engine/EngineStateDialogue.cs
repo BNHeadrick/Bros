@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CS8803AGA.devices;
 using CS8803AGA.dialog;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.engine
 {
@@ -33,12 +34,12 @@ namespace CS8803AGA.engine
 
         public override void update(GameTime gameTime)
         {
-            if (InputSet.getInstance().getButton(InputsEnum.BUTTON_1) ||
+            if (!Quest.gameOver && (InputSet.getInstance().getButton(InputsEnum.BUTTON_1) ||
                 InputSet.getInstance().getButton(InputsEnum.BUTTON_2) ||
                 InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON) ||
                 InputSet.getInstance().getButton(InputsEnum.CANCEL_BUTTON) ||
                 (m_button4_released && InputSet.getInstance().getButton(InputsEnum.BUTTON_4)) ||
-                m_dialog == null)
+                m_dialog == null))
             {
                 EngineManager.popState();
                 InputSet.getInstance().setAllToggles();

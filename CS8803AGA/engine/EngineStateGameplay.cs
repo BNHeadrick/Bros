@@ -40,6 +40,8 @@ namespace CS8803AGA.engine
             Point startPoint = new Point(0, 0);
             Area.makeTestArea(startPoint);
             GameplayManager.initialize(this, player, compC, WorldManager.GetArea(startPoint));
+
+            Quest.initPartyQuest();
         }
 
         /// <summary>

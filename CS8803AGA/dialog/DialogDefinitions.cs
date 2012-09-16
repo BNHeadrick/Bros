@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.dialog
 {
@@ -17,6 +18,7 @@ namespace CS8803AGA.dialog
         public static Dictionary<int, Dialog> charactersAt(Point location)
         {
             Dictionary<int, Dialog> dialog = new Dictionary<int, Dialog>();
+            Quest.atParty = false;
 
             if (location == Area.PARTYHOOD)
             {
@@ -41,6 +43,19 @@ namespace CS8803AGA.dialog
                                                              "I saw someone else take a brew. I think it was that guy down there.").add(
                                                              "Uggghh, please take this legendary haunted key, just leave me alone!").add(
                                                              "I am plagued by far less ghosts now that I no longer hold the haunted key. Thank you for mugging me."));
+            }
+            else if (location == Area.PARTY)
+            {
+                Quest.atParty = true;
+                dialog.Add(Constants.BREW_MAIDEN, new Dialog("I am Brew Maiden. Take this special brew with you.").add(
+                                                             "I am Brew Maiden. Looks like your hands are full. Come see me again later."));
+                dialog.Add(Constants.COOK, new Dialog("You look like you could use some greasy food. Here!").add(
+                                                      "You'll have to pound that brew first if you want any food from me.").add(
+                                                      "Finish that other helping before asking for seconds."));
+
+                dialog.Add(Constants.DEBUG_PARTY_DIALOG, new Dialog("I'm partying here.").add(
+                                                                    "Yo, thanks for the brew").add(
+                                                                    "Yo, thanks for the food"));
             }
             else if (location == Area.LIQUOR_STORE)
             {
