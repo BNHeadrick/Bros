@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CS8803AGA.questcontent;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CS8803AGA.dialog
 {
@@ -183,7 +184,7 @@ namespace CS8803AGA.dialog
                 // maybe need to do something special to set next flag??
                 if (Quest.gameOver)
                 {
-                    return new Dialog("Game over, you win");
+                    return new Dialog("Game over, you win", false, Color.WhiteSmoke);
                 }
 
                 dialogs[character].next();
