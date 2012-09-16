@@ -45,6 +45,10 @@ namespace CS8803AGA.dialog
                 {
                     dialogs[character].setDialog(1);
                     Quest.currentQuest = Quest.QUEST_TYPE.CRASH_PARTY;
+                    if (!Quest.talkedToCompanion)
+                    {
+                        Quest.brewsGiven[Constants.COMPANION]++;
+                    }
                     Quest.talkedToCompanion = true;
                 }
             }
@@ -104,6 +108,7 @@ namespace CS8803AGA.dialog
                             {
                                 dialogs[character].setDialog(3);
                             }
+                            Quest.brewsGiven[Constants.COMPANION]++;
                             Quest.drankStolenBrew = true;
                             break;
                         case Constants.BREW_THIEF3:

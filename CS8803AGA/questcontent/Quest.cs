@@ -70,6 +70,18 @@ namespace CS8803AGA.questcontent
 
         public static void checkPartyQuest()
         {
+            int[] chars = new int[]{ Constants.COMPANION, Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2,
+                Constants.PARTY_PEOPLE3, Constants.PARTY_PEOPLE4, Constants.PARTY_PEOPLE5, Constants.PARTY_PEOPLE6,
+                Constants.PARTY_PEOPLE7, Constants.PARTY_PEOPLE8, Constants.PARTY_PEOPLE9, Constants.PARTY_PEOPLE10};
+
+            Console.WriteLine("Character\tBrews\tFoods");
+            for (int i = 0; i < chars.Length; i++)
+            {
+                Console.WriteLine(i + "\t\t\t" + brewsGiven[chars[i]] + "\t\t" + foodGiven[chars[i]]);
+            }
+            Console.WriteLine("----------------------------");
+
+
             bool companionSober = (foodGiven[Constants.COMPANION] - brewsGiven[Constants.COMPANION] >= 1);
             bool partyer1Drunk = (brewsGiven[Constants.PARTY_PEOPLE1] - foodGiven[Constants.PARTY_PEOPLE1] >= 1);
             bool partyer2Drunk = (brewsGiven[Constants.PARTY_PEOPLE2] - foodGiven[Constants.PARTY_PEOPLE2] >= 1);
