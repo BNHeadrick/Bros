@@ -17,6 +17,7 @@ namespace CS8803AGA.controllers
     /// </summary>
     public class CompanionController : CharacterController
     {
+        int compSpeed;
         public float dx { get; set; }
         public float dy { get; set; }
 
@@ -40,6 +41,7 @@ namespace CS8803AGA.controllers
 
         public override void update()
         {
+            compSpeed = 0;
             AnimationController.update();
 
             Vector2 normPlayPos = player.getAbsPosVec();
@@ -67,12 +69,18 @@ namespace CS8803AGA.controllers
             string animName = angleTo4WayAnimation(-angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
-            if ( Quest.talkedToCompanion )
+            //if ( Quest.talkedToCompanion )
             //if (true) 
+           
+            //m_collider.handleMovement(new Vector2(dx, -dy));
+
+            if (Quest.talkedToCompanion)
             {
-                //m_collider.handleMovement(new Vector2(dx, -dy));
-                m_collider.handleMovement(AngleToVector((float)chaseAngle));
+                Console.WriteLine("UPDATED DAMMIT!");
+                compSpeed = m_speed;
             }
+            m_collider.handleMovement(AngleToVector((float)chaseAngle));
+            
 
             m_previousAngle = angle;
             
@@ -80,7 +88,7 @@ namespace CS8803AGA.controllers
 
         Vector2 AngleToVector(float angle)
         {
-            return new Vector2((float)Math.Cos(angle)*m_speed, (float)Math.Sin(angle)*m_speed);
+            return new Vector2((float)Math.Cos(angle) * compSpeed, (float)Math.Sin(angle) * compSpeed);
         }
 
     }

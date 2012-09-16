@@ -41,12 +41,12 @@ namespace CS8803AGA.dialog
                 if (!Quest.talkedToBrewMerch)
                 {
                     dialogs[character].setDialog(0);
-                    
                 }
                 else
                 {
                     dialogs[character].setDialog(1);
                     Quest.currentQuest = Quest.QUEST_TYPE.CRASH_PARTY;
+                    Quest.talkedToCompanion = true;
                 }
             }
 
