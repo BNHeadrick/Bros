@@ -42,7 +42,10 @@ namespace CS8803AGA.controllers
         public override void update()
         {
             compSpeed = 0;
-            AnimationController.update();
+            if (Quest.talkedToCompanion)
+            {
+                AnimationController.update();
+            }
 
             Vector2 normPlayPos = player.getAbsPosVec();
 
@@ -69,14 +72,8 @@ namespace CS8803AGA.controllers
             string animName = angleTo4WayAnimation(-angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
-            //if ( Quest.talkedToCompanion )
-            //if (true) 
-           
-            //m_collider.handleMovement(new Vector2(dx, -dy));
-
             if (Quest.talkedToCompanion)
             {
-                Console.WriteLine("UPDATED DAMMIT!");
                 compSpeed = m_speed;
             }
             m_collider.handleMovement(AngleToVector((float)chaseAngle));
