@@ -44,7 +44,7 @@ namespace CS8803AGA.dialog
             }
             else if (location == Area.LIQUOR_STORE)
             {
-                dialog.Add(132, new Dialog("Welcome to Brews 'R' Us"));
+                dialog.Add(132, new Dialog("Welcome to Brews 'R' Us.  Here's a ton of brews!").add("Welcome to Brews 'R' Us"));
                 dialog.Add(35, new Dialog("Meow").add("Meow").add("Meow").add("Meow").add("Woof! I mean, MEOW!"));
             }
             else if (location == Area.START_SOUTH)
@@ -66,7 +66,7 @@ namespace CS8803AGA.dialog
             }
             else
             {
-                dialog.Add(Constants.COMPANION, new Dialog("Let's get some brews, bro!", false, Color.PapayaWhip));
+                dialog.Add(Constants.COMPANION, new Dialog("Let's get some brews, bro!", false, Color.PapayaWhip).add("SWEET, SOME TASTY BREWS!"));
             }
 
             return dialog;

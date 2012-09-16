@@ -325,7 +325,7 @@ namespace CS8803AGA.world
                 };
             }
 
-            Console.WriteLine("This function was called");
+            //Console.WriteLine("This function was called");
 
             return transitions;
         }

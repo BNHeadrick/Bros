@@ -22,7 +22,37 @@ namespace CS8803AGA.dialog
          */
         public static void checkForQuestDialog(int character)
         {
-            if (Quest.currentQuest != Quest.QUEST_TYPE.GET_COMPANION)
+
+
+            if (character == Constants.LIQUERMERCH)
+            {
+                if (!Quest.talkedToBrewMerch)
+                {
+                    dialogs[character].setDialog(0);
+                    Quest.talkedToBrewMerch = true;
+                }
+                else
+                {
+                    dialogs[character].setDialog(1);
+                }
+            }
+            if (Quest.currentQuest == Quest.QUEST_TYPE.GET_COMPANION && character == Constants.COMPANION)
+            {
+                if (!Quest.talkedToBrewMerch)
+                {
+                    dialogs[character].setDialog(0);
+                    
+                }
+                else
+                {
+                    dialogs[character].setDialog(1);
+                    Quest.currentQuest = Quest.QUEST_TYPE.CRASH_PARTY;
+                }
+            }
+
+            else if (Quest.currentQuest != Quest.QUEST_TYPE.GET_COMPANION &&
+                (character == Constants.STOLEN_BREW || character == Constants.BREW_THIEF1 ||
+                character == Constants.BREW_THIEF2 || character == Constants.BREW_THIEF3))
             {
                 if (!Quest.talkedToStolenBrew)
                 {
@@ -37,18 +67,18 @@ namespace CS8803AGA.dialog
                     dialogs[character].setDialog(1);
                     switch (character)
                     {
-                    case Constants.STOLEN_BREW:
-                        dialogs[character].setDialog(0);
-                        break;
-                    case Constants.BREW_THIEF1:
-                        Quest.talkedToBrewThief1 = true;
-                        break;
-                    case Constants.BREW_THIEF2:
-                        Quest.talkedToBrewThief2 = true;
-                        break;
-                    case Constants.BREW_THIEF3:
-                        Quest.talkedToBrewThief3 = true;
-                        break;
+                        case Constants.STOLEN_BREW:
+                            dialogs[character].setDialog(0);
+                            break;
+                        case Constants.BREW_THIEF1:
+                            Quest.talkedToBrewThief1 = true;
+                            break;
+                        case Constants.BREW_THIEF2:
+                            Quest.talkedToBrewThief2 = true;
+                            break;
+                        case Constants.BREW_THIEF3:
+                            Quest.talkedToBrewThief3 = true;
+                            break;
                     }
                 }
                 else if (!Quest.talkedToStolenBrewAgain)
@@ -64,26 +94,27 @@ namespace CS8803AGA.dialog
                     dialogs[character].setDialog(2);
                     switch (character)
                     {
-                    case Constants.STOLEN_BREW:
-                        if (!Quest.drankStolenBrew)
-                        {
-                            dialogs[character].setDialog(1);
-                        }
-                        break;
-                    case Constants.BREW_THIEF2:
-                        if (Quest.drankStolenBrew)
-                        {
-                            dialogs[character].setDialog(3);
-                        }
-                        Quest.drankStolenBrew = true;
-                        break;
-                    case Constants.BREW_THIEF3:
-                        if (Quest.hasPartyKey)
-                        {
-                            dialogs[character].setDialog(3);
-                        }
-                        Quest.hasPartyKey = true;
-                        break;
+                        case Constants.STOLEN_BREW:
+                            if (!Quest.drankStolenBrew)
+                            {
+                                dialogs[character].setDialog(1);
+                            }
+                            break;
+                        case Constants.BREW_THIEF2:
+                            if (Quest.drankStolenBrew)
+                            {
+                                dialogs[character].setDialog(3);
+                            }
+                            Quest.drankStolenBrew = true;
+                            break;
+                        case Constants.BREW_THIEF3:
+                            if (Quest.hasPartyKey)
+                            {
+                                dialogs[character].setDialog(3);
+                            }
+                            Quest.hasPartyKey = true;
+                            Quest.currentQuest = Quest.QUEST_TYPE.PROTECT_COMPANION;
+                            break;
                     }
                 }
             }

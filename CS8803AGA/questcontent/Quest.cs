@@ -17,7 +17,8 @@ namespace CS8803AGA.questcontent
         public static QUEST_TYPE currentQuest = QUEST_TYPE.GET_COMPANION;
 
         //// vars for GET_COMPANION
-
+        public static bool talkedToBrewMerch = false;
+        public static bool talkedToCompanion = false;
 
 
         //// vars for CRASH_PARTY

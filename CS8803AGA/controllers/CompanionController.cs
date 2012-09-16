@@ -7,6 +7,7 @@ using CSharpQuadTree;
 using CS8803AGA.engine;
 using CS8803AGA.devices;
 using CS8803AGA.collision;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.controllers
 {
@@ -66,7 +67,8 @@ namespace CS8803AGA.controllers
             string animName = angleTo4WayAnimation(-angle);
             AnimationController.requestAnimation(animName, AnimationController.AnimationCommand.Play);
 
-            if (false )
+            if ( Quest.talkedToCompanion )
+            //if (true) 
             {
                 //m_collider.handleMovement(new Vector2(dx, -dy));
                 m_collider.handleMovement(AngleToVector((float)chaseAngle));

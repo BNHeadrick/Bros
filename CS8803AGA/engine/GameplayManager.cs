@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using CS8803AGA.controllers;
 using CS8803AGA.collision;
+using CS8803AGA.questcontent;
 
 namespace CS8803AGA.engine
 {
@@ -65,15 +66,22 @@ namespace CS8803AGA.engine
                 targetRectangle.Y + arrivingArea.TileSet.tileHeight / 2);
 
             Player.getCollider().move(newPos - Player.getCollider().Bounds.Center());
-            //Companion.getCollider().move(newPos - Companion.getCollider().Bounds.Center());
-
+            if (Quest.talkedToCompanion)
+            //if(true)
+            {
+                Companion.getCollider().move(newPos - Companion.getCollider().Bounds.Center());
+            }
             arrivingArea.add(GameplayManager.Player);
 
-            if(arrivingArea.Equals(WorldManager.GetArea(Area.START))){
+            if (!Quest.talkedToCompanion && arrivingArea.Equals(WorldManager.GetArea(Area.START)))
+            {
                 arrivingArea.add(GameplayManager.Companion);
                 //ADD AND ALSO IF FIRST QUEST IS UNDONE!
                 GameplayManager.Companion.setAbsPos(new Vector2(500, 50));
-                //GameplayManager.Companion.getCollider().setCollider(ColliderType.NPC);
+            }
+            else if(Quest.talkedToCompanion)
+            {
+                arrivingArea.add(GameplayManager.Companion);
             }
 
             activeArea = arrivingArea;
