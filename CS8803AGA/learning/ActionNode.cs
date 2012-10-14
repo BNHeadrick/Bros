@@ -79,6 +79,15 @@ namespace CS8803AGA.learning
         }
 
         /**
+         * Returns a copy (data) of this node
+         *@return a new copy
+         */
+        public ActionNode copy()
+        {
+            return new ActionNode(data);
+        }
+
+        /**
          * Finds the longest common subsequence
          *@return the longest common subsequence
          */
@@ -89,16 +98,45 @@ namespace CS8803AGA.learning
 
             ActionNode current = other;
             ActionNode curSubSeq = null;
+            ActionNode curChildren = null;
             int curLength = 0;
             while (current != null)
             {
-                ///TODO build the subseq
-
-                // this is the new longest subsequence
-                if (curLength > length)
+                //build the subseq
+                if (curSubSeq == null)
                 {
-                    root = curSubSeq;
-                    length = curLength;
+                    curChildren = findNode(current);
+                    if (curChildren != null)
+                    {
+                        curSubSeq = curChildren.copy();
+                        curLength = 1;
+                    }
+                }
+                else
+                {
+                    bool childFound = false;
+                    for (int i = 0; i < curChildren.children.Count; i++)
+                    {
+                        if (current.equals(curChildren.children[i]))
+                        {
+                            curChildren = curChildren.children[i];
+                            curSubSeq.addLeaf(curChildren);
+                            curLength++;
+                            childFound = true;
+                            break;
+                        }
+                    }
+                    if (!childFound)
+                    {
+                        curSubSeq = null;
+                        curLength = 0;
+                    }
+                    // this is the new longest subsequence
+                    else if (curLength > length)
+                    {
+                        root = curSubSeq;
+                        length = curLength;
+                    }
                 }
 
                 // the other list should be a unary tree
@@ -113,6 +151,16 @@ namespace CS8803AGA.learning
             }
 
             return root;
+        }
+
+        /**
+         * Merge a training session with this
+         *@param training the training to merge
+         */
+        public void merge(ActionNode training)
+        {
+            ActionNode lcs = longestSubsequence(training);
+            // somehow... merge
         }
     }
 }
