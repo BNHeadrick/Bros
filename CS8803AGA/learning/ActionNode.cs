@@ -15,7 +15,9 @@ namespace CS8803AGA.learning
     class ActionNode
     {
         private List<ActionNode> children; /**< the next nodes */
+        private List<ActionNode> parents; /**< the previous nodes */
         private int data; /**< whatever the data of the node is */
+        public static int EMPTY = -1; /**< empty data node */
 
         private int id; /**< unique id */
         private static int next_id = 0; /**< next id */
@@ -30,6 +32,7 @@ namespace CS8803AGA.learning
             id = next_id;
             next_id++;
             children = new List<ActionNode>();
+            parents = new List<ActionNode>();
         }
 
         /**
@@ -38,6 +41,20 @@ namespace CS8803AGA.learning
         public void addChild(ActionNode child) 
         {
             children.Add(child);
+            child.parents.Add(this);
+        }
+
+        /**
+         * Adds a leaf node (training constsruction)
+         */
+        public void addLeaf(ActionNode child)
+        {
+            ActionNode current = this;
+            while (current.children.Count != 0)
+            {
+                current = current.children[0];
+            }
+            current.addChild(child);
         }
 
         /**
@@ -75,7 +92,7 @@ namespace CS8803AGA.learning
             next.Add(this);
             for (int i = 0; i < next.Count; i++)
             {
-                if (!visited.Contains(node.id) && node.equals(next[i]))
+                if (!visited.Contains(next[i].id) && node.equals(next[i]))
                 {
                     return next[i];
                 }
@@ -133,10 +150,27 @@ namespace CS8803AGA.learning
                 }
                 if (!hasChild)
                 {
-                    current.children.Add(next);
+                    current.addChild(next);
                 }
                 current = next;
-                visited.Add(current.id);
+
+                // populate visited list (magically)
+                List<ActionNode> ancestors = new List<ActionNode>();
+                for (int j = 0; j < current.parents.Count; j++)
+                {
+                    ancestors.Add(current.parents[j]);
+                }
+                for (int j = 0; j < ancestors.Count; j++)
+                {
+                    if (!visited.Contains(ancestors[j].id))
+                    {
+                        visited.Add(ancestors[j].id);
+                    }
+                    for (int k = 0; k < ancestors[j].parents.Count; k++)
+                    {
+                        ancestors.Add(ancestors[j].parents[k]);
+                    }
+                }
 
                 if (i.children.Count != 0)
                 {
@@ -146,6 +180,41 @@ namespace CS8803AGA.learning
                 {
                     i = null;
                 }
+            }
+        }
+
+        /**
+         * Somehow tries to print the thingy
+         */
+        public void debugPrint()
+        {
+            List<ActionNode> next = new List<ActionNode>();
+            next.Add(this);
+            for (int i = 0; i < next.Count; i++)
+            {
+                if (next[i].data == EMPTY)
+                {
+                    Console.Write("{}");
+                }
+                else
+                {
+                    Console.Write(next[i].data);
+                }
+                Console.Write("(" + next[i].id + ") children: [");
+
+                for (int j = 0; j < next[i].children.Count; j++)
+                {
+                    if (next[i].children[j].data == EMPTY)
+                    {
+                        Console.Write("{}, ");
+                    }
+                    else
+                    {
+                        Console.Write(next[i].children[j].data+"("+next[i].children[j].id+"), ");
+                    }
+                    next.Add(next[i].children[j]);
+                }
+                Console.WriteLine("]");
             }
         }
     }
