@@ -10,6 +10,7 @@ using CS8803AGA.controllers;
 using CS8803AGA.collision;
 using CS8803AGA.world;
 using CS8803AGA.dialog;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA
 {
@@ -159,6 +160,15 @@ namespace CS8803AGA
                         CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(doodads[i, j]));
                         Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y+8);
                         CharacterController cc = CharacterController.construct(ci, pos);
+                        if (doodads[i, j] == 35)
+                        {
+                            List<int> path = new List<int>();
+                            path.Add(Bouncer.PATH_LEFT);
+                            path.Add(Bouncer.PATH_UP);
+                            path.Add(Bouncer.PATH_LEFT);
+                            path.Add(Bouncer.PATH_LEFT);
+                            cc.bouncer = new Bouncer(0, path);
+                        }
                         cc.setDoodadIndex(doodads[i, j]);
                         a.add(cc);
                     }
@@ -528,6 +538,29 @@ namespace CS8803AGA
         }
 
         #endregion
+
+        /**
+         * Returns whether or not there is an object here
+         * @param x x
+         * @param y y
+         * @return a boolean
+         */
+        public bool objectAt(int x, int y, int w, int h)
+        {
+            if ((!TileSet.tileInfos[Tiles[x/TILE_WIDTH, y/TILE_HEIGHT]].passable))
+            {
+                return true;
+            }
+            // check if doodad at location
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                if (((ICollidable)GameObjects[i]).getCollider().Bounds.IntersectsWith(new DoubleRect(x-w/2, y-h/2, w, h)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 }

@@ -89,11 +89,11 @@ namespace CS8803AGA.controllers
                 {
                     if (m_collider.m_other.m_type == ColliderType.PC)
                     {
-                        EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION));
+                        EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this));
                     }
                     else
                     {
-                        EngineManager.pushState(new EngineStateDialogue(((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex()));
+                        EngineManager.pushState(new EngineStateDialogue(((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex(), (CharacterController)m_collider.m_other.m_owner, this));
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace CS8803AGA.controllers
             {
                 if (c != this.m_collider && c.m_type == ColliderType.NPC)
                 {
-                    EngineManager.pushState(new EngineStateDialogue(0));
+                    EngineManager.pushState(new EngineStateDialogue(0, null, null));
                     InputSet.getInstance().setAllToggles();
                     return;
                 }

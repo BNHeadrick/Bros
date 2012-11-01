@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CS8803AGA.puzzle;
 
 /**
  * Node for learning things
@@ -16,8 +17,8 @@ namespace CS8803AGA.learning
     {
         private List<ActionNode> children; /**< the next nodes */
         private List<ActionNode> parents; /**< the previous nodes */
-        private int data; /**< whatever the data of the node is */
-        public static int EMPTY = -1; /**< empty data node */
+        private PuzzleObject data; /**< whatever the data of the node is */
+        public static PuzzleObject EMPTY = new EmptyPuzzleObject(); /**< empty data node */
 
         private int id; /**< unique id */
         private static int next_id = 0; /**< next id */
@@ -26,9 +27,9 @@ namespace CS8803AGA.learning
          * Creates a new node
          *@param _data the data
          */
-        public ActionNode(int _data)
+        public ActionNode(PuzzleObject _data)
         {
-            data = _data;
+            data = _data.copy();
             id = next_id;
             next_id++;
             children = new List<ActionNode>();
@@ -111,7 +112,7 @@ namespace CS8803AGA.learning
          */
         public bool equals(ActionNode node)
         {
-            return(node.data == data);
+            return(node.data.equals(data));
         }
 
         /**
@@ -192,7 +193,7 @@ namespace CS8803AGA.learning
             next.Add(this);
             for (int i = 0; i < next.Count; i++)
             {
-                if (next[i].data == EMPTY)
+                if (next[i].data.equals(EMPTY))
                 {
                     Console.Write("{}");
                 }
@@ -204,7 +205,7 @@ namespace CS8803AGA.learning
 
                 for (int j = 0; j < next[i].children.Count; j++)
                 {
-                    if (next[i].children[j].data == EMPTY)
+                    if (next[i].children[j].data.equals(EMPTY))
                     {
                         Console.Write("{}, ");
                     }

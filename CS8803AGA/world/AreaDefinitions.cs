@@ -19,8 +19,8 @@ namespace CS8803AGA.world
             int a = 10;
             int b = 11;
             int c = 12;
-            int d = 13;
-            int e = 14;
+            //int d = 13;
+            //int e = 14;
             if (location == Area.START)
             { // map 0x0
                 tiles = new int[]{

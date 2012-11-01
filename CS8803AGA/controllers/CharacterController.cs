@@ -5,6 +5,7 @@ using CS8803AGA.collision;
 using CS8803AGA.engine;
 using CS8803AGA.actions;
 using CS8803AGA;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA.controllers
 {
@@ -15,11 +16,13 @@ namespace CS8803AGA.controllers
 
         protected Vector2 m_position;
         protected Collider m_collider;
-        protected int m_speed;
+        public int m_speed;
 
         protected float m_previousAngle;
 
         private int m_doodadIndex;
+        public Bouncer bouncer;
+        public Brew brew;
 
         public int getDoodadIndex()
         {
@@ -46,16 +49,25 @@ namespace CS8803AGA.controllers
             {
                 cc = new PlayerController();
                 type = ColliderType.PC;
+
+                cc.bouncer = null;
+                cc.brew = new Brew(0);
             }
             else if (typeOfChar == Constants.CharType.NPCHAR)
             {
                 cc = new CharacterController();
                 type = ColliderType.NPC;
+
+                cc.bouncer = null;
+                cc.brew = null;
             }
             else
             {
                 cc = new CompanionController(p);
                 type = ColliderType.PC;
+
+                cc.bouncer = null;
+                cc.brew = null;
             }
 
             cc.m_doodadIndex = 0;
@@ -112,7 +124,7 @@ namespace CS8803AGA.controllers
         /// </summary>
         /// <param name="angle">Angle in radians, where 0 = right</param>
         /// <returns>Left, right, up, or down</returns>
-        protected virtual string angleTo4WayAnimation(float angle)
+        public virtual string angleTo4WayAnimation(float angle)
         {
             angle += MathHelper.PiOver4;
             angle += MathHelper.Pi;
