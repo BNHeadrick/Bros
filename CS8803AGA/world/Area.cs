@@ -167,7 +167,7 @@ namespace CS8803AGA
                             path.Add(Bouncer.PATH_UP);
                             path.Add(Bouncer.PATH_LEFT);
                             path.Add(Bouncer.PATH_LEFT);
-                            cc.bouncer = new Bouncer(0, path);
+                            cc.bouncer = new Bouncer(Brew.COLOR_VIOLET|Brew.COLOR_WHITE|Brew.COLOR_ORANGE, path);
                         }
                         cc.setDoodadIndex(doodads[i, j]);
                         a.add(cc);

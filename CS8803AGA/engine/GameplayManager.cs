@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using CS8803AGA.controllers;
 using CS8803AGA.collision;
 using CS8803AGA.questcontent;
+using Microsoft.Xna.Framework.Graphics;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA.engine
 {
@@ -89,7 +91,20 @@ namespace CS8803AGA.engine
 
         public static void drawHUD()
         {
-            // TODO
+            // brews
+            int j = 0;
+            for (int i = 1; i < playerController.brew.getColor() || i < companionController.brew.getColor(); i <<= 1)
+            {
+                if ((playerController.brew.getColor() & i) != 0)
+                {
+                    FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString("[#]", new Vector2(0, j * 36), Brew.getTextColor(i), 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
+                }
+                if ((companionController.brew.getColor() & i) != 0)
+                {
+                    FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString("[#]", new Vector2(912, j * 36), Brew.getTextColor(i), 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
+                }
+                j++;
+            }
         }
     }
 }

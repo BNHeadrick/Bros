@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CS8803AGA.puzzle
 {
@@ -21,6 +22,23 @@ namespace CS8803AGA.puzzle
         public const int COLOR_BROWN = 256;
 
         private int color; /**< the color of the brew */
+
+        public static Color getTextColor(int c)
+        {
+            switch (c)
+            {
+                case COLOR_RED:     return Color.Red;
+                case COLOR_BLUE:    return Color.Blue;
+                case COLOR_GREEN:   return Color.Green;
+                case COLOR_YELLOW:  return Color.Yellow;
+                case COLOR_ORANGE:  return Color.Orange;
+                case COLOR_VIOLET:  return Color.Violet;
+                case COLOR_WHITE:   return Color.White;
+                case COLOR_BLACK:   return Color.Black;
+                case COLOR_BROWN:   return Color.Brown;
+            }
+            return Color.Black;
+        }
 
         /**
          * Gets the color

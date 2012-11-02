@@ -30,6 +30,14 @@ namespace CS8803AGA.puzzle
         }
 
         /**
+         * getColor()
+         */
+        public int getColor()
+        {
+            return color;
+        }
+
+        /**
          * get path length
          * @return path.size()
          */

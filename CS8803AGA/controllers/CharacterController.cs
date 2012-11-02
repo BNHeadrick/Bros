@@ -67,7 +67,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
 
                 cc.bouncer = null;
-                cc.brew = null;
+                cc.brew = new Brew(0);
             }
 
             cc.m_doodadIndex = 0;
