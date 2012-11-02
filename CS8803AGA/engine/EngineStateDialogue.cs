@@ -20,6 +20,10 @@ namespace CS8803AGA.engine
         private int bouncerDist;
         private int bouncerI;
 
+        private bool brewMode;
+
+        private bool drawOnCompanionSide;
+
         #region Graphics
 
         private GameTexture m_baseImage;
@@ -30,7 +34,7 @@ namespace CS8803AGA.engine
 
         #endregion
 
-        public EngineStateDialogue(int character, CharacterController _npc, CharacterController player)
+        public EngineStateDialogue(int character, CharacterController _npc, CharacterController player, bool is_companion)
             : base(EngineManager.Engine)
         {
             m_baseImage = new GameTexture(@"Sprites/RPG/PopupScreen");
@@ -38,17 +42,35 @@ namespace CS8803AGA.engine
             m_dialog = DialogManager.get(character);
             m_button4_released = false;
 
+            drawOnCompanionSide = is_companion;
+
+            brewMode = false;
             bouncerMode = false;
             bouncerPass = false;
             bouncerDist = 0;
             bouncerI = 0;
             npc = _npc;
 
-            if (npc != null && npc.bouncer != null && player != null && player.brew != null)
+            if (npc != null && player != null && player.brew != null)
             {
-                m_dialog = null;
-                bouncerMode = true;
-                bouncerPass = npc.bouncer.canPass(player.brew, (int)npc.getCollider().Bounds.Center().X, (int)npc.getCollider().Bounds.Center().Y, (int)npc.getCollider().Bounds.Width, (int)npc.getCollider().Bounds.Height);
+                if (npc.bouncer != null)
+                {
+                    m_dialog = null;
+                    bouncerMode = true;
+                    bouncerPass = npc.bouncer.canPass(player.brew, (int)npc.getCollider().Bounds.Center().X, (int)npc.getCollider().Bounds.Center().Y, (int)npc.getCollider().Bounds.Width, (int)npc.getCollider().Bounds.Height);
+                }
+                else if (npc.brew != null)
+                {
+                    brewMode = true;
+                    if (player.brew.mix(npc.brew))
+                    {
+                        m_dialog = null;
+                    }
+                    else
+                    {
+                        m_dialog = new Dialog("I don't have the right brew for this mixture");
+                    }
+                }
             }
         }
 
@@ -147,7 +169,37 @@ namespace CS8803AGA.engine
                 true, Color.White, 0f, 1f);
 
             WorldManager.DrawMap(new Vector2(300, 100), 600, 500, Constants.DepthDialogueText);*/
-
+            if (npc != null)
+            {
+                if (npc.bouncer != null)
+                {
+                    int j = 0;
+                    for (int i = 1; i <= npc.bouncer.getColor(); i <<= 1)
+                    {
+                        if ((npc.bouncer.getColor() & i) != 0)
+                        {
+                            FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString("[#]", new Vector2(drawOnCompanionSide ? 912 - 48 : 48, j * 36), Brew.getTextColor(i), 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
+                        }
+                        j++;
+                    }
+                }
+                else if (npc.brew != null)
+                {
+                    int j = 0;
+                    for (int i = 1; i <= npc.brew.getColor() || i <= npc.brew.getUncolor(); i <<= 1)
+                    {
+                        if ((npc.brew.getColor() & i) != 0)
+                        {
+                            FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString("+[#]", new Vector2(drawOnCompanionSide ? 912 - 48*2 : 48, j * 36), Brew.getTextColor(i), 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
+                        }
+                        else if ((npc.brew.getUncolor() & i) != 0)
+                        {
+                            FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString("-[#]", new Vector2(drawOnCompanionSide ? 912 - 48*2 : 48, j * 36), Brew.getTextColor(i), 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
+                        }
+                        j++;
+                    }
+                }
+            }
             if (!bouncerMode && m_dialog != null)
             {
                 FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(m_dialog.getText(), new Vector2(50, 300), m_dialog.getColor(), 0, Vector2.Zero, 0.5f, m_dialog.getDrunk() ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 1.0f);
