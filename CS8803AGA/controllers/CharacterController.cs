@@ -6,6 +6,7 @@ using CS8803AGA.engine;
 using CS8803AGA.actions;
 using CS8803AGA;
 using CS8803AGA.puzzle;
+using CS8803AGA.learning;
 
 namespace CS8803AGA.controllers
 {
@@ -23,6 +24,8 @@ namespace CS8803AGA.controllers
         private int m_doodadIndex;
         public Bouncer bouncer;
         public Brew brew;
+
+        static private ActionNode currPlan;
 
         public int getDoodadIndex()
         {
@@ -52,6 +55,8 @@ namespace CS8803AGA.controllers
 
                 cc.bouncer = null;
                 cc.brew = new Brew(0, 0);
+
+                currPlan = new ActionNode(ActionNode.EMPTY);
             }
             else if (typeOfChar == Constants.CharType.NPCHAR)
             {
@@ -59,6 +64,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.NPC;
 
                 cc.bouncer = null;
+                cc.brew = new Brew(0, 0);
                 cc.brew = null;
             }
             else
@@ -67,7 +73,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
 
                 cc.bouncer = null;
-                cc.brew = new Brew(0, 0);
+                cc.brew = null;
             }
 
             cc.m_doodadIndex = 0;
@@ -214,5 +220,11 @@ namespace CS8803AGA.controllers
         }
 
         #endregion
+
+        public void clearPlan()
+        {
+            currPlan = null;
+        }
+
     }
 }
