@@ -64,7 +64,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.NPC;
 
                 cc.bouncer = null;
-                cc.brew = new Brew(0, 0);
+                
                 cc.brew = null;
             }
             else
@@ -73,7 +73,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
 
                 cc.bouncer = null;
-                cc.brew = null;
+                cc.brew = new Brew(0, 0);
             }
 
             cc.m_doodadIndex = 0;
@@ -221,9 +221,17 @@ namespace CS8803AGA.controllers
 
         #endregion
 
+        public void addTaskToPlan(PuzzleObject po)
+        {
+            
+            currPlan.addLeaf(new ActionNode(po));
+            currPlan.debugPrint();
+        }
+
         public void clearPlan()
         {
             currPlan = null;
+            currPlan = new ActionNode(ActionNode.EMPTY);
         }
 
     }

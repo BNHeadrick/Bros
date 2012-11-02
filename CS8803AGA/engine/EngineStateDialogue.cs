@@ -58,9 +58,21 @@ namespace CS8803AGA.engine
                     m_dialog = null;
                     bouncerMode = true;
                     bouncerPass = npc.bouncer.canPass(player.brew, (int)npc.getCollider().Bounds.Center().X, (int)npc.getCollider().Bounds.Center().Y, (int)npc.getCollider().Bounds.Width, (int)npc.getCollider().Bounds.Height);
+                    
+                    //if what was passed in is the player, then add what task he's currently doing to the plan.
+                    if (!is_companion)
+                    {
+                        player.addTaskToPlan(npc.bouncer);
+                    }
                 }
                 else if (npc.brew != null)
                 {
+                    //if what was passed in is the player, then add what task he's currently doing to the plan.
+                    if (!is_companion)
+                    {
+                        player.addTaskToPlan(npc.brew);
+                    }
+
                     brewMode = true;
                     if (player.brew.mix(npc.brew))
                     {

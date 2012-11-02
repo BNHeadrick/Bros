@@ -66,7 +66,6 @@ namespace CS8803AGA
         public const float DepthDialoguePage = .95f;
         public const float DepthDialogueText = .951f;
 
-
         public enum CharType : int
         {
             PLAYERCHAR = 0,
