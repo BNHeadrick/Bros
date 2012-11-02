@@ -59,6 +59,29 @@ namespace CS8803AGA.learning
         }
 
         /**
+         * Finds a node and returns the depth of it
+         *@param findData the node to find
+         *@return the depth or -1 if not present
+         */
+        public int findNodeDepth(PuzzleObject findData)
+        {
+            List<ActionNode> next = new List<ActionNode>();
+            next.Add(this);
+            for (int i = 0; i < next.Count; i++)
+            {
+                if (findData.equals(next[i].data))
+                {
+                    return i;
+                }
+                for (int j = 0; j < next[i].children.Count; j++)
+                {
+                    next.Add(next[i].children[j]);
+                }
+            }
+            return -1;
+        }
+
+        /**
          * Finda a node and returns it
          *@param node the node to find
          *@return null if node doesn't exist, or the node

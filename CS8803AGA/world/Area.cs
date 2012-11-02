@@ -563,5 +563,77 @@ namespace CS8803AGA
             return false;
         }
 
+        /**
+         * Returns objects new x,y that you can interact with
+         * @param x
+         * @param y
+         * @param w
+         * @param h
+         * @return 
+         */
+        public List<PuzzleObject> getPuzzleObjects(int x, int y, int w, int h)
+        {
+            List<PuzzleObject> objs = new List<PuzzleObject>();
+
+            List<int> locs = new List<int>();
+            locs.Add(x+y*WIDTH_IN_TILES);
+            // bfs
+            for (int i = 0; i < locs.Count; i++)
+            {
+                int curX = locs[i] % WIDTH_IN_TILES;
+                int curY = locs[i] / WIDTH_IN_TILES;
+
+                // check to make sure can pass through tile
+                if (TileSet.tileInfos[Tiles[x / TILE_WIDTH, y / TILE_HEIGHT]].passable)
+                {
+                    // check if doodad at location
+                    bool doodadAt = false;
+                    for (int j = 0; j < GameObjects.Count; i++)
+                    {
+                        if (((ICollidable)GameObjects[j]).getCollider().Bounds.IntersectsWith(new DoubleRect(curX - w / 2, curY - h / 2, w, h)))
+                        {
+                            // if puzzle object, then add to list
+                            if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
+                            {
+                                CharacterController npc = (CharacterController)GameObjects[j];
+                                if (npc.bouncer != null)
+                                {
+                                    objs.Add(npc.bouncer);
+                                }
+                                if (npc.brew != null)
+                                {
+                                    objs.Add(npc.brew);
+                                }
+                            }
+
+                            doodadAt = true;
+                            break;
+                        }
+                    }
+                    if (!doodadAt)
+                    {
+                        // add adjacent locs
+                        if (curX > 0 && !locs.Contains(locs[i] - 1))
+                        {
+                            locs.Add(locs[i] - 1);
+                        }
+                        if (curX < WIDTH_IN_TILES - 1 && !locs.Contains(locs[i] + 1))
+                        {
+                            locs.Add(locs[i] + 1);
+                        }
+                        if (curY > 0 && !locs.Contains(locs[i]-WIDTH_IN_TILES)) {
+                            locs.Add(locs[i]-WIDTH_IN_TILES);
+                        }
+                        if (curY < HEIGHT_IN_TILES - 1 && !locs.Contains(locs[i] + WIDTH_IN_TILES))
+                        {
+                            locs.Add(locs[i] + WIDTH_IN_TILES);
+                        }
+                    }
+                }
+            }
+
+            return objs;
+        }
+
     }
 }

@@ -9,6 +9,7 @@ namespace CS8803AGA.collision
     /// </summary>
     public interface ICollidable : IGameObject
     {
+
         /// <summary>
         /// Get the object's collider.
         /// </summary>

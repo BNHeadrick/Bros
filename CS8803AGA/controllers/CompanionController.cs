@@ -9,6 +9,7 @@ using CS8803AGA.devices;
 using CS8803AGA.collision;
 using CS8803AGA.questcontent;
 using CS8803AGA.learning;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA.controllers
 {
@@ -19,6 +20,9 @@ namespace CS8803AGA.controllers
     public class CompanionController : CharacterController
     {
         ActionNode learnedPlan;
+
+        ActionNode currentGoal; /**< current goal in learnedPlan */
+
         int compSpeed;
         bool isLearning;
         public float dx { get; set; }
@@ -42,6 +46,7 @@ namespace CS8803AGA.controllers
             player = p;
             isLearning = false;
             learnedPlan = new ActionNode(ActionNode.EMPTY);
+            currentGoal = null;
         }
 
         public override void update()
@@ -100,6 +105,26 @@ namespace CS8803AGA.controllers
         private bool executePlan()
         {
             //go to first node's location
+            if (currentGoal == null)
+            { // query the world to find out if there are any interactable objects
+                List<PuzzleObject> objs = GameplayManager.ActiveArea.getPuzzleObjects((int)m_collider.Bounds.Center().X / Area.TILE_WIDTH, (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height);
+                int priority = 0;
+                // choose highest priority object to interact with
+                for (int i = 0; i < objs.Count; i++)
+                {
+                    int p = learnedPlan.findNodeDepth(objs[i]);
+                    if (p != -1 && (currentGoal == null || p < priority))
+                    {
+                        currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
+                        priority = p;
+                    }
+                }
+            }
+            if (currentGoal != null)
+            {
+
+            }
+
             return false;
         }
 
