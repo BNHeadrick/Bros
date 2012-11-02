@@ -150,6 +150,8 @@ namespace CS8803AGA
             DecorationSet ds3 = DecorationSet.construct(@"World/trees");
             
             int[,] doodads = AreaDefinitions.doodadsAt(location);
+            Dictionary<int, PuzzleObject> puzzle = AreaDefinitions.puzzleAt(location);
+
             for (int i = 0; i < WIDTH_IN_TILES; i++)
             {
                 for (int j = 0; j < HEIGHT_IN_TILES; j++)
@@ -160,15 +162,13 @@ namespace CS8803AGA
                         CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(doodads[i, j]));
                         Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y+8);
                         CharacterController cc = CharacterController.construct(ci, pos);
-                        if (doodads[i, j] == 35)
+                        if (puzzle[doodads[i, j]] != null)
                         {
-                            List<int> path = new List<int>();
-                            path.Add(Bouncer.PATH_LEFT);
-                            path.Add(Bouncer.PATH_UP);
-                            path.Add(Bouncer.PATH_LEFT);
-                            path.Add(Bouncer.PATH_LEFT);
-                            //cc.bouncer = new Bouncer(0, path);
-                            cc.brew = new Brew(Brew.COLOR_BLACK, 0);
+                            if (puzzle[doodads[i, j]].type == PuzzleObject.TYPE_BOUNCER) {
+                                cc.bouncer = (Bouncer)puzzle[doodads[i, j]];
+                            } else if (puzzle[doodads[i, j]].type == PuzzleObject.TYPE_BREW) {
+                                cc.brew = (Brew)puzzle[doodads[i, j]];
+                            }
                         }
                         cc.setDoodadIndex(doodads[i, j]);
                         a.add(cc);

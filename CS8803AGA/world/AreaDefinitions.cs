@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA.world
 {
@@ -343,6 +344,35 @@ namespace CS8803AGA.world
             }
 
             return drunkenDoodads;
+        }
+        
+        public static Dictionary<int, PuzzleObject> puzzleAt(Point location)
+        {
+            Dictionary<int, PuzzleObject> puzzle = new Dictionary<int, PuzzleObject>();
+
+            if (location == Area.START_SOUTH)
+            {
+                int M = 181;
+                int C = 242;
+                int B = 73;
+                int K = 271;
+
+                List<int> k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_DOWN);
+                k_path.Add(Bouncer.PATH_RIGHT);
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_RIGHT);
+                puzzle.Add(K, new Bouncer(Brew.COLOR_RED|Brew.COLOR_BLUE|Brew.COLOR_WHITE, k_path));
+
+                puzzle.Add(M, new Brew(Brew.COLOR_RED | Brew.COLOR_YELLOW, 0));
+                puzzle.Add(C, new Brew(Brew.COLOR_BLUE, 0));
+                puzzle.Add(B, new Brew(Brew.COLOR_WHITE, Brew.COLOR_YELLOW));
+            }
+
+            return puzzle;
         }
 
         /// <summary>
