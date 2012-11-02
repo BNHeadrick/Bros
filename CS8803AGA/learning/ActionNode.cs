@@ -13,7 +13,7 @@ namespace CS8803AGA.learning
     /// NOTE: first node in KNOWLEDGE SET should be an EMPTY node.
     /// (this is so merge will work properly)
     /// </summary>
-    class ActionNode
+    public class ActionNode
     {
         private List<ActionNode> children; /**< the next nodes */
         private List<ActionNode> parents; /**< the previous nodes */

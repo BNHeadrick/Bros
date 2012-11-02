@@ -110,6 +110,7 @@ namespace CS8803AGA
         {
             if (other.m_owner == GameplayManager.Player)
             {
+                GameplayManager.Player.clearPlan();
                 // TODO
                 // remove this code once maps are pre-generated and area transition triggers already contain references
                 //  to their targets -- or, we might decide its just easier this way
