@@ -22,6 +22,7 @@ namespace CS8803AGA.puzzle
         public const int COLOR_BROWN = 256;
 
         private int color; /**< the color of the brew */
+        private int uncolor; /**< the color from the keg, to remove */
 
         public static Color getTextColor(int c)
         {
@@ -50,13 +51,24 @@ namespace CS8803AGA.puzzle
         }
 
         /**
+         * Gets the uncoloring
+         *@return uncolor
+         */
+        public int getUncolor()
+        {
+            return uncolor;
+        }
+
+        /**
          * Makes a new brew
          * @param _color color
+         * @param _uncolor uncolor
          */
-        public Brew(int _color)
+        public Brew(int _color, int _uncolor)
         {
             type = PuzzleObject.TYPE_BREW;
             color = _color;
+            uncolor = _uncolor;
         }
 
         /**
@@ -66,12 +78,16 @@ namespace CS8803AGA.puzzle
          */
         public bool mix(Brew other)
         {
-            for (int i = 1; i <= other.color; i <<= 1)
+            // first must make sure to unmix the uncolor
+            if (extract(other))
             {
-                if ((i & other.color) != 0 && (i & color) == 0)
+                for (int i = 1; i <= other.color; i <<= 1)
                 {
-                    color |= other.color;
-                    return true;
+                    if ((i & other.color) != 0 && (i & color) == 0)
+                    {
+                        color |= other.color;
+                        return true;
+                    }
                 }
             }
             return false;
@@ -84,14 +100,14 @@ namespace CS8803AGA.puzzle
          */
         public bool extract(Brew other)
         {
-            for (int i = 1; i <= other.color; i <<= 1)
+            for (int i = 1; i <= other.uncolor; i <<= 1)
             {
-                if ((i & other.color) != 0 && (i & color) == 0)
+                if ((i & other.uncolor) != 0 && (i & color) == 0)
                 {
                     return false;
                 }
             }
-            color &= ~other.color;
+            color &= ~other.uncolor;
             return true;
         }
 
@@ -101,7 +117,7 @@ namespace CS8803AGA.puzzle
          */
         public override bool equals(PuzzleObject other)
         {
-            return (other.type == type && ((Brew)other).color == color);
+            return (other.type == type && ((Brew)other).color == color && ((Brew)other).uncolor == uncolor);
         }
 
         /**
@@ -156,7 +172,7 @@ namespace CS8803AGA.puzzle
          */
         public override PuzzleObject copy()
         {
-            return new Brew(color);
+            return new Brew(color, uncolor);
         }
     }
 }

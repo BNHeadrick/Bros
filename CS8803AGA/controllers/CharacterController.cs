@@ -51,7 +51,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
 
                 cc.bouncer = null;
-                cc.brew = new Brew(0);
+                cc.brew = new Brew(0, 0);
             }
             else if (typeOfChar == Constants.CharType.NPCHAR)
             {
@@ -67,7 +67,7 @@ namespace CS8803AGA.controllers
                 type = ColliderType.PC;
 
                 cc.bouncer = null;
-                cc.brew = new Brew(0);
+                cc.brew = new Brew(0, 0);
             }
 
             cc.m_doodadIndex = 0;

@@ -93,7 +93,7 @@ namespace CS8803AGA.engine
         {
             // brews
             int j = 0;
-            for (int i = 1; i < playerController.brew.getColor() || i < companionController.brew.getColor(); i <<= 1)
+            for (int i = 1; i <= playerController.brew.getColor() || i <= companionController.brew.getColor(); i <<= 1)
             {
                 if ((playerController.brew.getColor() & i) != 0)
                 {
