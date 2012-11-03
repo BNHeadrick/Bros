@@ -161,7 +161,7 @@ namespace CS8803AGA
                     {
                         Console.WriteLine("doodad: " + doodads[i, j] + "x"+Constants.doodadIntToString(doodads[i, j]));
                         CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(doodads[i, j]));
-                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y+8);
+                        Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y);
                         CharacterController cc = CharacterController.construct(ci, pos);
                         if (puzzle.ContainsKey(doodads[i, j]))
                         {
@@ -547,7 +547,7 @@ namespace CS8803AGA
          * @param y y
          * @return a boolean
          */
-        public bool objectAt(int x, int y, int w, int h)
+        public bool objectAt(int x, int y, int w, int h, bool is_pc)
         {
             if ((!TileSet.tileInfos[Tiles[x/TILE_WIDTH, y/TILE_HEIGHT]].passable))
             {
@@ -556,7 +556,7 @@ namespace CS8803AGA
             // check if doodad at location
             for (int i = 0; i < GameObjects.Count; i++)
             {
-                if (((ICollidable)GameObjects[i]).getCollider().m_type != ColliderType.PC && ((ICollidable)GameObjects[i]).getCollider().Bounds.IntersectsWith(new DoubleRect(x - w / 2, y - h / 2, w, h)))
+                if (((is_pc && ((ICollidable)GameObjects[i]).getCollider().m_type != ColliderType.PC) || !is_pc) && ((ICollidable)GameObjects[i]).getCollider().Bounds.IntersectsWith(new DoubleRect(x - w / 2, y - h / 2, w, h)))
                 {
                     //Console.WriteLine(((ICollidable)GameObjects[i]).getCollider().m_type + " at "+(x/TILE_WIDTH)+"x"+(y/TILE_HEIGHT));
                     return true;
@@ -580,6 +580,9 @@ namespace CS8803AGA
 
             List<int> locs = new List<int>();
             locs.Add(x+y*WIDTH_IN_TILES);
+
+            List<int> toCheck = new List<int>();
+            List<int> toCheck2 = new List<int>();
             // bfs
             for (int i = 0; i < locs.Count; i++)
             {
@@ -601,7 +604,8 @@ namespace CS8803AGA
                                 CharacterController npc = (CharacterController)GameObjects[j];
                                 if (npc.bouncer != null && npc.bouncer.hasColor(brew))
                                 {
-                                    objs.Add(npc.bouncer);
+                                    toCheck.Add(j);
+                                    toCheck2.Add(i);
                                 }
                                 if (npc.brew != null && ((Brew)brew.copy()).mix(npc.brew))
                                 {
@@ -631,6 +635,54 @@ namespace CS8803AGA
                         {
                             locs.Add(locs[i] + WIDTH_IN_TILES);
                         }
+                    }
+                }
+            }
+
+            for (int j = 0; j < toCheck.Count; j++)
+            {
+                CharacterController npc = (CharacterController)GameObjects[toCheck[j]];
+                int i = toCheck2[j];
+
+                // make sure can reach spot that isn't part of path
+                List<int> spots = new List<int>();
+                if (locs[i] % Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((locs[i] - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((locs[i] - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+                {
+                    spots.Add(locs[i] - 1);
+                }
+                if (locs[i] % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((locs[i] + 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((locs[i] + 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+                {
+                    spots.Add(locs[i] + 1);
+                }
+                if (locs[i] / Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((locs[i] - Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((locs[i] - Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+                {
+                    spots.Add(locs[i] - Area.WIDTH_IN_TILES);
+                }
+                if (locs[i] / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((locs[i] + Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((locs[i] + Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+                {
+                    spots.Add(locs[i] + Area.WIDTH_IN_TILES);
+                }
+                switch (npc.bouncer.getPath(0))
+                {
+                    case Bouncer.PATH_DOWN:
+                        spots.Remove(locs[i] + Area.WIDTH_IN_TILES);
+                        break;
+                    case Bouncer.PATH_LEFT:
+                        spots.Remove(locs[i] - 1);
+                        break;
+                    case Bouncer.PATH_RIGHT:
+                        spots.Remove(locs[i] + 1);
+                        break;
+                    case Bouncer.PATH_UP:
+                        spots.Remove(locs[i] - Area.WIDTH_IN_TILES);
+                        break;
+                }
+                for (int k = 0; k < spots.Count; k++)
+                {
+                    if (locs.Contains(spots[k]))
+                    {
+                        objs.Add(npc.bouncer);
+                        break;
                     }
                 }
             }
@@ -685,8 +737,61 @@ namespace CS8803AGA
          *@param goal
          *@return dir
          */
-        public int startPath(int start, int goal, int w, int h)
+        public int startPath(int start, int goal, int type, int id, int w, int h)
         {
+            List<int> goals = new List<int>();
+            if (goal % Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            {
+                goals.Add(goal - 1);
+            }
+            if (goal % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((goal + 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            {
+                goals.Add(goal + 1);
+            }
+            if (goal / Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            {
+                goals.Add(goal - Area.WIDTH_IN_TILES);
+            }
+            if (goal / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((goal + Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            {
+                goals.Add(goal + Area.WIDTH_IN_TILES);
+            }
+            if (type == PuzzleObject.TYPE_BOUNCER)
+            {
+                // add all surroundings not on path
+                for (int j = 0; j < GameObjects.Count; j++)
+                {
+                    if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
+                    {
+                        CharacterController npc = (CharacterController)GameObjects[j];
+                        if (npc.bouncer != null && id == npc.bouncer.id)
+                        {
+                            switch (npc.bouncer.getPath(0))
+                            {
+                                case Bouncer.PATH_DOWN:
+                                    goals.Remove(goal + Area.WIDTH_IN_TILES);
+                                    break;
+                                case Bouncer.PATH_LEFT:
+                                    goals.Remove(goal - 1);
+                                    break;
+                                case Bouncer.PATH_RIGHT:
+                                    goals.Remove(goal + 1);
+                                    break;
+                                case Bouncer.PATH_UP:
+                                    goals.Remove(goal - Area.WIDTH_IN_TILES);
+                                    break;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (goals.Contains(start))
+            {
+                return -2;
+            }
+
             List<int> open = new List<int>();
             Dictionary<int, int> from = new Dictionary<int, int>();
             if (start % Area.WIDTH_IN_TILES > 0)
@@ -712,36 +817,35 @@ namespace CS8803AGA
 
             for (int i = 0; i < open.Count; i++)
             {
+                if (goals.Contains(open[i]))
+                {
+                    // done
+                    int current = open[i];
+                    while (from.ContainsKey(current) && from[current] != start)
+                    {
+                        current = from[current];
+                    }
+                    if (current == start - 1)
+                    {
+                        return CompanionController.WALK_LEFT;
+                    }
+                    else if (current == start + 1)
+                    {
+                        return CompanionController.WALK_RIGHT;
+                    }
+                    else if (current == start - Area.WIDTH_IN_TILES)
+                    {
+                        return CompanionController.WALK_UP;
+                    }
+                    else
+                    {
+                        return CompanionController.WALK_DOWN;
+                    }
+                }
                 //Console.WriteLine(start + " => " + open[i] + " : " + goal);
-                if (!objectAt(1+Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + (w) / 2, 1+Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + (h) / 2, w/2, h/2))
+                else if (!objectAt(Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + Area.TILE_WIDTH / 2, Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + Area.TILE_HEIGHT / 2, w/2, h/2, true))
                 {
 //                    Console.WriteLine(start + " => " + open[i] + " : " + goal);
-                    if (open[i] == goal)
-                    {
-                        // done
-                        int current = goal;
-                        while (from.ContainsKey(current) && from[current] != start)
-                        {
-                            current = from[current];
-                        }
-                        if (current == start - 1)
-                        {
-                            return CompanionController.WALK_LEFT;
-                        }
-                        else if (current == start + 1)
-                        {
-                            return CompanionController.WALK_RIGHT;
-                        }
-                        else if (current == start - Area.WIDTH_IN_TILES)
-                        {
-                            return CompanionController.WALK_UP;
-                        }
-                        else
-                        {
-                            return CompanionController.WALK_DOWN;
-                        }
-                    }
-
                     // add children
                     if (open[i] % Area.WIDTH_IN_TILES > 0 && !open.Contains(open[i]-1))
                     {
