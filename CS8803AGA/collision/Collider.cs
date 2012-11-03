@@ -24,7 +24,7 @@ namespace CS8803AGA.collision
         /// <summary>
         /// Area the collider takes up.
         /// </summary>
-        private DoubleRect m_bounds;
+        public DoubleRect m_bounds;
         private DoubleRect m_bounds2;
 
         /// <summary>

@@ -10,6 +10,8 @@ namespace CS8803AGA.puzzle
         public EmptyPuzzleObject()
         {
             type = PuzzleObject.TYPE_NONE;
+
+            id = next_id++;
         }
 
         /**

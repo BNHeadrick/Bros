@@ -21,7 +21,24 @@ namespace CS8803AGA.controllers
     {
         ActionNode learnedPlan;
 
-        ActionNode currentGoal; /**< current goal in learnedPlan */
+        private ActionNode currentGoal; /**< current goal in learnedPlan */
+        private int currentGoalID;
+        private int walk_target; /**< where to twlk to */
+        private bool walking; /**< where to walk to */
+        private bool interacting; /**< whether interact*/
+        private int walk_dir; /**< what dir to walk */
+        private int distance; /**< how far traveled */
+
+        private bool is_init;
+        private int width;
+        private int height;
+        private int boundsX;
+        private int boundsY;
+
+        public const int WALK_LEFT = 0;
+        public const int WALK_RIGHT = 1;
+        public const int WALK_UP = 2;
+        public const int WALK_DOWN = 3;
 
         int compSpeed;
         bool isLearning;
@@ -47,6 +64,18 @@ namespace CS8803AGA.controllers
             isLearning = false;
             learnedPlan = new ActionNode(ActionNode.EMPTY);
             currentGoal = null;
+            currentGoalID = -1;
+            walking = false;
+            distance = 0;
+            walk_dir = 0;
+            walk_target = -1;
+            interacting = false;
+
+            is_init = false;
+
+
+            ///debug
+            //learnedPlan.addLeaf(new ActionNode(new Brew(Brew.COLOR_RED, 0)));
         }
 
         public override void update()
@@ -104,28 +133,155 @@ namespace CS8803AGA.controllers
 
         private bool executePlan()
         {
-            //go to first node's location
-            if (currentGoal == null)
-            { // query the world to find out if there are any interactable objects
-                List<PuzzleObject> objs = GameplayManager.ActiveArea.getPuzzleObjects((int)m_collider.Bounds.Center().X / Area.TILE_WIDTH, (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height);
-                int priority = 0;
-                // choose highest priority object to interact with
-                for (int i = 0; i < objs.Count; i++)
-                {
-                    int p = learnedPlan.findNodeDepth(objs[i]);
-                    if (p != -1 && (currentGoal == null || p < priority))
+            if (!is_init)
+            {
+                width = (int)m_collider.Bounds.Width;
+                height = (int)m_collider.Bounds.Height;
+                boundsX = (int)m_collider.Bounds.X;
+                boundsY = (int)m_collider.Bounds.Y;
+                is_init = true;
+            }
+
+            if (Quest.talkedToCompanion)
+            {
+                //go to first node's location
+                if (currentGoal == null)
+                { // query the world to find out if there are any interactable objects
+                    List<PuzzleObject> objs = GameplayManager.ActiveArea.getPuzzleObjects((int)m_collider.Bounds.Center().X / Area.TILE_WIDTH, (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height, brew);
+                    int priority = 0;
+
+                    // choose highest priority object to interact with
+                    for (int i = 0; i < objs.Count; i++)
                     {
-                        currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
-                        priority = p;
+                        int p = learnedPlan.findNodeDepth(objs[i]);
+                        if (p != -1 && (currentGoal == null || p < priority))
+                        {
+                            currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
+                            currentGoalID = objs[i].id;
+                            priority = p;
+                        }
+                    }
+                    if (currentGoal != null)
+                    {
+                        interacting = true;
+                    }
+                }
+                if (currentGoal != null)
+                {
+                    if (interacting)
+                    {
+                        if (!walking)
+                        {
+                            // check if adjacent to goal
+                            int x = (int)m_collider.Bounds.Center().X / Area.TILE_WIDTH;
+                            int y = (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT;
+                            if (walk_target == -1)
+                            {
+                                walk_target = GameplayManager.ActiveArea.getObjectLocation(currentGoalID);
+                            }
+                            int gx = walk_target % Area.WIDTH_IN_TILES;
+                            int gy = walk_target / Area.WIDTH_IN_TILES;
+                            if ((gx - x) * (gx - x) + (gy - y) * (gy - y) <= 1)
+                            { // adjacent
+                                // interact!
+                                GameplayManager.ActiveArea.interact(this, currentGoalID);
+                                interacting = false;
+                                walk_target = -1;
+                            }
+                            else
+                            {
+                                // need to walk to
+                                walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, width, height);
+                                if (walk_dir != -1)
+                                {
+                                    walking = true;
+                                    // reset to center of square
+                                    //m_collider.m_bounds.X = x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2;
+                                    //m_collider.m_bounds.Y = y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2;
+
+                                    //Console.WriteLine(m_collider.m_bounds.X + "x" + m_collider.m_bounds.Y);
+                                    //Console.WriteLine((x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2) + "x" + (11+y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
+
+                                    m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2, 11-(float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
+                                }
+                            }
+                        }
+                        else
+                        { // walk torwards this thingy
+                            int travel = m_speed;
+                            int size = walk_dir < WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT;
+                            int reservation = size;
+                            if (distance + travel > size)
+                            {
+                                travel = (walk_dir < WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT) - distance;
+                                distance = 0;
+                                walking = false;
+                                reservation = 0;
+
+                                boundsX = (int)m_collider.Bounds.X;
+                                boundsY = (int)m_collider.Bounds.Y;
+                            }
+                            else
+                            {
+                                distance += travel;
+                                reservation -= distance;
+                            }
+                            // reserve space
+                            /*switch (walk_dir)
+                            {
+                                case WALK_LEFT:
+                                    if (reservation != 0)
+                                    {
+                                        m_collider.m_bounds.X = boundsX - Area.TILE_WIDTH - travel;
+                                    }
+                                    m_collider.m_bounds.Width = width + reservation;
+                                    break;
+                                case WALK_RIGHT:
+                                    m_collider.m_bounds.Width = width + reservation;
+                                    break;
+                                case WALK_UP:
+                                    if (reservation != 0)
+                                    {
+                                        m_collider.m_bounds.Y = boundsY - Area.TILE_HEIGHT - travel;
+                                    }
+                                    m_collider.m_bounds.Height = height + reservation;
+                                    break;
+                                case WALK_DOWN:
+                                    m_collider.m_bounds.Height = height + reservation;
+                                    break;
+                            }*/
+
+                            m_collider.handleMovement(new Vector2(walk_dir == WALK_LEFT ? -travel : walk_dir == WALK_RIGHT ? travel : 0, walk_dir == WALK_UP ? -travel : walk_dir == WALK_DOWN ? travel : 0));
+
+                            AnimationController.requestAnimation(walk_dir == WALK_LEFT ? "left" : walk_dir == WALK_RIGHT ? "right" : walk_dir == WALK_UP ? "up" : "down", AnimationController.AnimationCommand.Play);
+                            AnimationController.update();
+                        }
+                    }
+                    if (!interacting)
+                    {
+                        // find new goal
+                        ActionNode next = null;
+                        List<PuzzleObject> objs = GameplayManager.ActiveArea.getPuzzleObjects((int)m_collider.Bounds.Center().X / Area.TILE_WIDTH, (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height, brew);
+                        int priority = 0;
+                        // choose highest priority object to interact with
+                        for (int i = 0; i < objs.Count; i++)
+                        {
+                            int p = currentGoal.findNodeDepth(objs[i]);
+                            if (p != -1 && (next == null || p < priority))
+                            {
+                                next = currentGoal.findNode(new ActionNode(objs[i]));
+                                currentGoalID = objs[i].id;
+                                priority = p;
+                            }
+                        }
+                        if (next != null)
+                        {
+                            currentGoal = next;
+                        }
                     }
                 }
             }
-            if (currentGoal != null)
-            {
-
-            }
-
-            return false;
+            return (currentGoal != null);
         }
 
         Vector2 AngleToVector(float angle)
@@ -145,7 +301,11 @@ namespace CS8803AGA.controllers
         */
 
         public void learnNewInfo(ActionNode newInfo){
-            learnedPlan.merge(newInfo);
+            if (newInfo != null)
+            {
+                learnedPlan.merge(newInfo);
+            }
+            currentGoal = null;
         }
 
     }

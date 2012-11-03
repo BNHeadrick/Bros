@@ -27,6 +27,8 @@ namespace CS8803AGA.puzzle
             path = new List<int>();
             path.AddRange(_path);
             atPathStart = true;
+
+            id = next_id++;
         }
 
         /**
@@ -68,6 +70,23 @@ namespace CS8803AGA.puzzle
         }
 
         /**
+         * Determines if we have the color
+         *@param
+         *@return
+         */
+        public bool hasColor(Brew brew)
+        {
+            for (int i = 1; i <= color; i <<= 1)
+            {
+                if ((i & color) != 0 && (i & brew.getColor()) == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
          * Determines whether or not this bouncer is passable
          *@param brew the brew we have
          *@return true or false
@@ -76,39 +95,35 @@ namespace CS8803AGA.puzzle
         {
             // ensure color is correct
             Console.WriteLine(color + " // " + brew.getColor());
-            for (int i = 1; i <= color; i <<= 1)
+            if (hasColor(brew))
             {
-                if ((i & color) != 0 && (i & brew.getColor()) == 0)
+                // ensure path not blocked
+                Area area = GameplayManager.ActiveArea;
+                int dir = atPathStart ? 1 : -1;
+                for (int i = atPathStart ? 0 : path.Count - 1; atPathStart ? (i < path.Count) : (i >= 0); i += dir)
                 {
-                    return false;
-                }
-            }
-            // ensure path not blocked
-            Area area = GameplayManager.ActiveArea;
-            int dir = atPathStart ? 1 : -1;
-            for (int i = atPathStart ? 0 : path.Count-1; atPathStart ? (i < path.Count) : (i >= 0); i += dir)
-            {
-                if (path[i] == PATH_UP*dir)
-                {
-                    y -= Area.TILE_HEIGHT;
-                }
-                else if (path[i] == PATH_DOWN * dir)
-                {
-                    y += Area.TILE_HEIGHT ;
-                }
-                else if (path[i] == PATH_LEFT * dir)
-                {
-                    x -= Area.TILE_WIDTH;
-                }
-                else if (path[i] == PATH_RIGHT * dir)
-                {
-                    x += Area.TILE_WIDTH;
-                }
+                    if (path[i] == PATH_UP * dir)
+                    {
+                        y -= Area.TILE_HEIGHT;
+                    }
+                    else if (path[i] == PATH_DOWN * dir)
+                    {
+                        y += Area.TILE_HEIGHT;
+                    }
+                    else if (path[i] == PATH_LEFT * dir)
+                    {
+                        x -= Area.TILE_WIDTH;
+                    }
+                    else if (path[i] == PATH_RIGHT * dir)
+                    {
+                        x += Area.TILE_WIDTH;
+                    }
 
-                // check obj at x,y
-                if (area.objectAt(x, y, w, h))
-                {
-                    return false;
+                    // check obj at x,y
+                    if (area.objectAt(x, y, w, h))
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

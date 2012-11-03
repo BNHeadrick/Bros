@@ -69,6 +69,8 @@ namespace CS8803AGA.puzzle
             type = PuzzleObject.TYPE_BREW;
             color = _color;
             uncolor = _uncolor;
+
+            id = next_id++;
         }
 
         /**
@@ -89,7 +91,7 @@ namespace CS8803AGA.puzzle
                         return true;
                     }
                 }
-                return true;
+                return false;
             }
             return false;
         }

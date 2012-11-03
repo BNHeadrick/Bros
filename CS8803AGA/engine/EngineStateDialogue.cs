@@ -9,6 +9,7 @@ using CS8803AGA.dialog;
 using CS8803AGA.questcontent;
 using CS8803AGA.puzzle;
 using CS8803AGA.controllers;
+using CS8803AGA.collision;
 
 namespace CS8803AGA.engine
 {
@@ -51,7 +52,7 @@ namespace CS8803AGA.engine
             bouncerI = 0;
             npc = _npc;
 
-            if (npc != null && player != null && player.brew != null)
+            if (npc != null && npc.getCollider().m_type == ColliderType.NPC && player != null && player.brew != null)
             {
                 if (npc.bouncer != null)
                 {
@@ -60,7 +61,7 @@ namespace CS8803AGA.engine
                     bouncerPass = npc.bouncer.canPass(player.brew, (int)npc.getCollider().Bounds.Center().X, (int)npc.getCollider().Bounds.Center().Y, (int)npc.getCollider().Bounds.Width, (int)npc.getCollider().Bounds.Height);
                     
                     //if what was passed in is the player, then add what task he's currently doing to the plan.
-                    if (!is_companion)
+                    if (bouncerPass && !is_companion)
                     {
                         player.addTaskToPlan(npc.bouncer);
                     }
@@ -68,15 +69,15 @@ namespace CS8803AGA.engine
                 else if (npc.brew != null)
                 {
                     //if what was passed in is the player, then add what task he's currently doing to the plan.
-                    if (!is_companion)
-                    {
-                        player.addTaskToPlan(npc.brew);
-                    }
 
                     brewMode = true;
                     if (player.brew.mix(npc.brew))
                     {
                         m_dialog = null;
+                        if (!is_companion)
+                        {
+                            player.addTaskToPlan(npc.brew);
+                        }
                     }
                     else
                     {
@@ -181,7 +182,7 @@ namespace CS8803AGA.engine
                 true, Color.White, 0f, 1f);
 
             WorldManager.DrawMap(new Vector2(300, 100), 600, 500, Constants.DepthDialogueText);*/
-            if (npc != null)
+            if (npc != null && npc.getCollider().m_type == ColliderType.NPC)
             {
                 if (npc.bouncer != null)
                 {
