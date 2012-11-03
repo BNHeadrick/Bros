@@ -114,19 +114,19 @@ namespace CS8803AGA.world
             else
             { // default oopsie map
                 tiles = new int[]{
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4
                 };
             }
 
@@ -311,28 +311,34 @@ namespace CS8803AGA.world
                     b,c,c,c,c,c,c,c,c,c,c,b,0,0,0,0,0,0,0,0,0,0,0,b
                 };
                 */
-                int G = 13;
-                int N = 15;
-                int M = 16;
-                int I = 242;
-                int L = 251;
+                int D = 131; //guard
+                int N = 15; //ness
+                int M = 16; //monkey
+                int I = 242;//nekogirl
+                int L = 251;//oldman
                 
-                int R = 341;
+                int W = 341;//white vehicle
+                int B = 342;//blue vehicle
+                int R = 344;//red vehicle
+                int T = 161;//orange flame
+                int G = 162;//green flame
+                
+
 
                 doodads = new int[] {
-                    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-                    4,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,G,0,0,0,4,
-                    4,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,4,
-                    4,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,4,
-                    4,0,0,0,0,0,4,L,4,4,I,4,0,0,0,0,0,0,0,4,4,4,4,4,
-                    4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
-                    4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
-                    4,4,4,M,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
-                    4,0,0,0,4,0,0,0,0,0,0,0,4,4,4,N,4,4,4,4,4,4,4,4,
-                    4,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,R,4,
-                    4,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,4,
-                    4,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,4,
-                    4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,4
+                    0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,
+                    0,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,
+                    0,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,T,0,
+                    0,0,0,0,0,0,4,0,0,0,0,4,0,0,0,0,B,0,0,4,0,0,0,0,
+                    0,0,0,0,0,0,4,L,4,4,I,4,0,0,0,0,0,0,0,4,D,4,4,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,4,4,M,4,0,0,0,0,G,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,4,4,N,4,4,4,4,4,4,4,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,W,0,
+                    0,0,R,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,
+                    0,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0
                 };
             }
             else if (location == Area.PARTY)
@@ -431,36 +437,48 @@ namespace CS8803AGA.world
 
             if (location == Area.PARTYHOOD_NORTH)
             {
-                int G = 13;
-                int N = 15;
-                int M = 16;
-                int I = 242;
-                int L = 251;
+                int D = 131; //guard
+                int N = 15; //ness
+                int M = 16; //monkey
+                int I = 242;//nekogirl
+                int L = 251;//oldman
 
-                int R = 341;
+                int W = 341;//white vehicle
+                int B = 342;//blue vehicle
+                int R = 344;//red vehicle
+                int T = 161;//orange flame
+                int G = 162;//green flame
 
-                /*
-                List<int> k_path = new List<int>();
-                k_path.Add(Bouncer.PATH_LEFT);
-                k_path.Add(Bouncer.PATH_LEFT);
-                k_path.Add(Bouncer.PATH_LEFT);
-                k_path.Add(Bouncer.PATH_DOWN);
-                k_path.Add(Bouncer.PATH_RIGHT);
-                k_path.Add(Bouncer.PATH_UP);
-                k_path.Add(Bouncer.PATH_RIGHT);
-                puzzle.Add(K, new Bouncer(Brew.COLOR_RED|Brew.COLOR_BLUE|Brew.COLOR_WHITE, k_path));
                 
-                puzzle.Add(G, new Brew(Brew.COLOR_RED | Brew.COLOR_YELLOW, 0));
-                puzzle.Add(N, new Brew(Brew.COLOR_BLUE, 0));
-                puzzle.Add(M, new Brew(Brew.COLOR_WHITE, Brew.COLOR_YELLOW));
-                */
                 List<int> k_path = new List<int>();
                 k_path.Add(Bouncer.PATH_UP);
                 k_path.Add(Bouncer.PATH_LEFT);
 
-                puzzle.Add(N, new Bouncer(Brew.COLOR_RED, k_path));
+                puzzle.Add(N, new Bouncer(Brew.COLOR_WHITE, k_path));
+                puzzle.Add(W, new Brew(Brew.COLOR_WHITE, 0));
 
+                k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_UP);
+
+                puzzle.Add(D, new Bouncer(Brew.COLOR_GREEN, k_path));
+                puzzle.Add(G, new Brew(Brew.COLOR_GREEN, 0));
                 puzzle.Add(R, new Brew(Brew.COLOR_RED, 0));
+
+                k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_DOWN);
+                k_path.Add(Bouncer.PATH_DOWN);
+
+                puzzle.Add(M, new Bouncer(Brew.COLOR_BLUE, k_path));
+                puzzle.Add(B, new Brew(Brew.COLOR_BLUE, 0));
+                puzzle.Add(T, new Brew(Brew.COLOR_ORANGE, 0));
+
+                k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_UP);
+
+                puzzle.Add(I, new Bouncer(Brew.COLOR_BLUE|Brew.COLOR_ORANGE, k_path));
+
             }
             
 
