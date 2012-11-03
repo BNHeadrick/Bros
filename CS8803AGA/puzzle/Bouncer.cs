@@ -126,6 +126,10 @@ namespace CS8803AGA.puzzle
                     }
                 }
             }
+            else
+            {
+                return false;
+            }
             return true;
         }
 
