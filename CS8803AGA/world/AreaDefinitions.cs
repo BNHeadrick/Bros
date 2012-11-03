@@ -25,6 +25,7 @@ namespace CS8803AGA.world
             if (location == Area.START)
             { // map 0x0
                 tiles = new int[]{
+                    
                     3,3,3,3,3,3,3,3,3,3,3,0,6,2,3,3,3,3,3,3,3,3,3,3,
                     3,3,3,3,3,3,3,3,3,3,3,5,6,7,3,3,3,3,3,3,3,3,3,3,
                     3,3,3,3,3,3,3,3,3,3,3,5,6,7,3,3,3,3,3,3,3,3,3,3,
@@ -38,6 +39,22 @@ namespace CS8803AGA.world
                     3,3,3,3,3,3,3,3,5,6,7,3,3,3,3,3,3,3,3,3,3,3,3,3,
                     3,3,3,3,3,3,3,3,5,6,7,3,3,3,3,3,3,3,3,3,3,3,3,3,
                     3,3,3,3,3,3,3,3,5,6,7,3,3,3,3,3,3,3,3,3,3,3,3,3
+                    
+                    /*
+                    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,
+                    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
+                    */
                 };
             }
             else if (location == Area.PARTYHOOD)
@@ -144,7 +161,11 @@ namespace CS8803AGA.world
 
             if (location == Area.START)
             { // map 0x0
+
+                
+
                 doodads = new int[] {
+                    
                     1,0,0,0,0,0,0,0,0,0,0,b,0,c,0,0,0,0,0,0,0,0,0,2,
                     3,4,5,6,3,4,5,6,3,4,3,6,Z,3,4,5,6,3,4,5,6,3,4,5,
                     a,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -158,6 +179,10 @@ namespace CS8803AGA.world
                     0,0,0,0,0,0,0,0,b,0,0,0,0,0,0,0,c,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2
+                    
+
+
+                    
                 };
             }
             else if (location == Area.LIQUOR_STORE)
@@ -264,6 +289,8 @@ namespace CS8803AGA.world
             }
             else if (location == Area.PARTYHOOD_NORTH)
             { // map 0x-1 inside the house!
+
+                /* OLD PARTYHOOD-NORTH
                 int M = Constants.BREW_THIEF1;
                 int S = Constants.BREW_THIEF2;
                 int T = Constants.BREW_THIEF3;
@@ -282,6 +309,27 @@ namespace CS8803AGA.world
                     7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
                     7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
                     b,c,c,c,c,c,c,c,c,c,c,b,0,0,0,0,0,0,0,0,0,0,0,b
+                };
+                */
+                int G = 13;
+                int N = 15;
+                int M = 16;
+
+                int R = 341;
+                doodads = new int[] {
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,G,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,4,4,M,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,4,4,N,4,0,0,0,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,
+                    0,4,4,4,4,0,0,0,0,0,0,0,4,R,0,0,4,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                 };
             }
             else if (location == Area.PARTY)
@@ -357,6 +405,7 @@ namespace CS8803AGA.world
                 int B = 73;
                 int K = 271;
 
+                
                 List<int> k_path = new List<int>();
                 k_path.Add(Bouncer.PATH_LEFT);
                 k_path.Add(Bouncer.PATH_LEFT);
@@ -366,11 +415,45 @@ namespace CS8803AGA.world
                 k_path.Add(Bouncer.PATH_UP);
                 k_path.Add(Bouncer.PATH_RIGHT);
                 puzzle.Add(K, new Bouncer(Brew.COLOR_RED|Brew.COLOR_BLUE|Brew.COLOR_WHITE, k_path));
-
+                
                 puzzle.Add(M, new Brew(Brew.COLOR_RED | Brew.COLOR_YELLOW, 0));
                 puzzle.Add(C, new Brew(Brew.COLOR_BLUE, 0));
                 puzzle.Add(B, new Brew(Brew.COLOR_WHITE, Brew.COLOR_YELLOW));
             }
+
+
+            if (location == Area.PARTYHOOD_NORTH)
+            {
+                int G = 13;
+                int N = 15;
+                int M = 16;
+
+                int R = 341;
+
+                /*
+                List<int> k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_LEFT);
+                k_path.Add(Bouncer.PATH_DOWN);
+                k_path.Add(Bouncer.PATH_RIGHT);
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_RIGHT);
+                puzzle.Add(K, new Bouncer(Brew.COLOR_RED|Brew.COLOR_BLUE|Brew.COLOR_WHITE, k_path));
+                
+                puzzle.Add(G, new Brew(Brew.COLOR_RED | Brew.COLOR_YELLOW, 0));
+                puzzle.Add(N, new Brew(Brew.COLOR_BLUE, 0));
+                puzzle.Add(M, new Brew(Brew.COLOR_WHITE, Brew.COLOR_YELLOW));
+                */
+                List<int> k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_LEFT);
+
+                puzzle.Add(N, new Bouncer(Brew.COLOR_RED, k_path));
+
+                puzzle.Add(R, new Brew(Brew.COLOR_RED, 0));
+            }
+            
 
             return puzzle;
         }
@@ -387,9 +470,12 @@ namespace CS8803AGA.world
 
             if (location == Area.START)
             { // map 0x0
+                
                 transitions = new int[]{
-                        /*liquer door */5, 7, Area.LIQUOR_STORE.X, Area.LIQUOR_STORE.Y, 20, 11
+                        //liquer door
+                        5, 7, Area.LIQUOR_STORE.X, Area.LIQUOR_STORE.Y, 20, 11
                 };
+                
             }
             else if (location == Area.LIQUOR_STORE)
             {
