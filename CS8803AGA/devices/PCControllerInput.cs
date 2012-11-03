@@ -93,6 +93,8 @@ namespace CS8803AGA.devices
             {
                 leftY += -1.0f;
             }
+
+
             
             if (ks.IsKeyDown(LEFT_DIR_RIGHT) || ks.IsKeyDown(Keys.Right))
             {

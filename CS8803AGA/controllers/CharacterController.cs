@@ -7,6 +7,7 @@ using CS8803AGA.actions;
 using CS8803AGA;
 using CS8803AGA.puzzle;
 using CS8803AGA.learning;
+using CS8803AGA.devices;
 
 namespace CS8803AGA.controllers
 {
@@ -88,6 +89,8 @@ namespace CS8803AGA.controllers
             cc.m_collider = new Collider(cc, bounds, type);
 
             cc.m_speed =  ci.speed;
+
+            //if(PCControllerInput.
 
             cc.m_previousAngle = (float)Math.PI / 2;
 
