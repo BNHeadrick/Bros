@@ -180,9 +180,9 @@ namespace CS8803AGA.controllers
                             {
                                 walk_target = GameplayManager.ActiveArea.getObjectLocation(currentGoalID);
                             }
-                            int gx = walk_target % Area.WIDTH_IN_TILES;
-                            int gy = walk_target / Area.WIDTH_IN_TILES;
-                            if ((gx - x) * (gx - x) + (gy - y) * (gy - y) <= 1)
+                            //int gx = walk_target % Area.WIDTH_IN_TILES;
+                            //int gy = walk_target / Area.WIDTH_IN_TILES;
+                            if (x+y*Area.WIDTH_IN_TILES == walk_target)//(gx - x) * (gx - x) + (gy - y) * (gy - y) <= 1)
                             { // adjacent
                                 // interact!
                                 GameplayManager.ActiveArea.interact(this, currentGoalID);
@@ -192,9 +192,15 @@ namespace CS8803AGA.controllers
                             else
                             {
                                 // need to walk to
-                                walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, width, height);
+                                walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, currentGoal.getData().type, currentGoalID, width, height);
                                 //Console.WriteLine("path: " + walk_dir);
-                                if (walk_dir != -1)
+                                if (walk_dir == -2)
+                                { // bad, but, at location
+                                    GameplayManager.ActiveArea.interact(this, currentGoalID);
+                                    interacting = false;
+                                    walk_target = -1;
+                                }
+                                else if (walk_dir != -1)
                                 {
                                     walking = true;
                                     // reset to center of square
@@ -202,9 +208,9 @@ namespace CS8803AGA.controllers
                                     //m_collider.m_bounds.Y = y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2;
 
                                     //Console.WriteLine(m_collider.m_bounds.X + "x" + m_collider.m_bounds.Y);
-                                    //Console.WriteLine((x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2) + "x" + (11+y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
+                                    //Console.WriteLine((x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2) + "x" + (3+y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
 
-                                    m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2, 11-(float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
+                                    m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2, 11 - (float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
                                 }
                             }
                         }
@@ -265,6 +271,7 @@ namespace CS8803AGA.controllers
                         ActionNode next = null;
                         List<PuzzleObject> objs = GameplayManager.ActiveArea.getPuzzleObjects((int)m_collider.Bounds.Center().X / Area.TILE_WIDTH, (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height, brew);
                         int priority = 0;
+                        int nextID = -1;
                         // choose highest priority object to interact with
                         for (int i = 0; i < objs.Count; i++)
                         {
@@ -272,14 +279,16 @@ namespace CS8803AGA.controllers
                             if (p != -1 && (next == null || p < priority))
                             {
                                 next = currentGoal.findNode(new ActionNode(objs[i]));
-                                currentGoalID = objs[i].id;
+                                nextID = objs[i].id;
                                 priority = p;
                             }
                         }
-                        if (next != null)
+                        if (next != null && currentGoalID != nextID)
                         {
                             currentGoal = next;
+                            currentGoalID = nextID;
                             walk_target = -1;
+                            interacting = true;
                         }
                     }
                 }

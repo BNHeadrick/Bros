@@ -120,7 +120,7 @@ namespace CS8803AGA.puzzle
                     }
 
                     // check obj at x,y
-                    if (area.objectAt(x, y, w, h))
+                    if (area.objectAt(x, y, w, h, false))
                     {
                         return false;
                     }
