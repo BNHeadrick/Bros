@@ -20,7 +20,7 @@ namespace CS8803AGA.learning
         private PuzzleObject data; /**< whatever the data of the node is */
         public static PuzzleObject EMPTY = new EmptyPuzzleObject(); /**< empty data node */
 
-        private int id; /**< unique id */
+        public int id; /**< unique id */
         private static int next_id = 0; /**< next id */
 
         /**
@@ -76,7 +76,11 @@ namespace CS8803AGA.learning
         public int findNodeDepth(PuzzleObject findData)
         {
             List<ActionNode> next = new List<ActionNode>();
-            next.Add(this);
+            //next.Add(this);
+            for (int j = 0; j < children.Count; j++)
+            {
+                next.Add(children[j]);
+            }
             for (int i = 0; i < next.Count; i++)
             {
                 if (findData.equals(next[i].data))
@@ -99,7 +103,10 @@ namespace CS8803AGA.learning
         public ActionNode findNode(ActionNode node)
         {
             List<ActionNode> next = new List<ActionNode>();
-            next.Add(this);
+            for (int j = 0; j < children.Count; j++)
+            {
+                next.Add(children[j]);
+            }
             for (int i = 0; i < next.Count; i++)
             {
                 if (node.equals(next[i]))
@@ -190,19 +197,18 @@ namespace CS8803AGA.learning
 
                 // populate visited list (magically)
                 List<ActionNode> ancestors = new List<ActionNode>();
-                for (int j = 0; j < current.parents.Count; j++)
-                {
-                    ancestors.Add(current.parents[j]);
-                }
+                ancestors.Add(current);
                 for (int j = 0; j < ancestors.Count; j++)
                 {
                     if (!visited.Contains(ancestors[j].id))
                     {
+                        //Console.WriteLine("adding " + ancestors[j].id + " to visited");
                         visited.Add(ancestors[j].id);
-                    }
-                    for (int k = 0; k < ancestors[j].parents.Count; k++)
-                    {
-                        ancestors.Add(ancestors[j].parents[k]);
+                        for (int k = 0; k < ancestors[j].parents.Count; k++)
+                        {
+                            //Console.WriteLine("adding " + ancestors[j].parents[k].id + " to ancestors");
+                            ancestors.Add(ancestors[j].parents[k]);
+                        }
                     }
                 }
 
@@ -215,6 +221,8 @@ namespace CS8803AGA.learning
                     i = null;
                 }
             }
+
+            debugPrint();
         }
 
         /**
@@ -232,7 +240,7 @@ namespace CS8803AGA.learning
                 }
                 else
                 {
-                    Console.Write(next[i].data);
+                    Console.Write(next[i].data.type);
                 }
                 Console.Write("(" + next[i].id + ") children: [");
 
@@ -244,7 +252,7 @@ namespace CS8803AGA.learning
                     }
                     else
                     {
-                        Console.Write(next[i].children[j].data+"("+next[i].children[j].id+"), ");
+                        Console.Write(next[i].children[j].data+"(" + next[i].children[j].id + "), ");
                     }
                     next.Add(next[i].children[j]);
                 }

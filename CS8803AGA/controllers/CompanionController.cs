@@ -29,6 +29,8 @@ namespace CS8803AGA.controllers
         private int walk_dir; /**< what dir to walk */
         private int distance; /**< how far traveled */
 
+        private int last_walk_target;
+
         private bool is_init;
         private int width;
         private int height;
@@ -73,6 +75,7 @@ namespace CS8803AGA.controllers
 
             is_init = false;
 
+            last_walk_target = -1;
 
             ///debug
             //learnedPlan.addLeaf(new ActionNode(new Brew(Brew.COLOR_RED, 0)));
@@ -283,12 +286,20 @@ namespace CS8803AGA.controllers
                                 priority = p;
                             }
                         }
-                        if (next != null && currentGoalID != nextID)
+                        /*int next_walk_target = -1;
+                        if (nextID != -1)
+                        {
+                            next_walk_target = GameplayManager.ActiveArea.getObjectLocation(nextID);
+                        }*/
+                        if (next != null)// && last_walk_target != next_walk_target)
                         {
                             currentGoal = next;
+                            Console.WriteLine("doing: " + currentGoal.id);
                             currentGoalID = nextID;
                             walk_target = -1;
                             interacting = true;
+
+                            //last_walk_target = next_walk_target;
                         }
                     }
                 }

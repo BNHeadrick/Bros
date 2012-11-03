@@ -95,6 +95,7 @@ namespace CS8803AGA.controllers
                         EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this, false));
                         ((CompanionController)m_collider.m_other.m_owner).learnNewInfo(CharacterController.currPlan);
                         ((CharacterController)m_collider.m_owner).brew.extract(ALL_BREW);
+                        CharacterController.currPlan = null;
                     }
                     else
                     {
