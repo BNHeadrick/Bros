@@ -479,6 +479,12 @@ namespace CS8803AGA.world
 
                 puzzle.Add(I, new Bouncer(Brew.COLOR_BLUE|Brew.COLOR_ORANGE, k_path));
 
+                k_path = new List<int>();
+                k_path.Add(Bouncer.PATH_UP);
+                k_path.Add(Bouncer.PATH_UP);
+
+                puzzle.Add(L, new Bouncer(Brew.COLOR_RED | Brew.COLOR_GREEN, k_path));
+
             }
             
 
