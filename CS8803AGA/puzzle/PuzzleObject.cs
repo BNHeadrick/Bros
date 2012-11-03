@@ -11,7 +11,10 @@ namespace CS8803AGA.puzzle
         public const int TYPE_BREW = 1; /**< brew type */
         public const int TYPE_BOUNCER = 2; /**< guard type */
 
+        public static int next_id = 0;
+
         public int type; /**< maybe there's multiple types of puzzle objects */
+        public int id;
 
         /**
          * Determiens if two objects are the same
@@ -24,5 +27,10 @@ namespace CS8803AGA.puzzle
          * @return this
          */
         public abstract PuzzleObject copy();
+
+        public bool isSameAs(PuzzleObject other)
+        {
+            return (id == other.id);
+        }
     }
 }

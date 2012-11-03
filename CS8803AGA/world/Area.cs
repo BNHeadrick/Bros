@@ -11,6 +11,7 @@ using CS8803AGA.collision;
 using CS8803AGA.world;
 using CS8803AGA.dialog;
 using CS8803AGA.puzzle;
+using CS8803AGA.engine;
 
 namespace CS8803AGA
 {
@@ -162,7 +163,7 @@ namespace CS8803AGA
                         CharacterInfo ci = GlobalHelper.loadContent<CharacterInfo>(@"Characters/"+Constants.doodadIntToString(doodads[i, j]));
                         Vector2 pos = new Vector2(a.getTileRectangle(i, j).X+20, a.getTileRectangle(i, j).Y+8);
                         CharacterController cc = CharacterController.construct(ci, pos);
-                        if (puzzle[doodads[i, j]] != null)
+                        if (puzzle.ContainsKey(doodads[i, j]))
                         {
                             if (puzzle[doodads[i, j]].type == PuzzleObject.TYPE_BOUNCER) {
                                 cc.bouncer = (Bouncer)puzzle[doodads[i, j]];
@@ -569,9 +570,10 @@ namespace CS8803AGA
          * @param y
          * @param w
          * @param h
+         * @param brwe
          * @return 
          */
-        public List<PuzzleObject> getPuzzleObjects(int x, int y, int w, int h)
+        public List<PuzzleObject> getPuzzleObjects(int x, int y, int w, int h, Brew brew)
         {
             List<PuzzleObject> objs = new List<PuzzleObject>();
 
@@ -584,23 +586,23 @@ namespace CS8803AGA
                 int curY = locs[i] / WIDTH_IN_TILES;
 
                 // check to make sure can pass through tile
-                if (TileSet.tileInfos[Tiles[x / TILE_WIDTH, y / TILE_HEIGHT]].passable)
+                if (TileSet.tileInfos[Tiles[curX, curY]].passable)
                 {
                     // check if doodad at location
                     bool doodadAt = false;
-                    for (int j = 0; j < GameObjects.Count; i++)
+                    for (int j = 0; j < GameObjects.Count; j++)
                     {
-                        if (((ICollidable)GameObjects[j]).getCollider().Bounds.IntersectsWith(new DoubleRect(curX - w / 2, curY - h / 2, w, h)))
+                        if (((ICollidable)GameObjects[j]).getCollider().Bounds.IntersectsWith(new DoubleRect(curX*TILE_WIDTH + (TILE_WIDTH-w) / 2, curY*TILE_HEIGHT + (TILE_HEIGHT-h) / 2, w, h)))
                         {
                             // if puzzle object, then add to list
                             if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
                             {
                                 CharacterController npc = (CharacterController)GameObjects[j];
-                                if (npc.bouncer != null)
+                                if (npc.bouncer != null && npc.bouncer.hasColor(brew))
                                 {
                                     objs.Add(npc.bouncer);
                                 }
-                                if (npc.brew != null)
+                                if (npc.brew != null && ((Brew)brew.copy()).mix(npc.brew))
                                 {
                                     objs.Add(npc.brew);
                                 }
@@ -635,5 +637,134 @@ namespace CS8803AGA
             return objs;
         }
 
+        /**
+         * Returns the location of this object
+         *@param
+         *@return
+         */
+        public int getObjectLocation(int id)
+        {
+            for (int j = 0; j < GameObjects.Count; j++)
+            {
+                if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
+                {
+                    CharacterController npc = (CharacterController)GameObjects[j];
+                    if ((npc.bouncer != null && id == npc.bouncer.id) || (npc.brew != null && id == npc.brew.id))
+                    {
+                        return (int)npc.getCollider().Bounds.Center().X / Area.TILE_WIDTH + (int)npc.getCollider().Bounds.Center().Y / Area.TILE_HEIGHT * Area.WIDTH_IN_TILES;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        /**
+         * Interact with the object
+         *@param pc
+         *@param obj
+         */
+        public void interact(CharacterController pc, int obj)
+        {
+            for (int j = 0; j < GameObjects.Count; j++)
+            {
+                if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
+                {
+                    CharacterController npc = (CharacterController)GameObjects[j];
+                    if ((npc.bouncer != null && obj == npc.bouncer.id) || (npc.brew != null && obj == npc.brew.id))
+                    {
+                        EngineManager.pushState(new EngineStateDialogue(npc.getDoodadIndex(), npc, pc, true));
+                    }
+                }
+            }
+        }
+
+        /**
+         * Starts some sort of pathery
+         *@param start
+         *@param goal
+         *@return dir
+         */
+        public int startPath(int start, int goal, int w, int h)
+        {
+            List<int> open = new List<int>();
+            Dictionary<int, int> from = new Dictionary<int, int>();
+            if (start % Area.WIDTH_IN_TILES > 0)
+            {
+                open.Add(start - 1);
+                from.Add(start - 1, start);
+            }
+            if (start % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1)
+            {
+                open.Add(start + 1);
+                from.Add(start + 1, start);
+            }
+            if (start / Area.WIDTH_IN_TILES > 0)
+            {
+                open.Add(start - Area.WIDTH_IN_TILES);
+                from.Add(start - Area.WIDTH_IN_TILES, start);
+            }
+            if (start / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1)
+            {
+                open.Add(start + Area.WIDTH_IN_TILES);
+                from.Add(start + Area.WIDTH_IN_TILES, start);
+            }
+
+            for (int i = 0; i < open.Count; i++)
+            {
+                if (!objectAt(Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + (Area.TILE_WIDTH - w) / 2, Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + (Area.TILE_HEIGHT - h) / 2, w, h))
+                {
+                    //Console.WriteLine(start + " => " + open[i] + " : " + goal);
+                    if (open[i] == goal)
+                    {
+                        // done
+                        int current = goal;
+                        while (from.ContainsKey(current) && from[current] != start)
+                        {
+                            current = from[current];
+                        }
+                        if (current == start - 1)
+                        {
+                            return CompanionController.WALK_LEFT;
+                        }
+                        else if (current == start + 1)
+                        {
+                            return CompanionController.WALK_RIGHT;
+                        }
+                        else if (current == start - Area.WIDTH_IN_TILES)
+                        {
+                            return CompanionController.WALK_UP;
+                        }
+                        else
+                        {
+                            return CompanionController.WALK_DOWN;
+                        }
+                    }
+
+                    // add children
+                    if (open[i] % Area.WIDTH_IN_TILES > 0 && !open.Contains(open[i]-1))
+                    {
+                        open.Add(open[i] - 1);
+                        from.Add(open[i] - 1, open[i]);
+                    }
+                    if (open[i] % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1 && !open.Contains(open[i] + 1))
+                    {
+                        open.Add(open[i] + 1);
+                        from.Add(open[i] + 1, open[i]);
+                    }
+                    if (open[i] / Area.WIDTH_IN_TILES > 0 && !open.Contains(open[i] - Area.WIDTH_IN_TILES))
+                    {
+                        open.Add(open[i] - Area.WIDTH_IN_TILES);
+                        from.Add(open[i] - Area.WIDTH_IN_TILES, open[i]);
+                    }
+                    if (open[i] / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1 && !open.Contains(open[i] + Area.WIDTH_IN_TILES))
+                    {
+                        open.Add(open[i] + Area.WIDTH_IN_TILES);
+                        from.Add(open[i] + Area.WIDTH_IN_TILES, open[i]);
+                    }
+                }
+            }
+            //uh oh...
+            return -1;
+        }
     }
 }

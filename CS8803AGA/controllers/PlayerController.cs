@@ -7,6 +7,7 @@ using CSharpQuadTree;
 using CS8803AGA.engine;
 using CS8803AGA.devices;
 using CS8803AGA.collision;
+using CS8803AGA.puzzle;
 
 namespace CS8803AGA.controllers
 {
@@ -16,6 +17,8 @@ namespace CS8803AGA.controllers
     /// </summary>
     public class PlayerController : CharacterController
     {
+        private static Brew ALL_BREW = new Brew(0, -1);
+
         public float dx { get; set; }
         public float dy { get; set; }
 
@@ -90,6 +93,8 @@ namespace CS8803AGA.controllers
                     if (m_collider.m_other.m_type == ColliderType.PC)
                     {
                         EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this, false));
+                        ((CompanionController)m_collider.m_other.m_owner).learnNewInfo(CharacterController.currPlan);
+                        ((CharacterController)m_collider.m_owner).brew.extract(ALL_BREW);
                     }
                     else
                     {

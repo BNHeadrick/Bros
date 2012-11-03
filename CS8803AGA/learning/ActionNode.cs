@@ -35,6 +35,16 @@ namespace CS8803AGA.learning
             children = new List<ActionNode>();
             parents = new List<ActionNode>();
         }
+        
+
+        /**
+         * Returns data
+         * @return
+         */
+        public PuzzleObject getData()
+        {
+            return data;
+        }
 
         /**
          * Adds a child node

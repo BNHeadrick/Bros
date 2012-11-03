@@ -25,7 +25,7 @@ namespace CS8803AGA.controllers
         public Bouncer bouncer;
         public Brew brew;
 
-        static private ActionNode currPlan;
+        static public ActionNode currPlan;
 
         public int getDoodadIndex()
         {
@@ -56,7 +56,7 @@ namespace CS8803AGA.controllers
                 cc.bouncer = null;
                 cc.brew = new Brew(0, 0);
 
-                currPlan = new ActionNode(ActionNode.EMPTY);
+                currPlan = null;// new ActionNode(ActionNode.EMPTY);
             }
             else if (typeOfChar == Constants.CharType.NPCHAR)
             {
@@ -87,7 +87,7 @@ namespace CS8803AGA.controllers
             bounds.Offset((int)cc.m_position.X, (int)cc.m_position.Y);
             cc.m_collider = new Collider(cc, bounds, type);
 
-            cc.m_speed = ci.speed;
+            cc.m_speed =  ci.speed;
 
             cc.m_previousAngle = (float)Math.PI / 2;
 
@@ -223,15 +223,21 @@ namespace CS8803AGA.controllers
 
         public void addTaskToPlan(PuzzleObject po)
         {
-            
-            currPlan.addLeaf(new ActionNode(po));
+            if (currPlan == null)
+            {
+                currPlan = new ActionNode(po);
+            }
+            else
+            {
+                currPlan.addLeaf(new ActionNode(po));
+            }
             currPlan.debugPrint();
         }
 
         public void clearPlan()
         {
             currPlan = null;
-            currPlan = new ActionNode(ActionNode.EMPTY);
+            //currPlan = new ActionNode(ActionNode.EMPTY);
         }
 
     }
