@@ -72,6 +72,7 @@ namespace CS8803AGA.engine
             //if(true)
             {
                 Companion.getCollider().move(newPos - Companion.getCollider().Bounds.Center());
+                ((CompanionController)Companion).learnNewInfo(null);
             }
             arrivingArea.add(GameplayManager.Player);
 

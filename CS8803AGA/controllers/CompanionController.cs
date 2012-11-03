@@ -164,6 +164,7 @@ namespace CS8803AGA.controllers
                     if (currentGoal != null)
                     {
                         interacting = true;
+                        walk_target = -1;
                     }
                 }
                 if (currentGoal != null)
@@ -192,6 +193,7 @@ namespace CS8803AGA.controllers
                             {
                                 // need to walk to
                                 walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, width, height);
+                                //Console.WriteLine("path: " + walk_dir);
                                 if (walk_dir != -1)
                                 {
                                     walking = true;
@@ -277,6 +279,7 @@ namespace CS8803AGA.controllers
                         if (next != null)
                         {
                             currentGoal = next;
+                            walk_target = -1;
                         }
                     }
                 }
@@ -306,6 +309,7 @@ namespace CS8803AGA.controllers
                 learnedPlan.merge(newInfo);
             }
             currentGoal = null;
+            walk_target = -1;
         }
 
     }

@@ -556,8 +556,9 @@ namespace CS8803AGA
             // check if doodad at location
             for (int i = 0; i < GameObjects.Count; i++)
             {
-                if (((ICollidable)GameObjects[i]).getCollider().Bounds.IntersectsWith(new DoubleRect(x-w/2, y-h/2, w, h)))
+                if (((ICollidable)GameObjects[i]).getCollider().m_type != ColliderType.PC && ((ICollidable)GameObjects[i]).getCollider().Bounds.IntersectsWith(new DoubleRect(x - w / 2, y - h / 2, w, h)))
                 {
+                    //Console.WriteLine(((ICollidable)GameObjects[i]).getCollider().m_type + " at "+(x/TILE_WIDTH)+"x"+(y/TILE_HEIGHT));
                     return true;
                 }
             }
@@ -711,9 +712,10 @@ namespace CS8803AGA
 
             for (int i = 0; i < open.Count; i++)
             {
-                if (!objectAt(Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + (Area.TILE_WIDTH - w) / 2, Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + (Area.TILE_HEIGHT - h) / 2, w, h))
+                //Console.WriteLine(start + " => " + open[i] + " : " + goal);
+                if (!objectAt(1+Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + (w) / 2, 1+Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + (h) / 2, w/2, h/2))
                 {
-                    //Console.WriteLine(start + " => " + open[i] + " : " + goal);
+//                    Console.WriteLine(start + " => " + open[i] + " : " + goal);
                     if (open[i] == goal)
                     {
                         // done
