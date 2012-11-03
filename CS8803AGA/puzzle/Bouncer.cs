@@ -91,7 +91,7 @@ namespace CS8803AGA.puzzle
          *@param brew the brew we have
          *@return true or false
          */
-        public bool canPass(Brew brew, int x, int y, int w, int h)
+        public bool canPass(Brew brew, int x, int y, int w, int h, int px, int py, int pw, int ph)
         {
             // ensure color is correct
             Console.WriteLine(color + " // " + brew.getColor());
@@ -100,6 +100,34 @@ namespace CS8803AGA.puzzle
                 // ensure path not blocked
                 Area area = GameplayManager.ActiveArea;
                 int dir = atPathStart ? 1 : -1;
+                // check obj at x,y
+                switch (getPath(0))
+                {
+                    case PATH_DOWN:
+                        if (py > y && px - pw / 2 < x + w / 2 && px + pw / 2 > x - w / 2)
+                        {
+                            return false;
+                        }
+                        break;
+                    case PATH_LEFT:
+                        if (px > x && py - ph / 2 < y + h / 2 && py + ph / 2 > y - h / 2)
+                        {
+                            return false;
+                        }
+                        break;
+                    case PATH_RIGHT:
+                        if (px < x && py - ph / 2 < y + h / 2 && py + ph / 2 > y - h / 2)
+                        {
+                            return false;
+                        }
+                        break;
+                    case PATH_UP:
+                        if (py < y && px - pw / 2 < x + w / 2 && px + pw / 2 > x - w / 2)
+                        {
+                            return false;
+                        }
+                        break;
+                }
                 for (int i = atPathStart ? 0 : path.Count - 1; atPathStart ? (i < path.Count) : (i >= 0); i += dir)
                 {
                     if (path[i] == PATH_UP * dir)
@@ -120,7 +148,7 @@ namespace CS8803AGA.puzzle
                     }
 
                     // check obj at x,y
-                    if (area.objectAt(x, y, w, h, false))
+                    if (area.objectAt(x, y, w, Area.TILE_HEIGHT-2, false))
                     {
                         return false;
                     }
