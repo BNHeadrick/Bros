@@ -72,7 +72,10 @@ namespace CS8803AGA.engine
             //if(true)
             {
                 Companion.getCollider().move(newPos - Companion.getCollider().Bounds.Center());
-                ((CompanionController)Companion).learnNewInfo(null);
+                ((CompanionController)Companion).learnNewInfo(CharacterController.currPlan);
+                CharacterController.currPlan = null;
+                //Player.brew.extract(CharacterController.ALL_BREW);
+                //Companion.brew.extract(CharacterController.ALL_BREW);
             }
             arrivingArea.add(GameplayManager.Player);
 

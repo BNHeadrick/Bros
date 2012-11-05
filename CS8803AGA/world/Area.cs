@@ -28,6 +28,8 @@ namespace CS8803AGA
         public static Point PARTYHOOD_NORTH = new Point(0, -2);
         public static Point PARTYHOOD_NORTH2 = new Point(0, -3);
         public static Point PARTYHOOD_NORTH3 = new Point(0, -4);
+        public static Point PARTYHOOD_NORTH4 = new Point(0, -5);
+        public static Point PARTYHOOD_NORTH5 = new Point(0, -6);
         public static Point PARTY = new Point(-1, -1);
         public static Point LIQUOR_STORE = new Point(-1, 1);
 
@@ -168,9 +170,9 @@ namespace CS8803AGA
                         if (puzzle.ContainsKey(doodads[i, j]))
                         {
                             if (puzzle[doodads[i, j]].type == PuzzleObject.TYPE_BOUNCER) {
-                                cc.bouncer = (Bouncer)puzzle[doodads[i, j]];
+                                cc.bouncer = (Bouncer)puzzle[doodads[i, j]].copy();
                             } else if (puzzle[doodads[i, j]].type == PuzzleObject.TYPE_BREW) {
-                                cc.brew = (Brew)puzzle[doodads[i, j]];
+                                cc.brew = (Brew)puzzle[doodads[i, j]].copy();
                             }
                         }
                         cc.setDoodadIndex(doodads[i, j]);
@@ -742,6 +744,7 @@ namespace CS8803AGA
         public int startPath(int start, int goal, int type, int id, int w, int h)
         {
             List<int> goals = new List<int>();
+            Console.WriteLine("goal is:" + goal);
             if (goal % Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
             {
                 goals.Add(goal - 1);

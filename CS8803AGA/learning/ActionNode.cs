@@ -19,6 +19,7 @@ namespace CS8803AGA.learning
         private List<ActionNode> parents; /**< the previous nodes */
         private PuzzleObject data; /**< whatever the data of the node is */
         public static PuzzleObject EMPTY = new EmptyPuzzleObject(); /**< empty data node */
+        public int value;
 
         public int id; /**< unique id */
         private static int next_id = 0; /**< next id */
@@ -29,6 +30,7 @@ namespace CS8803AGA.learning
          */
         public ActionNode(PuzzleObject _data)
         {
+            value = 0;
             data = _data.copy();
             id = next_id;
             next_id++;
@@ -77,7 +79,7 @@ namespace CS8803AGA.learning
         {
             List<ActionNode> next = new List<ActionNode>();
             //next.Add(this);
-            for (int j = 0; j < children.Count; j++)
+            for (int j = children.Count-1; j >= 0; j--)
             {
                 next.Add(children[j]);
             }
@@ -85,9 +87,40 @@ namespace CS8803AGA.learning
             {
                 if (findData.equals(next[i].data))
                 {
+                    if (i - next[i].parents.Count-next[i].value < 0)
+                    {
+                        return (i - next[i].parents.Count - next[i].value - 1);
+                    }
+                    return (i - next[i].parents.Count - next[i].value);
+                }
+                for (int j = next[i].children.Count-1; j >= 0; j--)
+                {
+                    next.Add(next[i].children[j]);
+                }
+            }
+            return -1;
+        }
+
+        /**
+         * Finds a node and returns the depth of it
+         *@param findData the node to find
+         *@return the depth or -1 if not present
+         */
+        public int findNodeDepth(PuzzleObject findData, List<int> visited)
+        {
+            List<ActionNode> next = new List<ActionNode>();
+            //next.Add(this);
+            for (int j = children.Count - 1; j >= 0; j--)
+            {
+                next.Add(children[j]);
+            }
+            for (int i = 0; i < next.Count; i++)
+            {
+                if (!visited.Contains(next[i].id) && findData.equals(next[i].data))
+                {
                     return i;
                 }
-                for (int j = 0; j < next[i].children.Count; j++)
+                for (int j = next[i].children.Count - 1; j >= 0; j--)
                 {
                     next.Add(next[i].children[j]);
                 }

@@ -382,6 +382,13 @@ namespace CS8803AGA.world
                 */
                 int I = 242;//nekogirl
                 int L = 251;//oldman
+                int U = 73;//bunny
+
+                int A = 141;//fairy
+                
+                
+                
+                int M = 181;//machine
                 
 
                 int W = 341;//white vehicle
@@ -397,6 +404,53 @@ namespace CS8803AGA.world
                 
                  
                 doodads = new int[] {
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,4,0,0,0,0,
+                    0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,4,0,0,0,0,
+                    0,0,0,0,4,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,4,4,4,0,
+                    0,4,4,4,4,0,0,0,0,4,0,0,0,4,0,4,4,4,0,4,4,0,0,0,
+                    0,0,0,0,0,0,4,4,0,4,4,0,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,4,0,0,0,4,4,0,4,4,4,4,4,0,4,0,0,0,0,
+                    0,0,M,4,4,0,4,4,4,U,4,4,0,0,0,0,0,4,0,4,0,0,0,0,
+                    0,0,0,4,0,0,0,0,4,0,0,0,I,4,0,4,4,4,A,4,4,4,4,0,
+                    0,4,4,4,4,4,U,4,4,4,4,L,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,4,4,4,0,4,4,4,4,4,4,4,4,4,4,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,0
+                };
+            }
+
+            else if (location == Area.PARTYHOOD_NORTH3)
+            {
+                /*
+                int D = 131; //guard
+                int N = 15; //ness
+                int M = 16; //monkey
+                */
+                int I = 242;//nekogirl
+                int L = 251;//oldman
+                int U = 73;//bunny
+
+                int A = 141;//fairy
+
+
+
+                int M = 181;//machine
+
+
+                int W = 341;//white vehicle
+                int B = 342;//blue vehicle
+                int R = 344;//red vehicle
+                int T = 161;//orange flame
+                int G = 162;//green flame
+                int Y = 214;//yellow monster
+                int K = 118;//black dragon
+                int H = 31; //brown horse
+                int X = 217;//purple monster
+
+
+
+                doodads = new int[] {
                     0,4,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -409,11 +463,11 @@ namespace CS8803AGA.world
                     0,0,0,0,0,0,0,0,0,Y,G,K,T,H,X,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                    0,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,0
+                    0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,0
                 };
             }
 
-            else if (location == Area.PARTYHOOD_NORTH3)
+            else if (location == Area.PARTYHOOD_NORTH4)
             {
                 
                 int D = 131; //guard
@@ -448,6 +502,32 @@ namespace CS8803AGA.world
                     0,4,4,4,4,0,0,0,0,0,0,0,0,0,0,T,0,4,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,X,H,K,Y,0,
                     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,
+                    0,4,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,0
+                };
+            }
+
+            else if (location == Area.PARTYHOOD_NORTH5)
+            {
+                int L = 251;//oldman
+
+                int A = 141;//fairy
+
+                int M = 181;//machine
+
+                
+                doodads = new int[] {
+                    0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,4,4,4,0,4,0,0,4,0,4,4,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,4,0,0,0,4,4,0,4,0,4,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,4,4,0,0,4,4,4,4,0,4,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,4,0,0,0,4,0,4,4,0,4,0,4,0,0,0,0,0,0,0,0,0,0,
+                    0,0,4,4,4,0,4,0,0,4,0,4,4,0,4,4,4,4,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,0,4,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,
+                    0,4,4,4,4,4,4,4,L,4,4,4,4,4,4,4,A,4,4,4,4,4,4,0,
+                    0,0,0,0,0,0,0,M,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                     0,4,4,4,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,4,4,0
                 };
             }
@@ -569,7 +649,58 @@ namespace CS8803AGA.world
 
             else if (location == Area.PARTYHOOD_NORTH2)
             {
-             
+
+                int I = 242;//nekogirl
+                int L = 251;//oldman
+                int U = 73;//bunny
+                int A = 141;//fairy
+
+                int M = 181;//machine
+
+                List<int> i_path = new List<int>();
+                i_path.Add(Bouncer.PATH_DOWN);
+                i_path.Add(Bouncer.PATH_DOWN);
+                puzzle.Add(I, new Bouncer(Brew.COLOR_BLUE|Brew.COLOR_ORANGE, i_path));
+
+                List<int> l_path = new List<int>();
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_DOWN);
+                l_path.Add(Bouncer.PATH_DOWN);
+                puzzle.Add(L, new Bouncer(Brew.COLOR_RED | Brew.COLOR_GREEN, l_path));
+
+                List<int> u_path = new List<int>();
+                u_path.Add(Bouncer.PATH_UP);
+                u_path.Add(Bouncer.PATH_LEFT);
+                u_path.Add(Bouncer.PATH_LEFT);
+                puzzle.Add(U, new Bouncer(Brew.COLOR_WHITE | Brew.COLOR_GREEN, u_path));
+
+                puzzle.Add(M, new Brew(Brew.COLOR_YELLOW, Brew.COLOR_RED));
+
+                List<int> a_path = new List<int>();
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_UP);
+                puzzle.Add(A, new Bouncer(Brew.COLOR_WHITE | Brew.COLOR_GREEN | Brew.COLOR_YELLOW, a_path));
+
+
+                int W = 341;//white vehicle
+                int B = 342;//blue vehicle
+                int R = 344;//red vehicle
+                int T = 161;//orange flame
+                int Y = 214;//yellow monster
+                int G = 162;//green flame
+                puzzle.Add(W, new Brew(Brew.COLOR_WHITE, 0));
+                puzzle.Add(Y, new Brew(Brew.COLOR_YELLOW, 0));
+                puzzle.Add(R, new Brew(Brew.COLOR_RED, 0));
+                puzzle.Add(T, new Brew(Brew.COLOR_ORANGE, 0));
+                puzzle.Add(G, new Brew(Brew.COLOR_GREEN, 0));
+                puzzle.Add(B, new Brew(Brew.COLOR_BLUE, 0));
+            }
+
+            else if (location == Area.PARTYHOOD_NORTH3)
+            {
+
                 int I = 242;//nekogirl
                 int L = 251;//oldman
 
@@ -608,7 +739,7 @@ namespace CS8803AGA.world
                 puzzle.Add(G, new Brew(Brew.COLOR_GREEN, 0));
             }
 
-            else if (location == Area.PARTYHOOD_NORTH3)
+            else if (location == Area.PARTYHOOD_NORTH4)
             {
                 int D = 131; //guard
                 int N = 15; //ness
@@ -643,7 +774,7 @@ namespace CS8803AGA.world
                 k_path.Add(Bouncer.PATH_UP);
                 k_path.Add(Bouncer.PATH_UP);
 
-                puzzle.Add(L, new Bouncer(Brew.COLOR_RED, k_path));
+                puzzle.Add(L, new Bouncer(Brew.COLOR_RED | Brew.COLOR_GREEN, k_path));
                 puzzle.Add(R, new Brew(Brew.COLOR_RED, 0));
 
                 k_path = new List<int>();
@@ -677,6 +808,36 @@ namespace CS8803AGA.world
                 //red herrings
                 puzzle.Add(T, new Brew(Brew.COLOR_ORANGE, 0));
                 puzzle.Add(G, new Brew(Brew.COLOR_GREEN, 0));
+            }
+
+            else if (location == Area.PARTYHOOD_NORTH5)
+            {
+                int L = 251;//oldman
+                int A = 141;//fairy
+
+                int M = 181;//machine
+
+                List<int> l_path = new List<int>();
+                l_path.Add(Bouncer.PATH_UP);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_RIGHT);
+                l_path.Add(Bouncer.PATH_UP);
+                puzzle.Add(L, new Bouncer(Brew.COLOR_RED | Brew.COLOR_GREEN, l_path));
+
+                puzzle.Add(M, new Brew(Brew.COLOR_YELLOW, Brew.COLOR_RED));
+
+                List<int> a_path = new List<int>();
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_UP);
+                a_path.Add(Bouncer.PATH_LEFT);
+                puzzle.Add(A, new Bouncer(Brew.COLOR_WHITE | Brew.COLOR_GREEN | Brew.COLOR_YELLOW, a_path));
             }
 
             return puzzle;
@@ -720,12 +881,12 @@ namespace CS8803AGA.world
                 };
             }
 
-            else if (location == Area.PARTYHOOD_NORTH)
+            /*else if (location == Area.PARTYHOOD_NORTH)
             {
                 transitions = new int[]{
-                        /*back door */0, 9, Area.PARTYHOOD_NORTH2.X, Area.PARTYHOOD_NORTH2.Y, 9, 3
+                        /*back door * /0, 9, Area.PARTYHOOD_NORTH2.X, Area.PARTYHOOD_NORTH2.Y, 9, 3
                 };
-            }
+            }*/
 
             //Console.WriteLine("This function was called");
 

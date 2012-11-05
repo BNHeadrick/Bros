@@ -26,6 +26,8 @@ namespace CS8803AGA.controllers
         public Bouncer bouncer;
         public Brew brew;
 
+        public static Brew ALL_BREW = new Brew(0, -1);
+
         static public ActionNode currPlan;
 
         public int getDoodadIndex()

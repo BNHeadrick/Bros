@@ -23,6 +23,7 @@ namespace CS8803AGA.controllers
 
         private ActionNode currentGoal; /**< current goal in learnedPlan */
         private int currentGoalID;
+        public List<int> invalids;
         private int walk_target; /**< where to twlk to */
         private bool walking; /**< where to walk to */
         private bool interacting; /**< whether interact*/
@@ -72,6 +73,7 @@ namespace CS8803AGA.controllers
             walk_dir = 0;
             walk_target = -1;
             interacting = false;
+            invalids = new List<int>();
 
             is_init = false;
 
@@ -156,16 +158,23 @@ namespace CS8803AGA.controllers
                     // choose highest priority object to interact with
                     for (int i = 0; i < objs.Count; i++)
                     {
-                        int p = learnedPlan.findNodeDepth(objs[i]);
-                        if (p != -1 && (currentGoal == null || p < priority))
+                        if (!invalids.Contains(objs[i].id))
                         {
-                            currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
-                            currentGoalID = objs[i].id;
-                            priority = p;
+                            int p = learnedPlan.findNodeDepth(objs[i]);
+                            if (p != -1 && (currentGoal == null || p < priority))
+                            {
+                                currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
+                                currentGoalID = objs[i].id;
+                                priority = p;
+                            }
                         }
                     }
                     if (currentGoal != null)
                     {
+                        currentGoal.value++;
+                        //invalids.Clear();
+                        invalids.Add(currentGoalID);
+                        Console.WriteLine("doing: " + currentGoal.id);
                         interacting = true;
                         walk_target = -1;
                     }
@@ -182,9 +191,10 @@ namespace CS8803AGA.controllers
                             if (walk_target == -1)
                             {
                                 walk_target = GameplayManager.ActiveArea.getObjectLocation(currentGoalID);
+                                Console.WriteLine("walk to: " + (walk_target) % Area.WIDTH_IN_TILES + "x" + (walk_target / Area.WIDTH_IN_TILES));
                             }
-                            //int gx = walk_target % Area.WIDTH_IN_TILES;
-                            //int gy = walk_target / Area.WIDTH_IN_TILES;
+                            int gx = walk_target % Area.WIDTH_IN_TILES;
+                            int gy = walk_target / Area.WIDTH_IN_TILES;
                             if (x+y*Area.WIDTH_IN_TILES == walk_target)//(gx - x) * (gx - x) + (gy - y) * (gy - y) <= 1)
                             { // adjacent
                                 // interact!
@@ -214,6 +224,12 @@ namespace CS8803AGA.controllers
                                     //Console.WriteLine((x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2) + "x" + (3+y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
 
                                     m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - width) / 2, 11 - (float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - height) / 2));
+                                }
+                                else
+                                { // need to pick another action / can't reach this one
+                                    Console.WriteLine(walk_target + " is impossible to reach");
+                                    currentGoal = null;
+                                    return false;
                                 }
                             }
                         }
@@ -278,12 +294,15 @@ namespace CS8803AGA.controllers
                         // choose highest priority object to interact with
                         for (int i = 0; i < objs.Count; i++)
                         {
-                            int p = currentGoal.findNodeDepth(objs[i]);
-                            if (p != -1 && (next == null || p < priority))
+                            if (!invalids.Contains(objs[i].id))
                             {
-                                next = currentGoal.findNode(new ActionNode(objs[i]));
-                                nextID = objs[i].id;
-                                priority = p;
+                                int p = currentGoal.findNodeDepth(objs[i]);
+                                if (p != -1 && (next == null || p < priority))
+                                {
+                                    next = currentGoal.findNode(new ActionNode(objs[i]));
+                                    nextID = objs[i].id;
+                                    priority = p;
+                                }
                             }
                         }
                         /*int next_walk_target = -1;
@@ -294,12 +313,39 @@ namespace CS8803AGA.controllers
                         if (next != null)// && last_walk_target != next_walk_target)
                         {
                             currentGoal = next;
+                            currentGoal.value++;
                             Console.WriteLine("doing: " + currentGoal.id);
                             currentGoalID = nextID;
                             walk_target = -1;
                             interacting = true;
+                            invalids.Add(currentGoalID);
 
                             //last_walk_target = next_walk_target;
+                        }
+                        else
+                        {
+                            // check if this is another step series we can do
+                            /*for (int i = 0; i < objs.Count; i++)
+                            {
+                                int p = learnedPlan.findNodeDepth(objs[i], doneGoals);
+                                if (p != -1 && (next == null || p < priority))
+                                {
+                                    currentGoal = learnedPlan.findNode(new ActionNode(objs[i]));
+                                    nextID = objs[i].id;
+                                    priority = p;
+                                }
+                            }
+                            if (next != null)
+                            {
+                                currentGoal = next;
+                                Console.WriteLine("re-doing: " + currentGoal.id);
+                                doneGoals.Add(currentGoal.id);
+                                currentGoalID = nextID;
+                                walk_target = -1;
+                                interacting = true;
+                            }*/
+                            currentGoal = null;
+                            currentGoalID = -1;
                         }
                     }
                 }
@@ -329,6 +375,7 @@ namespace CS8803AGA.controllers
                 learnedPlan.merge(newInfo);
             }
             currentGoal = null;
+            invalids.Clear();
             walk_target = -1;
         }
 
