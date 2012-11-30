@@ -91,6 +91,22 @@ namespace CS8803AGA.engine
             }
 
             activeArea = arrivingArea;
+
+            if (activeArea.GlobalLocation == Area.PARTY)
+            {
+                // place the companion and player into new default start locales
+                double xdiff = GameplayManager.Player.m_position.X - GameplayManager.Player.m_collider.m_bounds.X;
+                double ydiff = GameplayManager.Player.m_position.Y - GameplayManager.Player.m_collider.m_bounds.Y;
+                GameplayManager.Player.m_position = new Vector2(Area.TILE_WIDTH*3, Area.TILE_HEIGHT*3);
+                GameplayManager.Player.m_collider.m_bounds.X = GameplayManager.Player.m_position.X-xdiff;
+                GameplayManager.Player.m_collider.m_bounds.Y = GameplayManager.Player.m_position.Y - ydiff;
+
+                xdiff = GameplayManager.Companion.m_position.X - GameplayManager.Companion.m_collider.m_bounds.X;
+                ydiff = GameplayManager.Companion.m_position.Y - GameplayManager.Companion.m_collider.m_bounds.Y;
+                GameplayManager.Companion.m_position = new Vector2(Area.TILE_WIDTH*5, Area.TILE_HEIGHT*9);
+                GameplayManager.Companion.m_collider.m_bounds.X = GameplayManager.Companion.m_position.X - xdiff;
+                GameplayManager.Companion.m_collider.m_bounds.Y = GameplayManager.Companion.m_position.Y - ydiff;
+            }
         }
 
         public static void drawHUD()

@@ -105,14 +105,20 @@ namespace CS8803AGA
 
         #region IGameObject Members
 
+        public int getDoodadIndex()
+        {
+            return -1;
+        }
+
         public bool isAlive()
         {
             return true;
         }
 
-        public void update()
+        public bool update()
         {
             // nch
+            return true;
         }
 
         #endregion

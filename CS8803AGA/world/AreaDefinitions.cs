@@ -389,17 +389,6 @@ namespace CS8803AGA.world
                 
                 
                 int M = 181;//machine
-                
-
-                int W = 341;//white vehicle
-                int B = 342;//blue vehicle
-                int R = 344;//red vehicle
-                int T = 161;//orange flame
-                int G = 162;//green flame
-                int Y = 214;//yellow monster
-                int K = 118;//black dragon
-                int H = 31; //brown horse
-                int X = 217;//purple monster
 
                 
                  
@@ -429,18 +418,7 @@ namespace CS8803AGA.world
                 */
                 int I = 242;//nekogirl
                 int L = 251;//oldman
-                int U = 73;//bunny
 
-                int A = 141;//fairy
-
-
-
-                int M = 181;//machine
-
-
-                int W = 341;//white vehicle
-                int B = 342;//blue vehicle
-                int R = 344;//red vehicle
                 int T = 161;//orange flame
                 int G = 162;//green flame
                 int Y = 214;//yellow monster

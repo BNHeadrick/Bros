@@ -30,7 +30,7 @@ namespace CS8803AGA.controllers
         private int walk_dir; /**< what dir to walk */
         private int distance; /**< how far traveled */
 
-        private int last_walk_target;
+        //private int last_walk_target;
 
         private bool is_init;
         private int width;
@@ -77,18 +77,26 @@ namespace CS8803AGA.controllers
 
             is_init = false;
 
-            last_walk_target = -1;
+            //last_walk_target = -1;
 
             ///debug
             //learnedPlan.addLeaf(new ActionNode(new Brew(Brew.COLOR_RED, 0)));
         }
 
-        public override void update()
+        public override bool update()
         {
-            //if there are no plans to execute (i.e., if the plan execution fails due to lack of associated
-            if (!executePlan())
+            if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
+            { /// TODO: put social game stuff in here
+                return true;
+            }
+            else
             {
-                followPlayer();
+                //if there are no plans to execute (i.e., if the plan execution fails due to lack of associated
+                if (!executePlan())
+                {
+                    followPlayer();
+                }
+                return true;
             }
         }
 

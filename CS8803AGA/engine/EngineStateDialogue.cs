@@ -21,7 +21,7 @@ namespace CS8803AGA.engine
         private int bouncerDist;
         private int bouncerI;
 
-        private bool brewMode;
+        //private bool brewMode;
 
         private bool drawOnCompanionSide;
 
@@ -40,12 +40,20 @@ namespace CS8803AGA.engine
         {
             m_baseImage = new GameTexture(@"Sprites/RPG/PopupScreen");
 
-            m_dialog = DialogManager.get(character);
+            if (GameplayManager.ActiveArea.GlobalLocation != Area.PARTY)
+            {
+                m_dialog = DialogManager.get(character);
+            }
+            else
+            {
+                // TODO put social game results here!
+                m_dialog = new Dialog(character+" played a social game, or passed or whatever...", false, Color.WhiteSmoke);
+            }
             m_button4_released = false;
 
             drawOnCompanionSide = is_companion;
 
-            brewMode = false;
+            //brewMode = false;
             bouncerMode = false;
             bouncerPass = false;
             bouncerDist = 0;
@@ -70,7 +78,7 @@ namespace CS8803AGA.engine
                 {
                     //if what was passed in is the player, then add what task he's currently doing to the plan.
 
-                    brewMode = true;
+                    //brewMode = true;
                     if (player.brew.mix(npc.brew))
                     {
                         m_dialog = null;

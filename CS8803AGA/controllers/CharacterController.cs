@@ -16,8 +16,8 @@ namespace CS8803AGA.controllers
         public int Health { get; set; }
         public AnimationController AnimationController { get; protected set; }
 
-        protected Vector2 m_position;
-        protected Collider m_collider;
+        public Vector2 m_position;
+        public Collider m_collider;
         public int m_speed;
 
         protected float m_previousAngle;
@@ -50,12 +50,16 @@ namespace CS8803AGA.controllers
         public static CharacterController construct(CharacterInfo ci, Vector2 startpos, Constants.CharType typeOfChar, PlayerController p)
         {
             CharacterController cc;
+            cc = new CharacterController();
+            cc.m_doodadIndex = 0;
             ColliderType type;
             if (typeOfChar == Constants.CharType.PLAYERCHAR)
             {
                 cc = new PlayerController();
+                ((PlayerController)cc).played_social_game = false;
                 type = ColliderType.PC;
 
+                cc.m_doodadIndex = Constants.PLAYER;
                 cc.bouncer = null;
                 cc.brew = new Brew(0, 0);
 
@@ -63,7 +67,6 @@ namespace CS8803AGA.controllers
             }
             else if (typeOfChar == Constants.CharType.NPCHAR)
             {
-                cc = new CharacterController();
                 type = ColliderType.NPC;
 
                 cc.bouncer = null;
@@ -74,12 +77,13 @@ namespace CS8803AGA.controllers
             {
                 cc = new CompanionController(p);
                 type = ColliderType.PC;
+                cc.m_doodadIndex = Constants.COMPANION;
 
                 cc.bouncer = null;
                 cc.brew = new Brew(0, 0);
             }
 
-            cc.m_doodadIndex = 0;
+            
             cc.m_position = startpos;
 
             cc.AnimationController = new AnimationController(ci.animationDataPath, ci.animationTexturePath);
@@ -119,9 +123,17 @@ namespace CS8803AGA.controllers
             Health = 2;
         }
 
-        public virtual void update()
+        public virtual bool update()
         {
-            // TODO
+            if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
+            { /// TODO play social game here
+                EngineManager.pushState(new EngineStateDialogue(getDoodadIndex(), null, null, false));
+                return true;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public virtual void draw()

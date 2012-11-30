@@ -202,9 +202,10 @@ namespace CS8803AGA
             return true;
         }
 
-        public override void update()
+        public override bool update()
         {
             // nch
+            return true;
         }
 
         public override void draw()

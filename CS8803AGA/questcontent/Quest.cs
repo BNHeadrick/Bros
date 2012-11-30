@@ -27,7 +27,7 @@ namespace CS8803AGA.questcontent
         public static bool talkedToBrewThief3 = false;
         public static bool talkedToStolenBrewAgain = false;
         public static bool drankStolenBrew = false;
-        public static bool hasPartyKey = false;
+        public static bool hasPartyKey = true;
 
 
         //// vars for PROTECT_COMPANION

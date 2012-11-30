@@ -20,6 +20,8 @@ namespace CS8803AGA.controllers
         public float dx { get; set; }
         public float dy { get; set; }
 
+        public bool played_social_game;
+
         public Vector2 getAbsPosVec()
         {
             return getMPos();
@@ -30,7 +32,7 @@ namespace CS8803AGA.controllers
             // nch, should only be called by CharacterController.construct
         }
 
-        public override void update()
+        public override bool update()
         {
             AnimationController.update();
 
@@ -51,7 +53,7 @@ namespace CS8803AGA.controllers
 
             if (dx == 0 && dy == 0)
             {
-                return;
+                return false;
             }
             else
             {
@@ -71,6 +73,8 @@ namespace CS8803AGA.controllers
             }
 
             m_previousAngle = angle;
+
+            return played_social_game;
         }
 
         /// <summary>
@@ -87,7 +91,7 @@ namespace CS8803AGA.controllers
                 }
                 // we are still colliding so check for dialog
                 else if (InputSet.getInstance().getButton(InputsEnum.BUTTON_4))
-                {
+                { ///TODO: social game stuff
                     if (m_collider.m_other.m_type == ColliderType.PC)
                     {
                         EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this, false));

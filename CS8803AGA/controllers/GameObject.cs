@@ -16,7 +16,9 @@ namespace CS8803AGA.controllers
         /// <summary>
         /// How the object updates each frame.
         /// </summary>
-        void update();
+        bool update();
+
+        int getDoodadIndex();
 
         /// <summary>
         /// How the object renders each frame.

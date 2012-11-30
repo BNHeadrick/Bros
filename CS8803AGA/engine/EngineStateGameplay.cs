@@ -16,6 +16,9 @@ namespace CS8803AGA.engine
     /// </summary>
     public class EngineStateGameplay : AEngineState
     {
+        public int[] party_order;
+        public int current_partier;
+
         /// <summary>
         /// Creates an EngineStateGameplay and registers it with the GameplayManager.
         /// Also creates and initializes a PlayerController and starting Area.
@@ -42,6 +45,22 @@ namespace CS8803AGA.engine
             GameplayManager.initialize(this, player, compC, WorldManager.GetArea(startPoint));
 
             Quest.initPartyQuest();
+
+            party_order = new int[]{
+                Constants.PARTY_PEOPLE1,
+                Constants.PARTY_PEOPLE2,
+                Constants.PARTY_PEOPLE3,
+                Constants.PARTY_PEOPLE4,
+                Constants.PARTY_PEOPLE5,
+                Constants.PARTY_PEOPLE6,
+                Constants.PARTY_PEOPLE7,
+                Constants.PARTY_PEOPLE8,
+                Constants.PARTY_PEOPLE9,
+                Constants.PARTY_PEOPLE10,
+                Constants.PLAYER,
+                Constants.COMPANION
+            };
+            current_partier = 0;
         }
 
         /// <summary>
@@ -50,7 +69,7 @@ namespace CS8803AGA.engine
         /// <param name="gameTime"></param>
         /// <returns></returns>
         public override void update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
+        {           
             if (InputSet.getInstance().getButton(InputsEnum.BUTTON_3))
             {
                 EngineManager.pushState(new EngineStateMap());
@@ -60,7 +79,24 @@ namespace CS8803AGA.engine
             GameplayManager.Player.checkNPCCollision();
 
             Area area = GameplayManager.ActiveArea;
-            area.GameObjects.ForEach(i => i.update());
+            if (area.GlobalLocation == Area.PARTY)
+            { // make party turn based
+                for (int i = 0; i < area.GameObjects.Count; i++)
+                {
+                    if (area.GameObjects[i].getDoodadIndex() == party_order[current_partier])
+                    {
+                        if (area.GameObjects[i].update() && ++current_partier >= party_order.Length)
+                        {
+                            current_partier = 0;
+                        }
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                area.GameObjects.ForEach(i => i.update());
+            }
             area.GameObjects.ForEach(i => { if (!i.isAlive() && i is ICollidable) ((ICollidable)i).getCollider().unregister(); });
             area.GameObjects.RemoveAll(i => !i.isAlive());
 

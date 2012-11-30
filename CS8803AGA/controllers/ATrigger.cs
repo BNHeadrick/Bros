@@ -14,6 +14,11 @@ namespace CS8803AGA.controllers
     /// </summary>
     public abstract class ATrigger : ITrigger, ICollidable
     {
+        public int getDoodadIndex()
+        {
+            return -1;
+        }
+
         public ATrigger(Rectangle bounds)
         {
             m_collider = new Collider(this, bounds, ColliderType.Trigger);
@@ -54,7 +59,7 @@ namespace CS8803AGA.controllers
 
         public abstract bool isAlive();
 
-        public abstract void update();
+        public abstract bool update();
 
         public abstract void draw();
 

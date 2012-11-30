@@ -38,7 +38,7 @@ namespace CS8803AGA.controllers
             return false; // only last one frame
         }
 
-        public override void update()
+        public override bool update()
         {
             List<Collider> collisions = m_collider.queryDetector(m_collider.Bounds);
 
@@ -52,6 +52,7 @@ namespace CS8803AGA.controllers
                     }
                 }
             }
+            return true;
         }
 
         public override void draw()
