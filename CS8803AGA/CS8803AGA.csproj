@@ -101,9 +101,9 @@
     <Compile Include="collision\CollisionDetector.cs" />
     <Compile Include="Knowledge\CulturalKnowledgebase.cs" />
     <Compile Include="Knowledge\PersonalityDescriptions.cs" />
-    <Compile Include="Knowledge\SocialFact.cs" />
     <Compile Include="Knowledge\SocialFacts.cs" />
     <Compile Include="Knowledge\SocialGame.cs" />
+    <Compile Include="Knowledge\SocialGames.cs" />
     <Compile Include="Knowledge\SocialNetworks.cs" />
     <Compile Include="Knowledge\SocialStatusRules.cs" />
     <Compile Include="learning\ActionNode.cs" />

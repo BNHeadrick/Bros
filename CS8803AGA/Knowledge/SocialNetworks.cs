@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CS8803AGA.controllers;
 
 namespace CS8803AGA.Knowledge
 {
@@ -16,5 +17,61 @@ namespace CS8803AGA.Knowledge
     {
         //this needs to have access to all NPCs and have a one to many relationship with all non-self NPCs
         //this could be done in a simple 2D array if nothing more sophisticated seems nessisary.
+
+        Dictionary<string, SocialNetwork> dictionary;
+
+        public SocialNetworks()
+        {
+            dictionary = new Dictionary<string, SocialNetwork>();
+        }
+
+        public void addSocNet(String key, CharacterController cc)
+        {
+            SocialNetwork sn = new SocialNetwork(cc);
+            dictionary.Add(key, sn);
+        }
+
+
+        public SocialNetwork getSocialNetwork(String key)
+        {
+            SocialNetwork theSN = null;
+            // See whether Dictionary contains this string.
+            if (dictionary.ContainsKey(key))
+            {
+                theSN = dictionary[key];
+            }
+            return theSN;
+        }
+
+    }
+
+    public class SocialNetwork
+    {
+        Dictionary<string, InnerSocialNetwork> innerSocNet;
+        CharacterController charCont;
+
+        public SocialNetwork(CharacterController cc)
+        {
+            charCont = cc;
+            innerSocNet = new Dictionary<string, InnerSocialNetwork>();
+        }
+
+        public void addInnerNetwork(String key, CharacterController cc)
+        {
+            InnerSocialNetwork isn = new InnerSocialNetwork(cc);
+            innerSocNet.Add(key, isn);
+        }
+
+    }
+    /*
+     *This class has is the "many" part of each social classes' one to many relationship.
+     */
+    public class InnerSocialNetwork
+    {
+        CharacterController innerChar;
+        public InnerSocialNetwork(CharacterController cc)
+        {
+            innerChar = cc;
+        }
     }
 }
