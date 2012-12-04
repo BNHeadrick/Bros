@@ -56,7 +56,6 @@ namespace CS8803AGA.controllers
             if (typeOfChar == Constants.CharType.PLAYERCHAR)
             {
                 cc = new PlayerController();
-                ((PlayerController)cc).played_social_game = false;
                 type = ColliderType.PC;
 
                 cc.m_doodadIndex = Constants.PLAYER;

@@ -7,5 +7,11 @@ namespace CS8803AGA.Knowledge
 {
     class SocialGame
     {
+        public string name; /**< name of the game */
+
+        public SocialGame(string _name)
+        {
+            name = _name;
+        }
     }
 }

@@ -99,6 +99,7 @@
     <Compile Include="collision\QuadTree.cs" />
     <Compile Include="collision\Collider.cs" />
     <Compile Include="collision\CollisionDetector.cs" />
+    <Compile Include="engine\EngineStateSocialGame.cs" />
     <Compile Include="Knowledge\CulturalKnowledgebase.cs" />
     <Compile Include="Knowledge\PersonalityDescriptions.cs" />
     <Compile Include="Knowledge\SocialFacts.cs" />

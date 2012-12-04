@@ -20,8 +20,6 @@ namespace CS8803AGA.controllers
         public float dx { get; set; }
         public float dy { get; set; }
 
-        public bool played_social_game;
-
         public Vector2 getAbsPosVec()
         {
             return getMPos();
@@ -34,6 +32,12 @@ namespace CS8803AGA.controllers
 
         public override bool update()
         {
+            if (EngineStateSocialGame.game_played)
+            {
+                EngineStateSocialGame.game_played = false;
+                return true;
+            }
+
             AnimationController.update();
 
             if (InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON))
@@ -74,7 +78,7 @@ namespace CS8803AGA.controllers
 
             m_previousAngle = angle;
 
-            return played_social_game;
+            return false;
         }
 
         /// <summary>
@@ -91,18 +95,52 @@ namespace CS8803AGA.controllers
                 }
                 // we are still colliding so check for dialog
                 else if (InputSet.getInstance().getButton(InputsEnum.BUTTON_4))
-                { ///TODO: social game stuff
-                    if (m_collider.m_other.m_type == ColliderType.PC)
+                {
+                    if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
                     {
-                        EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this, false));
-                        ((CompanionController)m_collider.m_other.m_owner).learnNewInfo(CharacterController.currPlan);
-                        ((CharacterController)m_collider.m_owner).brew.extract(ALL_BREW);
-                        ((CharacterController)m_collider.m_other.m_owner).brew.extract(ALL_BREW);
-                        CharacterController.currPlan = null;
+                        // move to appropriate spot (not in same square as other)
+                        double angle = Math.Atan2(m_collider.m_other.m_bounds.Center().Y - m_collider.m_bounds.Center().Y, m_collider.m_other.m_bounds.Center().X - m_collider.m_bounds.Center().X);
+                        int dx = 0;
+                        int dy = 0;
+                        while (angle < 0)
+                        {
+                            angle += 2*Math.PI;
+                        }
+                        while (angle >= 2 * Math.PI)
+                        {
+                            angle -= 2 * Math.PI;
+                        }
+                        if (angle <= Math.PI/4.0f || angle > 7.0f*Math.PI/4.0f) {
+                            dx = -Area.TILE_WIDTH;
+                        } else if (angle <= 3.0f*Math.PI/4.0f) {
+                            dy = -Area.TILE_HEIGHT;
+                        } else if (angle <= 5.0f*Math.PI/4.0f) {
+                            dx = Area.TILE_WIDTH;
+                        } else {
+                            dy = Area.TILE_HEIGHT;
+                        }
+                        double xdiff = m_position.X - m_collider.m_bounds.X;
+                        double ydiff = m_position.Y - m_collider.m_bounds.Y;
+                        m_position = new Vector2(((CharacterController)m_collider.m_other.m_owner).m_position.X+dx, ((CharacterController)m_collider.m_other.m_owner).m_position.Y+dy);
+                        m_collider.move(new Vector2((float)(-m_collider.m_bounds.X + m_position.X - xdiff), (float)(-m_collider.m_bounds.Y + m_position.Y - ydiff)));
+                        m_position = new Vector2(((CharacterController)m_collider.m_other.m_owner).m_position.X + dx, ((CharacterController)m_collider.m_other.m_owner).m_position.Y + dy);
+
+                        EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), ((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex()));
                     }
                     else
                     {
-                        EngineManager.pushState(new EngineStateDialogue(((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex(), (CharacterController)m_collider.m_other.m_owner, this, false));
+                        if (m_collider.m_other.m_type == ColliderType.PC)
+                        {
+                            EngineManager.pushState(new EngineStateDialogue(Constants.COMPANION, (CharacterController)m_collider.m_other.m_owner, this, false));
+                            ((CompanionController)m_collider.m_other.m_owner).learnNewInfo(CharacterController.currPlan);
+                            ((CharacterController)m_collider.m_owner).brew.extract(ALL_BREW);
+                            ((CharacterController)m_collider.m_other.m_owner).brew.extract(ALL_BREW);
+                            CharacterController.currPlan = null;
+                        }
+                        else
+                        {
+                            EngineManager.pushState(new EngineStateDialogue(((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex(), (CharacterController)m_collider.m_other.m_owner, this, false));
+                        }
                     }
                 }
             }

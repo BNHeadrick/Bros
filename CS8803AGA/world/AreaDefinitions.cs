@@ -96,7 +96,7 @@ namespace CS8803AGA.world
             else if (location == Area.PARTY)
             {
                 tiles = new int[]{
-                    4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+                    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
                     4,6,6,6,6,6,6,6,6,3,6,6,6,6,6,6,6,6,6,6,6,6,6,4,
                     4,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,4,
                     4,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,4,
@@ -852,12 +852,12 @@ namespace CS8803AGA.world
                         /*back door */9, 4, Area.PARTY.X, Area.PARTY.Y, 9, 1
                 };
             }
-            else if (location == Area.PARTY)
+            /*else if (location == Area.PARTY)
             {
                 transitions = new int[]{
-                        /*back door */9, 0, Area.PARTYHOOD.X, Area.PARTYHOOD.Y, 9, 3
+                        /*back door * /9, 0, Area.PARTYHOOD.X, Area.PARTYHOOD.Y, 9, 3
                 };
-            }
+            }*/
 
             /*else if (location == Area.PARTYHOOD_NORTH)
             {
