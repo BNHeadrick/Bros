@@ -570,6 +570,104 @@ namespace CS8803AGA
         }
 
         /**
+         * Returns the id of the character at the specified tile
+         *@param x
+         *@param y
+         *@return -1 if there is no object (as defined by getDoodadIndex())
+         */
+        public int getCharacterIdAt(int x, int y)
+        {
+            if ((!TileSet.tileInfos[Tiles[x, y]].passable))
+            {
+                return -1;
+            }
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                if (GameObjects[i].getDoodadIndex() != -1 && (int)(((ICollidable)GameObjects[i]).getCollider().Bounds.Center().X) / TILE_WIDTH == x && (int)(((ICollidable)GameObjects[i]).getCollider().Bounds.Center().Y) / TILE_HEIGHT == y)
+                {
+                    return GameObjects[i].getDoodadIndex();
+                }
+            }
+            return -1;
+        }
+
+        /**
+         * Returns the character
+         *@param id the doodad index of the character
+         *@return the character or null
+         */
+        public CharacterController getCharacter(int id)
+        {
+            if (id < 0)
+            {
+                return null;
+            }
+            for (int i = 0; i < GameObjects.Count; i++)
+            {
+                if (GameObjects[i].getDoodadIndex() == id)
+                {
+                    return (CharacterController)GameObjects[i];
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Returns a list of party people that can be interacted with
+         *@param x x
+         *@param y y
+         *@param w width
+         *@param h height
+         */
+        public List<int> getPartiers(int x, int y, int w, int h)
+        {
+            List<int> partiers = new List<int>();
+
+            //bfs out
+            List<int> open = new List<int>();
+            open.Add(x/TILE_WIDTH + y/TILE_HEIGHT * WIDTH_IN_TILES);
+
+            for (int i = 0; i < open.Count; i++)
+            {
+                int curX = open[i] % WIDTH_IN_TILES; // tile coord of square
+                int curY = open[i] / WIDTH_IN_TILES;
+                if (i != 0) // if not the initial spot, check if partier
+                {
+                    int px = x - (x / TILE_WIDTH - curX) * TILE_WIDTH; // pixel coord of square
+                    int py = y - (y / TILE_HEIGHT - curY) * TILE_HEIGHT;
+                    if (objectAt(px, py, w, h, false))
+                    { // object here, check if a partier
+                        int partier = getCharacterIdAt(curX, curY);
+                        if (partier != -1)
+                        {
+                            partiers.Add(partier);
+                        }
+                        continue;
+                    }
+                }
+                // add adjacent spots
+                if (curX > 0 && !open.Contains(open[i]-1))
+                {
+                    open.Add(open[i] - 1);
+                }
+                if (curX < WIDTH_IN_TILES - 1 && !open.Contains(open[i] + 1))
+                {
+                    open.Add(open[i] + 1);
+                }
+                if (curY > 0 && !open.Contains(open[i] - WIDTH_IN_TILES))
+                {
+                    open.Add(open[i]-WIDTH_IN_TILES);
+                }
+                if (curY < HEIGHT_IN_TILES - 1 && !open.Contains(open[i] + WIDTH_IN_TILES))
+                {
+                    open.Add(open[i] + WIDTH_IN_TILES);
+                }
+            }
+
+            return partiers;
+        }
+
+        /**
          * Returns objects new x,y that you can interact with
          * @param x
          * @param y

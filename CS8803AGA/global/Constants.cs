@@ -43,7 +43,7 @@ namespace CS8803AGA
         public const int PARTY_PEOPLE3 = 258;
         public const int PARTY_PEOPLE4 = 223;
         public const int PARTY_PEOPLE5 = 198;
-        public const int PARTY_PEOPLE6 = 161;
+        public const int PARTY_PEOPLE6 = 32;
         public const int PARTY_PEOPLE7 = 173;
         public const int PARTY_PEOPLE8 = 175;
         public const int PARTY_PEOPLE9 = 64;

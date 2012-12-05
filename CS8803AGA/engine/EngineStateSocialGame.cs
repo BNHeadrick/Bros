@@ -137,34 +137,21 @@ namespace CS8803AGA.engine
             }
             else
             {
-                bool had_player = false;
-                bool had_victim = false;
-                for (int i = 0; i < GameplayManager.ActiveArea.GameObjects.Count; i++)
-                {
-                    if (player != -1 && GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == player)
-                    {
-                        CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
-                        Vector2 pos = character.m_position;
-                        character.m_position = new Vector2(SCREEN_W / 3, SCREEN_H / 8);
-                        character.AnimationController.requestAnimation("right", AnimationController.AnimationCommand.Play);
-                        character.draw();
-                        character.m_position = pos;
-                        had_player = true;
-                    }
-                    else if (victim != -1 && GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == victim)
-                    {
-                        CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
-                        Vector2 pos = character.m_position;
-                        character.m_position = new Vector2(2 * SCREEN_W / 3, SCREEN_H / 8);
-                        character.AnimationController.requestAnimation("left", AnimationController.AnimationCommand.Play);
-                        character.draw();
-                        character.m_position = pos;
-                        had_victim = true;
-                    }
-                    if (had_player && had_victim)
-                    {
-                        break;
-                    }
+                CharacterController character = GameplayManager.ActiveArea.getCharacter(player);
+                if (character != null) {
+                    Vector2 pos = character.m_position;
+                    character.m_position = new Vector2(SCREEN_W / 3, SCREEN_H / 8);
+                    character.AnimationController.requestAnimation("right", AnimationController.AnimationCommand.Play);
+                    character.draw();
+                    character.m_position = pos;
+                }
+                character = GameplayManager.ActiveArea.getCharacter(victim);
+                if (character != null) {
+                    Vector2 pos = character.m_position;
+                    character.m_position = new Vector2(2 * SCREEN_W / 3, SCREEN_H / 8);
+                    character.AnimationController.requestAnimation("left", AnimationController.AnimationCommand.Play);
+                    character.draw();
+                    character.m_position = pos;
                 }
 
                 if (game == null)
@@ -209,23 +196,15 @@ namespace CS8803AGA.engine
                 option = option.Substring(0, option.IndexOf('#'));
             }
             FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(option, new Vector2(x, y), color, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
-            if (obj != -1)
-            {
-                for (int j = 0; j < GameplayManager.ActiveArea.GameObjects.Count; j++)
-                {
-                    if (GameplayManager.ActiveArea.GameObjects[j].getDoodadIndex() == obj)
-                    {
-                        CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[j];
-                        Vector2 pos = character.m_position;
-                        character.m_position = new Vector2(x + option.Length * 16, y + 16);
-                        character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
-                        character.AnimationController.Scale /= 1.5f;
-                        character.draw();
-                        character.AnimationController.Scale *= 1.5f;
-                        character.m_position = pos;
-                        break;
-                    }
-                }
+            CharacterController character = GameplayManager.ActiveArea.getCharacter(obj);
+            if (character != null) {
+                Vector2 pos = character.m_position;
+                character.m_position = new Vector2(x + option.Length * 16, y + 16);
+                character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
+                character.AnimationController.Scale /= 1.5f;
+                character.draw();
+                character.AnimationController.Scale *= 1.5f;
+                character.m_position = pos;
             }
         }
     }

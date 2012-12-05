@@ -8,6 +8,7 @@ using CS8803AGA;
 using CS8803AGA.puzzle;
 using CS8803AGA.learning;
 using CS8803AGA.devices;
+using System.Collections.Generic;
 
 namespace CS8803AGA.controllers
 {
@@ -127,7 +128,8 @@ namespace CS8803AGA.controllers
             if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
             { /// TODO play social game here
               /// TODO: pick someone to play a game with and path to them
-              /// 
+              ///
+                List<int> potential_players = GameplayManager.ActiveArea.getPartiers((int)m_collider.m_bounds.Center().X, (int)m_collider.m_bounds.Center().Y, (int)m_collider.m_bounds.Width, (int)m_collider.m_bounds.Height);
                 // if (next to other player) {
                 EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, -1));
                 return true;

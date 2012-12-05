@@ -86,12 +86,8 @@ namespace CS8803AGA.controllers
         public override bool update()
         {
             if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
-            { /// TODO play social game here
-                /// TODO: pick someone to play a game with and path to them
-                /// 
-                // if (next to other player) {
-                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, -1));
-                return true;
+            {
+                return base.update();
             }
             else
             {
