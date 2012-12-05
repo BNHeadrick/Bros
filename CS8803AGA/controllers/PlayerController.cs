@@ -110,15 +110,29 @@ namespace CS8803AGA.controllers
                         {
                             angle -= 2 * Math.PI;
                         }
-                        if (angle <= Math.PI/4.0f || angle > 7.0f*Math.PI/4.0f) {
-                            dx = -Area.TILE_WIDTH;
-                        } else if (angle <= 3.0f*Math.PI/4.0f) {
-                            dy = -Area.TILE_HEIGHT;
-                        } else if (angle <= 5.0f*Math.PI/4.0f) {
-                            dx = Area.TILE_WIDTH;
-                        } else {
-                            dy = Area.TILE_HEIGHT;
-                        }
+                        do {
+                            if (angle <= Math.PI/4.0f || angle > 7.0f*Math.PI/4.0f) {
+                                dx += -Area.TILE_WIDTH;
+                            } else if (angle <= 3.0f*Math.PI/4.0f) {
+                                dy += -Area.TILE_HEIGHT;
+                            } else if (angle <= 5.0f*Math.PI/4.0f) {
+                                dx += Area.TILE_WIDTH;
+                            } else {
+                                dy += Area.TILE_HEIGHT;
+                            }
+                            if (m_collider.m_other.m_bounds.Center().X + dx < 0 || m_collider.m_other.m_bounds.Center().X + dx > Area.TILE_WIDTH * Area.WIDTH_IN_TILES)
+                            {
+                                // at the edge, so grow out in a different direction
+                                dx = 0;
+                                dy += ((new Random()).Next(1, 3) == 2 ? -1 : 1) * Area.TILE_HEIGHT;
+                            }
+                            else if (m_collider.m_other.m_bounds.Center().Y + dy < 0 || m_collider.m_other.m_bounds.Center().Y + dy > Area.TILE_HEIGHT * Area.HEIGHT_IN_TILES)
+                            {
+                                // at the edge, so grow out in a different direction
+                                dy = 0;
+                                dx += ((new Random()).Next(1, 3) == 2 ? -1 : 1) * Area.TILE_HEIGHT;
+                            }
+                        } while (GameplayManager.ActiveArea.objectAt((int)(m_collider.m_other.m_bounds.Center().X+dx), (int)(m_collider.m_other.m_bounds.Center().Y+dy), (int)m_collider.m_other.m_bounds.Width, (int)m_collider.m_other.m_bounds.Height, true));
                         double xdiff = m_position.X - m_collider.m_bounds.X;
                         double ydiff = m_position.Y - m_collider.m_bounds.Y;
                         m_position = new Vector2(((CharacterController)m_collider.m_other.m_owner).m_position.X+dx, ((CharacterController)m_collider.m_other.m_owner).m_position.Y+dy);
