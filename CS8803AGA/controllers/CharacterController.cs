@@ -126,7 +126,10 @@ namespace CS8803AGA.controllers
         {
             if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
             { /// TODO play social game here
-                EngineManager.pushState(new EngineStateDialogue(getDoodadIndex(), null, null, false));
+              /// TODO: pick someone to play a game with and path to them
+              /// 
+                // if (next to other player) {
+                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, -1));
                 return true;
             }
             else

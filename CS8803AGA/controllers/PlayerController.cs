@@ -139,7 +139,7 @@ namespace CS8803AGA.controllers
                         m_collider.move(new Vector2((float)(-m_collider.m_bounds.X + m_position.X - xdiff), (float)(-m_collider.m_bounds.Y + m_position.Y - ydiff)));
                         m_position = new Vector2(((CharacterController)m_collider.m_other.m_owner).m_position.X + dx, ((CharacterController)m_collider.m_other.m_owner).m_position.Y + dy);
 
-                        EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), ((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex()));
+                        EngineManager.pushState(new EngineStateSocialGame(((CharacterController)(m_collider.m_other.m_owner)).getDoodadIndex()));
                     }
                     else
                     {

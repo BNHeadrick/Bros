@@ -27,14 +27,52 @@ namespace CS8803AGA.engine
         public bool key_pressed;
         public bool quit;
 
-        public EngineStateSocialGame(int game_player, int game_victim)
+        /**
+         * Creates a new social game results screen (no choice because not player initing
+         * @param game_player the game starter
+         * @param game_victim the other player
+         * @param social_game the game to be played
+         */
+        public EngineStateSocialGame(int game_player, int game_victim, int social_game): base(EngineManager.Engine)
+        {
+            game_played = false;
+            player = game_player;
+            victim = game_victim;
+
+            key_pressed = true;
+            quit = false;
+            cursor = 0;
+
+            if (player == -1 || victim == -1 || social_game == -1)
+            {
+                quit = true;
+                key_pressed = false;
+                possible_games = new List<SocialGame>();
+                game = null;
+            }
+            else
+            { // this is a real game
+                //possible_games = SocialGames.get(player, victim);
+                //game = possible_games[social_game];
+
+                //debug:
+                possible_games = new List<SocialGame>();
+                game = null;
+            }
+        }
+
+        /**
+         * Creates a new social game menu (player init)
+         * @param game_victim the other player
+         */
+        public EngineStateSocialGame(int game_victim)
             : base(EngineManager.Engine)
         {
             game_played = false;
 
-            player = game_player;
+            player = Constants.PLAYER;
             victim = game_victim;
-            //game = social_game;
+
             game = null;
             key_pressed = true;
             quit = false;
@@ -56,7 +94,7 @@ namespace CS8803AGA.engine
         {
             if (!key_pressed && InputSet.getInstance().getButton(InputsEnum.BUTTON_4))
             {
-                if (game == null && cursor != possible_games.Count-1)
+                if (game == null && cursor < possible_games.Count-1)
                 {
                     game = possible_games[cursor];
                     game_played = true;
@@ -93,60 +131,65 @@ namespace CS8803AGA.engine
 
         public override void draw()
         {
-            //EngineManager.peekBelowState(this).draw();
-
-            bool had_player = false;
-            bool had_victim = false;
-            for (int i = 0; i < GameplayManager.ActiveArea.GameObjects.Count; i++)
+            if (quit)
             {
-                if (GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == player)
-                {
-                    CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
-                    Vector2 pos = character.m_position;
-                    character.m_position = new Vector2(SCREEN_W / 3, SCREEN_H / 8);
-                    character.AnimationController.requestAnimation("right", AnimationController.AnimationCommand.Play);
-                    character.draw();
-                    character.m_position = pos;
-                    had_player = true;
-                }
-                else if (GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == victim)
-                {
-                    CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
-                    Vector2 pos = character.m_position;
-                    character.m_position = new Vector2(2*SCREEN_W / 3, SCREEN_H / 8);
-                    character.AnimationController.requestAnimation("left", AnimationController.AnimationCommand.Play);
-                    character.draw();
-                    character.m_position = pos;
-                    had_victim = true;
-                }
-                if (had_player && had_victim)
-                {
-                    break;
-                }
-            }
-
-            if (game == null)
-            { // yet to choose a social game
-                draw_string("Choose social game:", SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
-                int page_start = PAGE_SIZE * (cursor / PAGE_SIZE);
-                int i = page_start;
-                if (i != 0)
-                {
-                    draw_string("^ More ^", SCREEN_W / 6, SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
-                }
-                for (; i < page_start + PAGE_SIZE && i < possible_games.Count; i++)
-                {
-                    draw_string((i == cursor ? "> " : "") + possible_games[i].name, SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * (i - page_start), Color.MistyRose);
-                }
-                if (i < possible_games.Count)
-                {
-                    draw_string("v More v", SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * i, Color.AliceBlue);
-                }
+                EngineManager.peekBelowState(this).draw();
             }
             else
             {
-                // display results of social game
-                draw_string("Results of: " + possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8+50, Color.AliceBlue);
+                bool had_player = false;
+                bool had_victim = false;
+                for (int i = 0; i < GameplayManager.ActiveArea.GameObjects.Count; i++)
+                {
+                    if (player != -1 && GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == player)
+                    {
+                        CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
+                        Vector2 pos = character.m_position;
+                        character.m_position = new Vector2(SCREEN_W / 3, SCREEN_H / 8);
+                        character.AnimationController.requestAnimation("right", AnimationController.AnimationCommand.Play);
+                        character.draw();
+                        character.m_position = pos;
+                        had_player = true;
+                    }
+                    else if (victim != -1 && GameplayManager.ActiveArea.GameObjects[i].getDoodadIndex() == victim)
+                    {
+                        CharacterController character = (CharacterController)GameplayManager.ActiveArea.GameObjects[i];
+                        Vector2 pos = character.m_position;
+                        character.m_position = new Vector2(2 * SCREEN_W / 3, SCREEN_H / 8);
+                        character.AnimationController.requestAnimation("left", AnimationController.AnimationCommand.Play);
+                        character.draw();
+                        character.m_position = pos;
+                        had_victim = true;
+                    }
+                    if (had_player && had_victim)
+                    {
+                        break;
+                    }
+                }
+
+                if (game == null)
+                { // yet to choose a social game
+                    draw_string("Choose social game:", SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    int page_start = PAGE_SIZE * (cursor / PAGE_SIZE);
+                    int i = page_start;
+                    if (i != 0)
+                    {
+                        draw_string("^ More ^", SCREEN_W / 6, SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
+                    }
+                    for (; i < page_start + PAGE_SIZE && i < possible_games.Count; i++)
+                    {
+                        draw_string((i == cursor ? "> " : "") + possible_games[i].name, SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * (i - page_start), Color.MistyRose);
+                    }
+                    if (i < possible_games.Count)
+                    {
+                        draw_string("v More v", SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * i, Color.AliceBlue);
+                    }
+                }
+                else
+                {
+                    // display results of social game
+                    draw_string("Results of: " + possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                }
             }
         }
 
