@@ -26,6 +26,7 @@ namespace CS8803AGA.engine
         public int cursor;
         public bool key_pressed;
         public bool quit;
+        public bool results_screen;
 
         /**
          * Creates a new social game results screen (no choice because not player initing
@@ -40,6 +41,7 @@ namespace CS8803AGA.engine
             victim = game_victim;
 
             key_pressed = true;
+            results_screen = false;
             quit = false;
             cursor = 0;
 
@@ -98,13 +100,16 @@ namespace CS8803AGA.engine
                 {
                     game = possible_games[cursor];
                     game_played = true;
-                    key_pressed = true;
+                }
+                else if (results_screen)
+                {
+                    quit = true;
                 }
                 else
                 {
-                    quit = true;
-                    key_pressed = true;
+                    results_screen = true;
                 }
+                key_pressed = true;
             }
             else if (key_pressed && !InputSet.getInstance().getButton(InputsEnum.BUTTON_4) && InputSet.getInstance().getLeftDirectionalY() == 0)
             {
@@ -172,10 +177,16 @@ namespace CS8803AGA.engine
                         draw_string("v More v", SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * i, Color.AliceBlue);
                     }
                 }
-                else
+                else if (results_screen)
                 {
                     // display results of social game
                     draw_string("Results of: " + possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                }
+                else
+                {
+                    // display some cool stock text
+                    draw_string(possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    draw_string(possible_games[cursor].text(), SCREEN_W / 8, SCREEN_H / 8 + 100, Color.TransparentWhite);
                 }
             }
         }
