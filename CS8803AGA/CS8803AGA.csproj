@@ -100,6 +100,7 @@
     <Compile Include="collision\Collider.cs" />
     <Compile Include="collision\CollisionDetector.cs" />
     <Compile Include="Knowledge\CulturalKnowledgebase.cs" />
+    <Compile Include="Knowledge\InputKnowledge.cs" />
     <Compile Include="Knowledge\PersonalityDescriptions.cs" />
     <Compile Include="Knowledge\SocialFacts.cs" />
     <Compile Include="Knowledge\SocialGame.cs" />

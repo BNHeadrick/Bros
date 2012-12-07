@@ -40,10 +40,15 @@ namespace CS8803AGA.Knowledge
         }
 
         //if(socialstatuschangeisheadistrue & thebody compared to the social facts and social networks)
-
+        //TODO; finish this!
         public bool canGameStart(String rule, SGame sg)
         {
-            return false;
+            Boolean canStart = false;
+            if (dictionary.ContainsKey(rule))
+            {
+                
+            }
+            return canStart;
         }
 
     }

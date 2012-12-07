@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using CS8803AGA.engine;
+using CS8803AGA.Knowledge;
 
 namespace CS8803AGA
 {
@@ -17,6 +18,9 @@ namespace CS8803AGA
 
         static WorldManager()
         {
+            InputKnowledge ik = new InputKnowledge();
+            ik.TestInput();
+
             WorldMap = new Dictionary<Point, Area>();
         }
 
