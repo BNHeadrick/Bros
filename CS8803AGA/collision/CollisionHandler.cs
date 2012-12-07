@@ -127,7 +127,7 @@ namespace CS8803AGA.collision
                     {
                         mover.m_other = other;
                     }
-                    if (Quest.currentQuest == Quest.QUEST_TYPE.GET_COMPANION)
+                    if (Quest.currentQuest == Quest.QUEST_TYPE.GET_COMPANION || GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
                     { // if companion isn't in party, treat as NPC collider
                         allowedMovement = scaleBackVelocity(mover, other, deltaPosition);
                     }

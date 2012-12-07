@@ -97,15 +97,20 @@ namespace CS8803AGA.engine
                 // place the companion and player into new default start locales
                 double xdiff = GameplayManager.Player.m_position.X - GameplayManager.Player.m_collider.m_bounds.X;
                 double ydiff = GameplayManager.Player.m_position.Y - GameplayManager.Player.m_collider.m_bounds.Y;
-                GameplayManager.Player.m_position = new Vector2(Area.TILE_WIDTH*3, Area.TILE_HEIGHT*3);
-                GameplayManager.Player.m_collider.m_bounds.X = GameplayManager.Player.m_position.X-xdiff;
-                GameplayManager.Player.m_collider.m_bounds.Y = GameplayManager.Player.m_position.Y - ydiff;
+                GameplayManager.Player.m_position = new Vector2(Area.TILE_WIDTH * 3 + 20, Area.TILE_HEIGHT * 3);
+                GameplayManager.Player.m_collider.move(new Vector2((float)(-GameplayManager.Player.m_collider.m_bounds.X + GameplayManager.Player.m_position.X - xdiff), (float)(-GameplayManager.Player.m_collider.m_bounds.Y + GameplayManager.Player.m_position.Y - ydiff)));
+                GameplayManager.Player.m_position = new Vector2(Area.TILE_WIDTH * 3 + 20, Area.TILE_HEIGHT * 3);
 
                 xdiff = GameplayManager.Companion.m_position.X - GameplayManager.Companion.m_collider.m_bounds.X;
                 ydiff = GameplayManager.Companion.m_position.Y - GameplayManager.Companion.m_collider.m_bounds.Y;
-                GameplayManager.Companion.m_position = new Vector2(Area.TILE_WIDTH*5, Area.TILE_HEIGHT*9);
-                GameplayManager.Companion.m_collider.m_bounds.X = GameplayManager.Companion.m_position.X - xdiff;
-                GameplayManager.Companion.m_collider.m_bounds.Y = GameplayManager.Companion.m_position.Y - ydiff;
+                GameplayManager.Companion.m_position = new Vector2(Area.TILE_WIDTH * 3 + 20, Area.TILE_HEIGHT * 9);
+                GameplayManager.Companion.m_collider.move(new Vector2((float)(-GameplayManager.Companion.m_collider.m_bounds.X + GameplayManager.Companion.m_position.X - xdiff), (float)(-GameplayManager.Companion.m_collider.m_bounds.Y + GameplayManager.Companion.m_position.Y - ydiff)));
+                GameplayManager.Companion.m_position = new Vector2(Area.TILE_WIDTH * 3 + 20, Area.TILE_HEIGHT * 9);
+                GameplayManager.Companion.m_collider.m_type = ColliderType.NPC;
+            }
+            else
+            {
+                GameplayManager.Companion.m_collider.m_type = ColliderType.PC;
             }
         }
 
