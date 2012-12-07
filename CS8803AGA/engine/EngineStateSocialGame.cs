@@ -186,7 +186,7 @@ namespace CS8803AGA.engine
                 {
                     // display some cool stock text
                     draw_string(possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
-                    draw_string(possible_games[cursor].text(), SCREEN_W / 8, SCREEN_H / 8 + 100, Color.TransparentWhite);
+                    draw_string(possible_games[cursor].text(), SCREEN_W / 8, SCREEN_H / 8 + 100, Color.Thistle);
                 }
             }
         }
