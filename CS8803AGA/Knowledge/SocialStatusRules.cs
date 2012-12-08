@@ -14,18 +14,17 @@ namespace CS8803AGA.Knowledge
 {
     public class SocialStatusRules
     {
-
         Dictionary<string, SocialStatusRule> dictionary;
+        public static SocialStatusRules singleton = new SocialStatusRules();
 
-        public SocialStatusRules(String key, String aName)
+        protected SocialStatusRules()
         {
             dictionary = new Dictionary<string, SocialStatusRule>();
         }
 
-        public void addSocStatRule(String key, String aName)
+        public void addSocStatRule(String key, SocialStatusRule rule)
         {
-            SocialStatusRule sr = new SocialStatusRule(aName);
-            dictionary.Add(key, sr);
+            dictionary.Add(key, rule);
         }
 
         public SocialStatusRule getSocialStatusRule(String key)

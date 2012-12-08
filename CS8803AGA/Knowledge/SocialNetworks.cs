@@ -26,9 +26,9 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, SocialNetwork>();
         }
 
-        public void addSocNet(String key, CharacterController cc)
+        public void addSocNet(String key)
         {
-            SocialNetwork sn = new SocialNetwork(cc);
+            SocialNetwork sn = new SocialNetwork();
             dictionary.Add(key, sn);
         }
 
@@ -49,17 +49,15 @@ namespace CS8803AGA.Knowledge
     public class SocialNetwork
     {
         Dictionary<string, InnerSocialNetwork> innerSocNet;
-        CharacterController charCont;
 
-        public SocialNetwork(CharacterController cc)
+        public SocialNetwork()
         {
-            charCont = cc;
             innerSocNet = new Dictionary<string, InnerSocialNetwork>();
         }
 
-        public void addInnerNetwork(String key, CharacterController cc)
+        public void addInnerNetwork(String key)
         {
-            InnerSocialNetwork isn = new InnerSocialNetwork(cc);
+            InnerSocialNetwork isn = new InnerSocialNetwork();
             innerSocNet.Add(key, isn);
         }
 
@@ -76,12 +74,10 @@ namespace CS8803AGA.Knowledge
         public const int RELATION_MIN = 0;
         public const int RELATION_MAX = 100;
 
-        CharacterController innerChar;
         public int relation;
         public List<string> predicates;
-        public InnerSocialNetwork(CharacterController cc)
+        public InnerSocialNetwork()
         {
-            innerChar = cc;
             relation = 0;
             predicates = new List<string>();
         }

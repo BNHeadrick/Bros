@@ -29,8 +29,8 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, CulturalKnowledge>();
         }
 
-        public void addCultKnowledge(String key, CharacterController cc){
-            CulturalKnowledge ck = new CulturalKnowledge(cc);
+        public void addCultKnowledge(String key){
+            CulturalKnowledge ck = new CulturalKnowledge();
             dictionary.Add(key, ck);
         }
 
@@ -52,17 +52,16 @@ namespace CS8803AGA.Knowledge
     public class CulturalKnowledge
     {
         Dictionary<string, InnerCulturalKnowledge> innerCulKno;
-        CharacterController charCont;
-        public CulturalKnowledge(CharacterController cc)
+
+        public CulturalKnowledge()
         {
-            charCont = cc;
             innerCulKno = new Dictionary<string, InnerCulturalKnowledge>();
         }
 
-        public void addInnerNetwork(String key, string obj)
+        public void addInnerNetwork(string obj)
         {
-            InnerCulturalKnowledge isn = new InnerCulturalKnowledge(obj);
-            innerCulKno.Add(key, isn);
+            InnerCulturalKnowledge isn = new InnerCulturalKnowledge();
+            innerCulKno.Add(obj, isn);
         }
 
         public InnerCulturalKnowledge getInnerNetwork(string key)
@@ -79,11 +78,9 @@ namespace CS8803AGA.Knowledge
         public const int RELATION_MIN = 0;
         public const int RELATION_MAX = 100;
 
-        public string obj;
         public int relation;
-        public InnerCulturalKnowledge(string _obj)
+        public InnerCulturalKnowledge()
         {
-            obj = _obj;
             relation = 0;
         }
     }
