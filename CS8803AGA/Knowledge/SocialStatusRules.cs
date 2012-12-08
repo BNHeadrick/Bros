@@ -56,8 +56,10 @@ namespace CS8803AGA.Knowledge
         public const int TYPE_RELATION = 0;
         public const int TYPE_PREDICATE = 1;
         public const int TYPE_CULTURAL = 2;
-        public const int TYPE_PAST_GAME = 3;
-        public const int TYPE_PERSONALITY = 4;
+        public const int TYPE_CULTURAL_TARGET = 3;
+        public const int TYPE_PAST_GAME = 4;
+        public const int TYPE_PERSONALITY = 5;
+        public const int TYPE_PERSONALITY_TARGET = 6;
 
         public int type;
         public string data; /**< either the game we want, the culture to check, or the predicate to check */
@@ -98,6 +100,11 @@ namespace CS8803AGA.Knowledge
                         int relation = CulturalKnowledgebase.singleton.getCulturalKnowledge("" + p1).getInnerNetwork(data).relation;
                         return (relation >= min && relation <= max);
                     }
+                case TYPE_CULTURAL_TARGET:
+                    {
+                        int relation = CulturalKnowledgebase.singleton.getCulturalKnowledge("" + p2).getInnerNetwork(data).relation;
+                        return (relation >= min && relation <= max);
+                    }
                 case TYPE_PAST_GAME:
                     foreach (KeyValuePair<string, SocialFact> fact in SocialFacts.singleton.dictionary) {
                         if (fact.Value.equals(data, p1, p2))
@@ -108,6 +115,8 @@ namespace CS8803AGA.Knowledge
                     return false;
                 case TYPE_PERSONALITY:
                     return PersonalityDescriptions.singleton.getPersDesc("" + p1).personality.Contains(data);
+                case TYPE_PERSONALITY_TARGET:
+                    return PersonalityDescriptions.singleton.getPersDesc("" + p2).personality.Contains(data);
             }
             return false;
         }
