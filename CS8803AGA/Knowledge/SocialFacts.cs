@@ -23,10 +23,13 @@ namespace CS8803AGA.Knowledge
 
     public class SocialFacts
     {
+
+        public static SocialFacts singleton = new SocialFacts();
+
         Dictionary<string, SocialFact> dictionary;
         
 
-        public SocialFacts()
+        protected SocialFacts()
         {
             dictionary = new Dictionary<string, SocialFact>();
         }
@@ -37,7 +40,7 @@ namespace CS8803AGA.Knowledge
             dictionary.Add(key, sf);
         }
 
-        public void addSocialFact(String key, String aName, float aAffection, CharacterController init, CharacterController targ, CharacterController tParty)
+        public void addSocialFact(String key, String aName, float aAffection, int init, int targ, int tParty)
         {
             SocialFact sf = new SocialFact(aName, aAffection, init, targ, tParty);
             dictionary.Add(key, sf);
@@ -59,14 +62,13 @@ namespace CS8803AGA.Knowledge
     {
 
         private string name;
-        private CharacterController initiator;   
-        private CharacterController target;       
-        private CharacterController thirdParty;   
+        private int initiator;   
+        private int target;       
+        private int thirdParty;   
 
-        public SocialFact(String aName, float aAffection, CharacterController init, CharacterController targ, CharacterController tParty)
+        public SocialFact(String aName, float aAffection, int init, int targ, int tParty)
         {
             name = aName;
-            affection = aAffection;
             initiator = init;
             target = targ;
             thirdParty = tParty;

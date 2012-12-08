@@ -17,16 +17,18 @@ namespace CS8803AGA.Knowledge
     class PersonalityDescriptions
     {
 
+        public static PersonalityDescriptions singleton = new PersonalityDescriptions();
         //get access to all NPCs
         Dictionary<string, PersonalityDescription> dictionary;
 
-        public PersonalityDescriptions()
+
+        protected PersonalityDescriptions()
         {
             dictionary = new Dictionary<string, PersonalityDescription>();
         }
 
-        public void addPersDesc(string key, CharacterController cc){
-            PersonalityDescription pd = new PersonalityDescription(cc);
+        public void addPersDesc(string key, int charVal){
+            PersonalityDescription pd = new PersonalityDescription(charVal);
             dictionary.Add(key, pd);
         }
 
@@ -47,10 +49,10 @@ namespace CS8803AGA.Knowledge
 
     public class PersonalityDescription
     {
-        CharacterController charCont;
-        public PersonalityDescription(CharacterController cc)
+        int charVal;
+        public PersonalityDescription(int cv)
         {
-            charCont = cc;
+            charVal = cv;
         }
     }
 }

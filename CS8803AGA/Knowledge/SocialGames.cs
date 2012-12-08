@@ -8,10 +8,10 @@ namespace CS8803AGA.Knowledge
 {
     class SocialGames
     {
-
+        public static SocialGames singleton = new SocialGames();
         Dictionary<string, SGame> dictionary;
 
-        public SocialGames()
+        protected SocialGames()
         {
             dictionary = new Dictionary<string, SGame>();
         }
@@ -44,7 +44,7 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
-        SocialStatusRules ssR; 
+        SocialStatusRule ssR; 
         String name;
         float resultingAction;
         public SGame(string aName)
