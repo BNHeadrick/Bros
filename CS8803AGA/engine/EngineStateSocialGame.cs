@@ -77,6 +77,7 @@ namespace CS8803AGA.engine
 
             game = null;
             key_pressed = true;
+            results_screen = false;
             quit = false;
             cursor = 0;
             //possible_games = ????
