@@ -99,9 +99,15 @@ namespace CS8803AGA.Knowledge
                         return (relation >= min && relation <= max);
                     }
                 case TYPE_PAST_GAME:
-                    break;
+                    foreach (KeyValuePair<string, SocialFact> fact in SocialFacts.singleton.dictionary) {
+                        if (fact.Value.equals(data, p1, p2))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 case TYPE_PERSONALITY:
-                    break;
+                    return PersonalityDescriptions.singleton.getPersDesc("" + p1).personality.Contains(data);
             }
             return false;
         }

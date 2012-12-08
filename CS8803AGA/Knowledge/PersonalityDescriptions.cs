@@ -50,9 +50,11 @@ namespace CS8803AGA.Knowledge
     public class PersonalityDescription
     {
         int charVal;
+        public List<string> personality;
         public PersonalityDescription(int cv)
         {
             charVal = cv;
+            personality = new List<string>();
         }
     }
 }

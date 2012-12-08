@@ -26,7 +26,7 @@ namespace CS8803AGA.Knowledge
 
         public static SocialFacts singleton = new SocialFacts();
 
-        Dictionary<string, SocialFact> dictionary;
+        public Dictionary<string, SocialFact> dictionary;
         
 
         protected SocialFacts()
@@ -73,12 +73,16 @@ namespace CS8803AGA.Knowledge
             target = targ;
             thirdParty = tParty;
         }
-
+        
         public SocialFact(String aName)
         {
             name = aName;
         }
 
+        public bool equals(string aName, int p1, int p2)
+        {
+            return (name == aName && initiator == p1 && target == p2);
+        }
     }
 
 }

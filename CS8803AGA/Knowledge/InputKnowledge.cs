@@ -51,6 +51,7 @@ namespace CS8803AGA.Knowledge
             {
                 SocialNetworks.singleton.addSocNet("" + partiers[i]);
                 CulturalKnowledgebase.singleton.addCultKnowledge("" + partiers[i]);
+                PersonalityDescriptions.singleton.addPersDesc("" + partiers[i], partiers[i]);
                 for (int j = 0; j < partiers.Length; j++)
                 {
                     if (j != i)
@@ -67,6 +68,11 @@ namespace CS8803AGA.Knowledge
             }
 
             // add any social network predicates
+
+            // add any purse desks
+
+            // add social status rules
+            //SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 25, 75));
         }
 
     }

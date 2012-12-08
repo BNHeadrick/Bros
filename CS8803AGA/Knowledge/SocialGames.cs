@@ -44,15 +44,16 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
-        SocialStatusRule ssR; 
+        List<string> ssR; 
         String name;
         float resultingAction;
         public SGame(string aName)
         {
             name = aName;
+            ssR = new List<string>();
         }
 
-        public SGame(string aName, SocialStatusRule aSSR)
+        public SGame(string aName, List<string> aSSR)
         {
             name = aName;
             ssR = aSSR;
