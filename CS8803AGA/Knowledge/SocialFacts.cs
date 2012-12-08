@@ -4,6 +4,10 @@ during game play, a detailed sense of time, what social game the social fact too
 in, what characters were playing the game and what changes in 
 the social network occurred.
  * 
+ * It is important to note that the social facts database is also used to 
+store the initial state of the game world
+ * 
+ * 
  * A class that contains individual social facts.
  */
 
@@ -55,11 +59,9 @@ namespace CS8803AGA.Knowledge
     {
 
         private string name;
-
-        private float affection;    //this is the social status; a float between 0.0 and 1.0 showing the amount that a char likes another char.
-        private CharacterController initiator;    //should later be a pointer to an NPC
-        private CharacterController target;       //should later be a pointer to an NPC
-        private CharacterController thirdParty;   //should later be a pointer to an NPC
+        private CharacterController initiator;   
+        private CharacterController target;       
+        private CharacterController thirdParty;   
 
         public SocialFact(String aName, float aAffection, CharacterController init, CharacterController targ, CharacterController tParty)
         {

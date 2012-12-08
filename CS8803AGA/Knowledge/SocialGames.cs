@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CS8803AGA.controllers;
 
 namespace CS8803AGA.Knowledge
 {
@@ -15,7 +16,7 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, SGame>();
         }
 
-        public void addSocialGame(String key, String aName)
+        public void addSocialGame(string key, string aName)
         {
             SGame sg = new SGame(aName);
             dictionary.Add(key, sg);
@@ -43,12 +44,25 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
+        SocialStatusRules ssR; 
         String name;
-        public SGame(String aName)
+        float resultingAction;
+        public SGame(string aName)
         {
             name = aName;
         }
 
+        public SGame(string aName, SocialStatusRule aSSR)
+        {
+            name = aName;
+            ssR = aSSR;
+        }
+
+        /*
+        public bool runSGame(CharacterController cc, SocialNetwork sn, ){
+
+        }
+        */
     }
 
 }

@@ -25,7 +25,7 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, PersonalityDescription>();
         }
 
-        public void addPersDesc(String key, CharacterController cc){
+        public void addPersDesc(string key, CharacterController cc){
             PersonalityDescription pd = new PersonalityDescription(cc);
             dictionary.Add(key, pd);
         }
