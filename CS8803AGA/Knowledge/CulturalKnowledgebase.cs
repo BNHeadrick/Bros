@@ -22,8 +22,9 @@ namespace CS8803AGA.Knowledge
     public class CulturalKnowledgebase
     {
         Dictionary<string, CulturalKnowledge> dictionary;
+        public static CulturalKnowledgebase singleton = new CulturalKnowledgebase();
 
-        public CulturalKnowledgebase()
+        protected CulturalKnowledgebase()
         {
             dictionary = new Dictionary<string, CulturalKnowledge>();
         }
@@ -50,10 +51,40 @@ namespace CS8803AGA.Knowledge
 
     public class CulturalKnowledge
     {
+        Dictionary<string, InnerCulturalKnowledge> innerCulKno;
         CharacterController charCont;
         public CulturalKnowledge(CharacterController cc)
         {
             charCont = cc;
+            innerCulKno = new Dictionary<string, InnerCulturalKnowledge>();
+        }
+
+        public void addInnerNetwork(String key, string obj)
+        {
+            InnerCulturalKnowledge isn = new InnerCulturalKnowledge(obj);
+            innerCulKno.Add(key, isn);
+        }
+
+        public InnerCulturalKnowledge getInnerNetwork(string key)
+        {
+            return innerCulKno[key];
+        }
+    }
+
+    /*
+     *This class has is the "many" part of each social classes' one to many relationship.
+     */
+    public class InnerCulturalKnowledge
+    {
+        public const int RELATION_MIN = 0;
+        public const int RELATION_MAX = 100;
+
+        public string obj;
+        public int relation;
+        public InnerCulturalKnowledge(string _obj)
+        {
+            obj = _obj;
+            relation = 0;
         }
     }
 }

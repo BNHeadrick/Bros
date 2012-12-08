@@ -19,8 +19,9 @@ namespace CS8803AGA.Knowledge
         //this could be done in a simple 2D array if nothing more sophisticated seems nessisary.
 
         Dictionary<string, SocialNetwork> dictionary;
+        public static SocialNetworks singleton = new SocialNetworks();
 
-        public SocialNetworks()
+        protected SocialNetworks()
         {
             dictionary = new Dictionary<string, SocialNetwork>();
         }
@@ -62,16 +63,27 @@ namespace CS8803AGA.Knowledge
             innerSocNet.Add(key, isn);
         }
 
+        public InnerSocialNetwork getInnerNetwork(string key)
+        {
+            return innerSocNet[key];
+        }
     }
     /*
      *This class has is the "many" part of each social classes' one to many relationship.
      */
     public class InnerSocialNetwork
     {
+        public const int RELATION_MIN = 0;
+        public const int RELATION_MAX = 100;
+
         CharacterController innerChar;
+        public int relation;
+        public List<string> predicates;
         public InnerSocialNetwork(CharacterController cc)
         {
             innerChar = cc;
+            relation = 0;
+            predicates = new List<string>();
         }
     }
 }
