@@ -9,6 +9,7 @@ using CS8803AGA.puzzle;
 using CS8803AGA.learning;
 using CS8803AGA.devices;
 using System.Collections.Generic;
+using CS8803AGA.Knowledge;
 
 namespace CS8803AGA.controllers
 {
@@ -27,9 +28,19 @@ namespace CS8803AGA.controllers
         public Bouncer bouncer;
         public Brew brew;
 
+        private int victim;
+        private SGame social_game;
+
         public static Brew ALL_BREW = new Brew(0, -1);
 
         static public ActionNode currPlan;
+
+        // taken from companion controller, pathing variables
+        private bool walking;
+        private int walk_target;
+        private int walk_dir;
+        private int distance;
+        ////////////////////////
 
         public int getDoodadIndex()
         {
@@ -100,6 +111,14 @@ namespace CS8803AGA.controllers
 
             cc.m_previousAngle = (float)Math.PI / 2;
 
+            cc.victim = -1;
+            cc.social_game = null;
+
+            cc.walking = false;
+            cc.walk_target = -1;
+            cc.walk_dir = -1;
+            cc.distance = 0;
+
             return cc;
         }
 
@@ -126,19 +145,125 @@ namespace CS8803AGA.controllers
         public virtual bool update()
         {
             if (GameplayManager.ActiveArea.GlobalLocation == Area.PARTY)
-            { /// TODO play social game here
-              /// TODO: pick someone to play a game with and path to them
-              ///
-                List<int> potential_players = GameplayManager.ActiveArea.getPartiers((int)m_collider.m_bounds.Center().X, (int)m_collider.m_bounds.Center().Y, (int)m_collider.m_bounds.Width, (int)m_collider.m_bounds.Height);
-                // SocialGames.getAllGames(p1, p2) will get the list of games
-                // if (next to other player) {
-                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, null));
-                return true;
-            }
-            else
             {
-                return true;
+                if (victim != -1 && social_game != null)
+                {
+                    // path to the victim
+                    if (!walking)
+                    {
+                        // check if adjacent to goal
+                        int x = (int)m_collider.Bounds.Center().X / Area.TILE_WIDTH;
+                        int y = (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT;
+                        if (walk_target == -1)
+                        {
+                            walk_target = GameplayManager.ActiveArea.getObjectLocation(victim);
+                        }
+                        int gx = walk_target % Area.WIDTH_IN_TILES;
+                        int gy = walk_target / Area.WIDTH_IN_TILES;
+                        if (x + y * Area.WIDTH_IN_TILES == walk_target)//(gx - x) * (gx - x) + (gy - y) * (gy - y) <= 1)
+                        { // adjacent
+                            // interact!
+                            EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), victim, social_game));
+                            walk_target = -1;
+                            victim = -1;
+                            social_game = null;
+                            return true;
+                        }
+                        else
+                        {
+                            // need to walk to
+                            walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, PuzzleObject.TYPE_NONE, victim, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height);
+                            //Console.WriteLine("path: " + walk_dir);
+                            if (walk_dir == -2)
+                            { // bad, but, at location
+                                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), victim, social_game));
+                                walk_target = -1;
+                                victim = -1;
+                                social_game = null;
+                                return true;
+                            }
+                            else if (walk_dir != -1)
+                            {
+                                walking = true;
+                                m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - (int)m_collider.Bounds.Width) / 2, 11 - (float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - (int)m_collider.Bounds.Height) / 2));
+                            }
+                            else
+                            { // need to pick another action / can't reach this one
+                                victim = -1;
+                                social_game = null;
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    { // walk torwards this thingy
+                        int travel = m_speed;
+                        int size = walk_dir < CompanionController.WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT;
+                        int reservation = size;
+                        if (distance + travel > size)
+                        {
+                            travel = (walk_dir < CompanionController.WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT) - distance;
+                            distance = 0;
+                            walking = false;
+                            reservation = 0;
+                        }
+                        else
+                        {
+                            distance += travel;
+                            reservation -= distance;
+                        }
+
+                        m_collider.handleMovement(new Vector2(walk_dir == CompanionController.WALK_LEFT ? -travel : walk_dir == CompanionController.WALK_RIGHT ? travel : 0, walk_dir == CompanionController.WALK_UP ? -travel : walk_dir == CompanionController.WALK_DOWN ? travel : 0));
+
+                        AnimationController.requestAnimation(walk_dir == CompanionController.WALK_LEFT ? "left" : walk_dir == CompanionController.WALK_RIGHT ? "right" : walk_dir == CompanionController.WALK_UP ? "up" : "down", AnimationController.AnimationCommand.Play);
+                        AnimationController.update();
+                    }
+                }
+                else
+                {
+                    // pick a social game to play
+                    List<int> potential_players = GameplayManager.ActiveArea.getPartiers((int)m_collider.m_bounds.Center().X, (int)m_collider.m_bounds.Center().Y, (int)m_collider.m_bounds.Width, (int)m_collider.m_bounds.Height);
+                    int total = 0;
+                    List<List<SGame>> games = new List<List<SGame>>();
+                    for (int i = 0; i < potential_players.Count; i++)
+                    {
+                        List<SGame> sgames = SocialGames.getAllGames(getDoodadIndex(), potential_players[i]);
+                        for (int j = 0; j < sgames.Count; j++)
+                        {
+                            total += sgames[i].ssR.Count + 1;
+                        }
+                        games.Add(sgames);
+                    }
+                    int game = (new Random()).Next(total);
+
+
+                    for (int i = 0; i < games.Count; i++)
+                    {
+                        for (int j = 0; j < games[i].Count; j++)
+                        {
+                            game -= games[i][j].ssR.Count + 1;
+                            if (game < 0)
+                            {
+                                victim = potential_players[i];
+                                social_game = games[i][j];
+                                break;
+                            }
+                        }
+                        if (game < 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (victim == -1 && social_game == null)
+                    {
+                        return true;
+                    }
+                    //EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), victim, social_game));
+                    return false;
+                }
             }
+            return true;
         }
 
         public virtual void draw()
