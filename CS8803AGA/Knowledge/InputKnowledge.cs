@@ -39,12 +39,25 @@ namespace CS8803AGA.Knowledge
             };
 
             string[] cult_knowledge = new string[] {"bears",
-                                                    "fire bears"
+                                                    "fire bears",
+                                                    "pogo sticks",
+                                                    "tacos",
+                                                    "brews",
+                                                    "brewtopia",
+                                                    "rad shoes",
+                                                    "bed sheets"
+
             };
 
             int[] cult_relations = new int[] {
                    /* bears => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* fire beras */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                   /* fire bears */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* pogo sticks*/ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* tacos => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* brews */      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* b-topia  */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* rad shoes */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* bed sheets */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             };
 
             for (int i = 0; i < partiers.Length; i++)
@@ -68,11 +81,14 @@ namespace CS8803AGA.Knowledge
             }
 
             // add any social network predicates
+            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2, "love");
+            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2, "love");
 
             // add any purse desks
+            PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE1);
 
             // add social status rules
-            //SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 25, 75));
+            SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 25, 75));
         }
 
     }

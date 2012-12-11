@@ -17,10 +17,10 @@ namespace CS8803AGA.Knowledge
     class PersonalityDescriptions
     {
 
-        public static PersonalityDescriptions singleton = new PersonalityDescriptions();
+        
         //get access to all NPCs
         Dictionary<string, PersonalityDescription> dictionary;
-
+        public static PersonalityDescriptions singleton = new PersonalityDescriptions();
 
         protected PersonalityDescriptions()
         {

@@ -30,6 +30,7 @@ namespace CS8803AGA.Knowledge
         {
             SocialNetwork sn = new SocialNetwork();
             dictionary.Add(key, sn);
+
         }
 
 
@@ -42,6 +43,26 @@ namespace CS8803AGA.Knowledge
                 theSN = dictionary[key];
             }
             return theSN;
+        }
+        
+        public void addPredicates(int personA, int personB, String predicateForA, String predicateForB)
+        {
+            String firstPerson = personA.ToString();
+            String secPerson = personB .ToString();
+
+            dictionary[firstPerson].getInnerNetwork(secPerson).addPredicate(predicateForA);
+            dictionary[secPerson].getInnerNetwork(firstPerson).addPredicate(predicateForB);
+
+        }
+        
+
+        public void addPredicate(int personA, int personB, String predicateForBoth)
+        {
+            String firstPerson = personA.ToString();
+            String secPerson = personB.ToString();
+
+            dictionary[firstPerson].getInnerNetwork(secPerson).addPredicate(predicateForBoth);
+            dictionary[secPerson].getInnerNetwork(firstPerson).addPredicate(predicateForBoth);
         }
 
     }
@@ -65,6 +86,27 @@ namespace CS8803AGA.Knowledge
         {
             return innerSocNet[key];
         }
+        /*
+        public void addPredicates(int personA, int personB, String predicateForA, String predicateForB)
+        {
+            String firstPerson = personA.ToString;
+            String secPerson = personA.ToString;
+
+            innerSocNet[firstPerson].addPredicate(predicateForA);
+            innerSocNet[secPerson].addPredicate(predicateForB);
+
+        }
+
+        public void addPredicate(int personA, int personB, String predicateForBoth)
+        {
+            String firstPerson = personA.ToString;
+            String secPerson = personA.ToString;
+
+            innerSocNet[firstPerson].addPredicate(predicateForBoth);
+            innerSocNet[secPerson].addPredicate(predicateForBoth);
+
+        }
+        */
     }
     /*
      *This class has is the "many" part of each social classes' one to many relationship.
@@ -80,6 +122,10 @@ namespace CS8803AGA.Knowledge
         {
             relation = 0;
             predicates = new List<string>();
+        }
+
+        public void addPredicate(String pred){
+            predicates.Add(pred);
         }
     }
 }
