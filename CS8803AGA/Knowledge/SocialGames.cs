@@ -76,6 +76,7 @@ namespace CS8803AGA.Knowledge
 
         public SGame(string aName)
         {
+            p3 = -1;
             drelation = 0;
             drelation_target = 0;
             drelation_third = 0;
@@ -95,6 +96,7 @@ namespace CS8803AGA.Knowledge
 
         public SGame(string aName, List<string> aSSR)
         {
+            p3 = -1;
             drelation = 0;
             drelation_target = 0;
             drelation_third = 0;
@@ -117,6 +119,7 @@ namespace CS8803AGA.Knowledge
                      List<string> _predicates_add_third, List<string> _predicates_remove_third, List<string> _personality_add,
                      List<string> _personality_remove, List<string> _personality_add_target, List<string> _personality_remove_target)
         {
+            p3 = -1;
             drelation = _drelation;
             drelation_target = _drelation_target;
             drelation_third = _drelation_third;

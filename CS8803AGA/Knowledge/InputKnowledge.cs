@@ -21,21 +21,25 @@ namespace CS8803AGA.Knowledge
                                         Constants.PARTY_PEOPLE9,
                                         Constants.PARTY_PEOPLE10,
                                         Constants.PLAYER,
-                                        Constants.COMPANION
+                                        Constants.COMPANION,
+                                        Constants.COOK,
+                                        Constants.BREW_MAIDEN
             };
 
-            int[] relations = new int[] { 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
-                                          50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
-                                          50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50,
-                                          50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50,
-                                          50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50,
-                                          50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50,
-                                          50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50,
-                                          50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50,
-                                          50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50,
-                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50,
-                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50,
-                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0
+            int[] relations = new int[] { 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50,
+                                          50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0
             };
 
             string[] cult_knowledge = new string[] {"bears",
@@ -50,14 +54,14 @@ namespace CS8803AGA.Knowledge
             };
 
             int[] cult_relations = new int[] {
-                   /* bears => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* fire bears */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* pogo sticks*/ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* tacos => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* brews */      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* b-topia  */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* rad shoes */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* bed sheets */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                   /* bears => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* fire bears */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* pogo sticks*/ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* tacos => */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* brews */      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* b-topia  */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* rad shoes */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* bed sheets */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             };
 
             for (int i = 0; i < partiers.Length; i++)
@@ -88,7 +92,14 @@ namespace CS8803AGA.Knowledge
             PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE1);
 
             // add social status rules
-            SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 25, 75));
+            SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 49, 51));
+
+
+            // add social games
+            SGame s = new SGame("Praise Brewtopia!");
+            s.ssR.Add("cool rule");
+            s.drelation = -2;
+            SocialGames.singleton.addSocialGame(s);
         }
 
     }

@@ -58,7 +58,9 @@ namespace CS8803AGA.engine
                 Constants.PARTY_PEOPLE9,
                 Constants.PARTY_PEOPLE10,
                 Constants.PLAYER,
-                Constants.COMPANION
+                Constants.COMPANION,
+                Constants.COOK,
+                Constants.BREW_MAIDEN
             };
             current_partier = 0;
         }

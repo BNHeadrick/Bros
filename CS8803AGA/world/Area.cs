@@ -801,7 +801,17 @@ namespace CS8803AGA
         {
             for (int j = 0; j < GameObjects.Count; j++)
             {
-                if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
+                if (GlobalLocation == Area.PARTY)
+                {
+                    if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC || ((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.PC) {
+                        CharacterController npc = (CharacterController)GameObjects[j];
+                        if (id == npc.getDoodadIndex())
+                        {
+                            return (int)npc.getCollider().Bounds.Center().X / Area.TILE_WIDTH + (int)npc.getCollider().Bounds.Center().Y / Area.TILE_HEIGHT * Area.WIDTH_IN_TILES;
+                        }
+                    }
+                }
+                else if (((ICollidable)GameObjects[j]).getCollider().m_type == ColliderType.NPC)
                 {
                     CharacterController npc = (CharacterController)GameObjects[j];
                     if ((npc.bouncer != null && id == npc.bouncer.id) || (npc.brew != null && id == npc.brew.id))
@@ -842,7 +852,7 @@ namespace CS8803AGA
         public int startPath(int start, int goal, int type, int id, int w, int h)
         {
             List<int> goals = new List<int>();
-            Console.WriteLine("goal is:" + goal);
+            //Console.WriteLine("goal is:" + goal);
             if (goal % Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
             {
                 goals.Add(goal - 1);
@@ -946,7 +956,7 @@ namespace CS8803AGA
                     }
                 }
                 //Console.WriteLine(start + " => " + open[i] + " : " + goal);
-                else if (!objectAt(Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + Area.TILE_WIDTH / 2, Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + Area.TILE_HEIGHT / 2, w/2, h/2, true))
+                else if (!objectAt(Area.TILE_WIDTH * (open[i] % Area.WIDTH_IN_TILES) + Area.TILE_WIDTH / 2, Area.TILE_HEIGHT * (open[i] / Area.WIDTH_IN_TILES) + Area.TILE_HEIGHT / 2, w/2, h/2, GlobalLocation!=Area.PARTY))
                 {
 //                    Console.WriteLine(start + " => " + open[i] + " : " + goal);
                     // add children

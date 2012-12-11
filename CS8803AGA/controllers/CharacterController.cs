@@ -156,7 +156,9 @@ namespace CS8803AGA.controllers
                         int y = (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT;
                         if (walk_target == -1)
                         {
+                            Console.WriteLine("victim= " + victim);
                             walk_target = GameplayManager.ActiveArea.getObjectLocation(victim);
+                            Console.WriteLine("walk_target= " + walk_target);
                         }
                         int gx = walk_target % Area.WIDTH_IN_TILES;
                         int gy = walk_target / Area.WIDTH_IN_TILES;
@@ -230,7 +232,7 @@ namespace CS8803AGA.controllers
                         List<SGame> sgames = SocialGames.getAllGames(getDoodadIndex(), potential_players[i]);
                         for (int j = 0; j < sgames.Count; j++)
                         {
-                            total += sgames[i].ssR.Count + 1;
+                            total += sgames[j].ssR.Count + 1;
                         }
                         games.Add(sgames);
                     }
@@ -260,8 +262,8 @@ namespace CS8803AGA.controllers
                         return true;
                     }
                     //EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), victim, social_game));
-                    return false;
                 }
+                return false;
             }
             return true;
         }
