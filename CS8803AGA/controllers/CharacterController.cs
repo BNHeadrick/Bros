@@ -156,9 +156,9 @@ namespace CS8803AGA.controllers
                         int y = (int)m_collider.Bounds.Center().Y / Area.TILE_HEIGHT;
                         if (walk_target == -1)
                         {
-                            Console.WriteLine("victim= " + victim);
+                            //Console.WriteLine("victim= " + victim);
                             walk_target = GameplayManager.ActiveArea.getObjectLocation(victim);
-                            Console.WriteLine("walk_target= " + walk_target);
+                            //Console.WriteLine("walk_target= " + walk_target);
                         }
                         int gx = walk_target % Area.WIDTH_IN_TILES;
                         int gy = walk_target / Area.WIDTH_IN_TILES;
@@ -174,7 +174,7 @@ namespace CS8803AGA.controllers
                         else
                         {
                             // need to walk to
-                            walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, PuzzleObject.TYPE_NONE, victim, (int)m_collider.Bounds.Width, (int)m_collider.Bounds.Height);
+                            walk_dir = GameplayManager.ActiveArea.startPath(x + y * Area.WIDTH_IN_TILES, walk_target, PuzzleObject.TYPE_NONE, victim, Area.TILE_WIDTH-2, Area.TILE_HEIGHT-2);
                             //Console.WriteLine("path: " + walk_dir);
                             if (walk_dir == -2)
                             { // bad, but, at location
@@ -187,7 +187,7 @@ namespace CS8803AGA.controllers
                             else if (walk_dir != -1)
                             {
                                 walking = true;
-                                m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - (int)m_collider.Bounds.Width) / 2, 11 - (float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - (int)m_collider.Bounds.Height) / 2));
+                                m_collider.handleMovement(new Vector2(-(float)m_collider.m_bounds.X + x * Area.TILE_WIDTH + (Area.TILE_WIDTH - (int)m_collider.Bounds.Width) / 2,  - (float)m_collider.m_bounds.Y + y * Area.TILE_HEIGHT + (Area.TILE_HEIGHT - (int)m_collider.Bounds.Height) / 2));
                             }
                             else
                             { // need to pick another action / can't reach this one
@@ -199,20 +199,17 @@ namespace CS8803AGA.controllers
                     }
                     else
                     { // walk torwards this thingy
-                        int travel = m_speed;
+                        int travel = m_speed*2;
                         int size = walk_dir < CompanionController.WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT;
-                        int reservation = size;
                         if (distance + travel > size)
                         {
                             travel = (walk_dir < CompanionController.WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT) - distance;
                             distance = 0;
                             walking = false;
-                            reservation = 0;
                         }
                         else
                         {
                             distance += travel;
-                            reservation -= distance;
                         }
 
                         m_collider.handleMovement(new Vector2(walk_dir == CompanionController.WALK_LEFT ? -travel : walk_dir == CompanionController.WALK_RIGHT ? travel : 0, walk_dir == CompanionController.WALK_UP ? -travel : walk_dir == CompanionController.WALK_DOWN ? travel : 0));

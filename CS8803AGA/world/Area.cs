@@ -853,19 +853,19 @@ namespace CS8803AGA
         {
             List<int> goals = new List<int>();
             //Console.WriteLine("goal is:" + goal);
-            if (goal % Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            if (goal % Area.WIDTH_IN_TILES > 0 && (start == goal-1 || !objectAt(1 + Area.TILE_WIDTH * ((goal - 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, GlobalLocation != Area.PARTY)))
             {
                 goals.Add(goal - 1);
             }
-            if (goal % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((goal + 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            if (goal % Area.WIDTH_IN_TILES < Area.WIDTH_IN_TILES - 1 && (start == goal+1 || !objectAt(1 + Area.TILE_WIDTH * ((goal + 1) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + 1) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, GlobalLocation != Area.PARTY)))
             {
                 goals.Add(goal + 1);
             }
-            if (goal / Area.WIDTH_IN_TILES > 0 && !objectAt(1 + Area.TILE_WIDTH * ((goal - Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            if (goal / Area.WIDTH_IN_TILES > 0 && (start == goal-Area.WIDTH_IN_TILES || !objectAt(1 + Area.TILE_WIDTH * ((goal - Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal - Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, GlobalLocation != Area.PARTY)))
             {
                 goals.Add(goal - Area.WIDTH_IN_TILES);
             }
-            if (goal / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1 && !objectAt(1 + Area.TILE_WIDTH * ((goal + Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, true))
+            if (goal / Area.WIDTH_IN_TILES < Area.HEIGHT_IN_TILES - 1 && (start == goal+Area.WIDTH_IN_TILES || !objectAt(1 + Area.TILE_WIDTH * ((goal + Area.WIDTH_IN_TILES) % Area.WIDTH_IN_TILES) + (w) / 2, 1 + Area.TILE_HEIGHT * ((goal + Area.WIDTH_IN_TILES) / Area.WIDTH_IN_TILES) + (h) / 2, w / 2, h / 2, GlobalLocation != Area.PARTY)))
             {
                 goals.Add(goal + Area.WIDTH_IN_TILES);
             }
