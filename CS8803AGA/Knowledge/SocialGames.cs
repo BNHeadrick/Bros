@@ -16,10 +16,9 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, SGame>();
         }
 
-        public void addSocialGame(string key, string aName)
+        public void addSocialGame(SGame game)
         {
-            SGame sg = new SGame(aName);
-            dictionary.Add(key, sg);
+            dictionary.Add(game.name, game);
         }
 
 
@@ -34,6 +33,19 @@ namespace CS8803AGA.Knowledge
             return theSG;
         }
 
+        public static List<SGame> getAllGames(int p1, int p2)
+        {
+            List<SGame> games = new List<SGame>();
+            foreach (KeyValuePair<string, SGame> pair in singleton.dictionary)
+            {
+                if (pair.Value.satisfied(p1, p2))
+                {
+                    games.Add(pair.Value);
+                }
+            }
+            return games;
+        }
+
     }
 
     public class SGame{
@@ -44,10 +56,11 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
-        List<string> ssR;  
-        String name;
+        public List<string> ssR;  
+        public String name;
         
         // results
+        public int p3;
         public int drelation;
         public int drelation_target;
         public int drelation_third;
@@ -99,8 +112,30 @@ namespace CS8803AGA.Knowledge
             ssR = aSSR;
         }
 
+        public SGame(string aName, List<string> aSSR, int _drelation, int _drelation_target, int _drelation_third,
+                     int _drelation_third_target, List<string> _predicates_add, List<string> _predicates_remove,
+                     List<string> _predicates_add_third, List<string> _predicates_remove_third, List<string> _personality_add,
+                     List<string> _personality_remove, List<string> _personality_add_target, List<string> _personality_remove_target)
+        {
+            drelation = _drelation;
+            drelation_target = _drelation_target;
+            drelation_third = _drelation_third;
+            drelation_third_target = _drelation_third_target;
+            predicates_add = _predicates_add;
+            predicates_remove = _predicates_remove;
+            predicates_add_third = _predicates_add_third;
+            predicates_remove_third = _predicates_remove_third;
+            personality_add = _personality_add;
+            personality_remove = _personality_remove;
+            personality_add_target = _personality_add_target;
+            personality_remove_target = _personality_remove_target;
+
+            name = aName;
+            ssR = aSSR;
+        }
+
         
-        public void run(int p1, int p2, int p3) {
+        public void run(int p1, int p2) {
             SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation += drelation;
             SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation += drelation_target;
             for (int i = 0; i < predicates_add.Count; i++)
@@ -164,6 +199,32 @@ namespace CS8803AGA.Knowledge
             {
                 PersonalityDescriptions.singleton.getPersDesc(""+p2).personality.Remove(personality_remove_target[i]);
             }
+        }
+
+        /**
+         * Wether or not two players can play this game
+         *@param p1
+         *@param p2
+         *@return true or false
+         */
+        public bool satisfied(int p1, int p2) {
+            if (p1 == p3 || p2 == p3)
+            {
+                return false;
+            }
+            for (int i = 0; i < ssR.Count; i++)
+            {
+                if (!SocialStatusRules.singleton.getSocialStatusRule(ssR[i]).satisfied(p1, p2))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public string text()
+        {
+            return "This is some placeholder text";
         }
 
     }

@@ -20,9 +20,9 @@ namespace CS8803AGA.engine
 
         public int victim;
         public int player;
-        public SocialGame game;
+        public SGame game;
 
-        public List<SocialGame> possible_games;
+        public List<SGame> possible_games;
         public int cursor;
         public bool key_pressed;
         public bool quit;
@@ -34,7 +34,7 @@ namespace CS8803AGA.engine
          * @param game_victim the other player
          * @param social_game the game to be played
          */
-        public EngineStateSocialGame(int game_player, int game_victim, int social_game): base(EngineManager.Engine)
+        public EngineStateSocialGame(int game_player, int game_victim, SGame social_game): base(EngineManager.Engine)
         {
             game_played = false;
             player = game_player;
@@ -45,20 +45,17 @@ namespace CS8803AGA.engine
             quit = false;
             cursor = 0;
 
-            if (player == -1 || victim == -1 || social_game == -1)
+            if (!(player == -1 || victim == -1 || social_game == null))
             {
-                quit = true;
-                key_pressed = false;
-                possible_games = new List<SocialGame>();
-                game = null;
+                possible_games = new List<SGame>();
+                game = social_game;
+                game.run(player, victim);
             }
             else
-            { // this is a real game
-                //possible_games = SocialGames.get(player, victim);
-                //game = possible_games[social_game];
-
-                //debug:
-                possible_games = new List<SocialGame>();
+            {                
+                quit = true;
+                key_pressed = false;
+                possible_games = new List<SGame>();
                 game = null;
             }
         }
@@ -83,14 +80,8 @@ namespace CS8803AGA.engine
             //possible_games = ????
             /// debug:
             /// 
-            possible_games = new List<SocialGame>();
-            possible_games.Add(new SocialGame("Praise Brewtopia!"));
-            possible_games.Add(new SocialGame("Grab a brew."));
-            possible_games.Add(new SocialGame("Gossip about #55"));
-            possible_games.Add(new SocialGame("Play prank."));
-            possible_games.Add(new SocialGame("Vomit on."));
-            possible_games.Add(new SocialGame("Knock brew out of hand."));
-            possible_games.Add(new SocialGame("[CANCEL]"));
+            possible_games = SocialGames.getAllGames(player, victim);
+            possible_games.Add(new SGame("[CANCEL]"));
         }
 
         public override void update(GameTime gameTime)
@@ -100,9 +91,10 @@ namespace CS8803AGA.engine
                 if (game == null && cursor < possible_games.Count-1)
                 {
                     game = possible_games[cursor];
+                    game.run(player, victim);
                     game_played = true;
                 }
-                else if (results_screen)
+                else if (results_screen || cursor == possible_games.Count-1)
                 {
                     quit = true;
                 }
@@ -181,13 +173,13 @@ namespace CS8803AGA.engine
                 else if (results_screen)
                 {
                     // display results of social game
-                    draw_string("Results of: " + possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    draw_string("Results of: " + game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
                 }
                 else
                 {
                     // display some cool stock text
-                    draw_string(possible_games[cursor].name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
-                    draw_string(possible_games[cursor].text(), SCREEN_W / 8, SCREEN_H / 8 + 100, Color.Thistle);
+                    draw_string(game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    draw_string(game.text(), SCREEN_W / 8, SCREEN_H / 8 + 100, Color.Thistle);
                 }
             }
         }

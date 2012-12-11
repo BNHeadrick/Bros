@@ -130,8 +130,9 @@ namespace CS8803AGA.controllers
               /// TODO: pick someone to play a game with and path to them
               ///
                 List<int> potential_players = GameplayManager.ActiveArea.getPartiers((int)m_collider.m_bounds.Center().X, (int)m_collider.m_bounds.Center().Y, (int)m_collider.m_bounds.Width, (int)m_collider.m_bounds.Height);
+                // SocialGames.getAllGames(p1, p2) will get the list of games
                 // if (next to other player) {
-                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, -1));
+                EngineManager.pushState(new EngineStateSocialGame(getDoodadIndex(), -1, null));
                 return true;
             }
             else
