@@ -99,7 +99,7 @@ namespace CS8803AGA.Knowledge
             SGame s = new SGame("Praise Brewtopia!");
             s.ssR.Add("cool rule");
             s.drelation = -2;
-            SocialGames.singleton.addSocialGame(s);
+            //SocialGames.singleton.addSocialGame(s);
         }
 
     }

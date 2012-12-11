@@ -140,7 +140,23 @@ namespace CS8803AGA.Knowledge
         
         public void run(int p1, int p2) {
             SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation += drelation;
+            if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation > InnerSocialNetwork.RELATION_MAX)
+            {
+                SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation = InnerSocialNetwork.RELATION_MAX;
+            }
+            else if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation < InnerSocialNetwork.RELATION_MIN)
+            {
+                SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation = InnerSocialNetwork.RELATION_MIN;
+            }
             SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation += drelation_target;
+            if (SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation > InnerSocialNetwork.RELATION_MAX)
+            {
+                SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation = InnerSocialNetwork.RELATION_MAX;
+            }
+            else if (SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation < InnerSocialNetwork.RELATION_MIN)
+            {
+                SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation = InnerSocialNetwork.RELATION_MIN;
+            }
             for (int i = 0; i < predicates_add.Count; i++)
             {
                 if (!SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).predicates.Contains(predicates_add[i]))
@@ -161,7 +177,23 @@ namespace CS8803AGA.Knowledge
             if (p3 != -1)
             {
                 SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation += drelation_third;
+                if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation > InnerSocialNetwork.RELATION_MAX)
+                {
+                    SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation = InnerSocialNetwork.RELATION_MAX;
+                }
+                else if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation < InnerSocialNetwork.RELATION_MIN)
+                {
+                    SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation = InnerSocialNetwork.RELATION_MIN;
+                }
                 SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation += drelation_third_target;
+                if (SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation > InnerSocialNetwork.RELATION_MAX)
+                {
+                    SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation = InnerSocialNetwork.RELATION_MAX;
+                }
+                else if (SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation < InnerSocialNetwork.RELATION_MIN)
+                {
+                    SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation = InnerSocialNetwork.RELATION_MIN;
+                }
                 for (int i = 0; i < predicates_add_third.Count; i++)
                 {
                     if (!SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).predicates.Contains(predicates_add_third[i]))

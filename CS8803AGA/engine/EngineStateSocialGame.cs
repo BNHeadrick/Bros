@@ -28,6 +28,9 @@ namespace CS8803AGA.engine
         public bool quit;
         public bool results_screen;
 
+        public List<string> stats;
+        public int stats_page;
+
         /**
          * Creates a new social game results screen (no choice because not player initing
          * @param game_player the game starter
@@ -82,6 +85,13 @@ namespace CS8803AGA.engine
             /// 
             possible_games = SocialGames.getAllGames(player, victim);
             possible_games.Add(new SGame("[CANCEL]"));
+
+            stats_page = 0;
+            stats = new List<string>();
+            // populate all stats to display
+            stats.Add("Relations " + SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).relation + "#" + victim);
+            stats.Add("Relations " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + player).relation + "#" + player);
+
         }
 
         public override void update(GameTime gameTime)
@@ -104,7 +114,7 @@ namespace CS8803AGA.engine
                 }
                 key_pressed = true;
             }
-            else if (key_pressed && !InputSet.getInstance().getButton(InputsEnum.BUTTON_4) && InputSet.getInstance().getLeftDirectionalY() == 0)
+            else if (key_pressed && InputSet.getInstance().getLeftDirectionalX() == 0 && !InputSet.getInstance().getButton(InputsEnum.BUTTON_4) && InputSet.getInstance().getLeftDirectionalY() == 0)
             {
                 key_pressed = false;
             }
@@ -118,6 +128,16 @@ namespace CS8803AGA.engine
                 else if (!key_pressed && InputSet.getInstance().getLeftDirectionalY() < 0 && cursor < possible_games.Count - 1)
                 {
                     cursor++;
+                    key_pressed = true;
+                }
+                else if (!key_pressed && InputSet.getInstance().getLeftDirectionalX() < 0 && stats_page > 0)
+                {
+                    stats_page--;
+                    key_pressed = true;
+                }
+                else if (!key_pressed && InputSet.getInstance().getLeftDirectionalX() > 0 && stats_page < stats.Count/(PAGE_SIZE+1))
+                {
+                    stats_page++;
                     key_pressed = true;
                 }
             }
@@ -168,6 +188,20 @@ namespace CS8803AGA.engine
                     if (i < possible_games.Count)
                     {
                         draw_string("v More v", SCREEN_W / 6, SCREEN_H / 8 + 128 + 36 * i, Color.AliceBlue);
+                    }
+
+                    draw_string("Stats", 5 * SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    if (stats_page > 0)
+                    {
+                        draw_string("< < More", SCREEN_W / 8 * 5, SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
+                    }
+                    for (i = stats_page*PAGE_SIZE; i < stats_page*PAGE_SIZE + PAGE_SIZE && i < stats.Count; i++)
+                    {
+                        draw_string(stats[i], SCREEN_W / 8*5, SCREEN_H / 8 + 128 + 36 * (i - stats_page*PAGE_SIZE), Color.RosyBrown);
+                    }
+                    if (stats_page < stats.Count/(PAGE_SIZE+1))
+                    {
+                        draw_string("More > >", SCREEN_W / 8 * 5, SCREEN_H / 8 + 128 + 36*(i-stats_page*PAGE_SIZE), Color.AliceBlue);
                     }
                 }
                 else if (results_screen)
