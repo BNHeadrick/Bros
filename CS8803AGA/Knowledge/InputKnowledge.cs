@@ -72,7 +72,7 @@ namespace CS8803AGA.Knowledge
             {
                 SocialNetworks.singleton.addSocNet("" + partiers[i]);
                 CulturalKnowledgebase.singleton.addCultKnowledge("" + partiers[i]);
-                PersonalityDescriptions.singleton.addPersDesc("" + partiers[i], partiers[i]);
+                PersonalityDescriptions.singleton.addPersDesc("" + partiers[i]);
                 for (int j = 0; j < partiers.Length; j++)
                 {
                     if (j != i)

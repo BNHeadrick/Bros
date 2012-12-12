@@ -27,9 +27,20 @@ namespace CS8803AGA.Knowledge
             dictionary = new Dictionary<string, PersonalityDescription>();
         }
 
+        public void addPersDesc(string key)
+        {
+            if (!dictionary.ContainsKey(key))
+            {
+                dictionary.Add(key, new PersonalityDescription());
+            }
+        }
+
         public void addPersDesc(string key, int charVal){
-            PersonalityDescription pd = new PersonalityDescription(charVal);
-            dictionary.Add(key, pd);
+            if (!dictionary.ContainsKey("" + charVal))
+            {
+                dictionary.Add("" + charVal, new PersonalityDescription());
+            }
+            dictionary["" + charVal].personality.Add(key);
         }
 
         public PersonalityDescription getPersDesc(String key)
@@ -49,11 +60,9 @@ namespace CS8803AGA.Knowledge
 
     public class PersonalityDescription
     {
-        int charVal;
         public List<string> personality;
-        public PersonalityDescription(int cv)
+        public PersonalityDescription()
         {
-            charVal = cv;
             personality = new List<string>();
         }
     }
