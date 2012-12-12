@@ -85,21 +85,59 @@ namespace CS8803AGA.Knowledge
             }
 
             // add any social network predicates
-            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2, "love");
-            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2, "love");
+            addSocNetPredicates();
 
             // add any purse desks
-            PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE1);
+            addPersDesc();
 
             // add social status rules
-            SocialStatusRules.singleton.addSocStatRule("cool rule", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 49, 51));
-
+            addSSRules();
 
             // add social games
-            SGame s = new SGame("Praise Brewtopia!");
-            s.ssR.Add("cool rule");
-            s.drelation = -2;
-            //SocialGames.singleton.addSocialGame(s);
+            addSocialGames();
+        }
+
+        private void addSocNetPredicates()
+        {
+            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE1, Constants.PARTY_PEOPLE2, "love");
+            
+            SocialNetworks.singleton.addPredicate(Constants.PARTY_PEOPLE3, Constants.PARTY_PEOPLE4, "hate");
+            
+            SocialNetworks.singleton.addPredicate(Constants.PLAYER, Constants.COMPANION, "bros");
+            
+        }
+
+        private void addPersDesc()
+        {
+            PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE1);
+            PersonalityDescriptions.singleton.addPersDesc("sex-magnet", Constants.PARTY_PEOPLE2);
+            PersonalityDescriptions.singleton.addPersDesc("fire bear lover", Constants.PARTY_PEOPLE3);
+            PersonalityDescriptions.singleton.addPersDesc("fire bear slayer", Constants.PARTY_PEOPLE4);
+
+            PersonalityDescriptions.singleton.addPersDesc("brew-coholic", Constants.COMPANION);
+            
+        }
+
+        private void addSSRules()
+        {
+            SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "", 0, 100));
+            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 50, 100));
+        }
+
+        private void addSocialGames()
+        {
+            SGame a = new SGame("Praise Brewtopia!");
+            a.ssR.Add("loves brewtopia");
+            a.drelation = -2;
+            SocialGames.singleton.addSocialGame(a);
+
+            
+            SGame s = new SGame("Talk Smack About #" + Constants.COMPANION);
+            s.ssR.Add("hates companion");
+            s.p3 = Constants.COMPANION;
+            s.drelation_third_target = -5;
+            SocialGames.singleton.addSocialGame(s);
+            
         }
 
     }
