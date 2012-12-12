@@ -49,7 +49,8 @@ namespace CS8803AGA.Knowledge
                                                     "brews",
                                                     "brewtopia",
                                                     "rad shoes",
-                                                    "bed sheets"
+                                                    "bed sheets",
+                                                    "hate companion"
 
             };
 
@@ -61,7 +62,8 @@ namespace CS8803AGA.Knowledge
                    /* brews */      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    /* b-topia  */   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    /* rad shoes */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   /* bed sheets */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                   /* bed sheets */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   /* hate comp  */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             };
 
             for (int i = 0; i < partiers.Length; i++)
@@ -120,8 +122,8 @@ namespace CS8803AGA.Knowledge
 
         private void addSSRules()
         {
-            SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "", 0, 100));
-            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "", 50, 100));
+            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 100));
+            SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 50, 100));
         }
 
         private void addSocialGames()

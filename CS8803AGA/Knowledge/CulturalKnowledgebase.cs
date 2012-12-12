@@ -66,6 +66,7 @@ namespace CS8803AGA.Knowledge
 
         public InnerCulturalKnowledge getInnerNetwork(string key)
         {
+            Console.WriteLine("the key is " + key);
             return innerCulKno[key];
         }
     }
