@@ -48,11 +48,15 @@ namespace CS8803AGA.engine
             quit = false;
             cursor = 0;
 
+            stats_page = 0;
+            stats = new List<string>();
+
             if (!(player == -1 || victim == -1 || social_game == null))
             {
                 possible_games = new List<SGame>();
                 game = social_game;
-                game.run(player, victim);
+
+                game.run(player, victim, stats);
             }
             else
             {                
@@ -130,7 +134,9 @@ namespace CS8803AGA.engine
                 if (game == null && cursor < possible_games.Count-1)
                 {
                     game = possible_games[cursor];
-                    game.run(player, victim);
+                    stats.Clear();
+                    stats_page = 0;
+                    game.run(player, victim, stats);
                     game_played = true;
                 }
                 else if (results_screen || cursor == possible_games.Count-1)
@@ -165,6 +171,19 @@ namespace CS8803AGA.engine
                     key_pressed = true;
                 }
                 else if (!key_pressed && InputSet.getInstance().getLeftDirectionalX() > 0 && stats_page < stats.Count/(PAGE_SIZE+1))
+                {
+                    stats_page++;
+                    key_pressed = true;
+                }
+            }
+            else if (results_screen)
+            {
+                if (!key_pressed && InputSet.getInstance().getLeftDirectionalX() < 0 && stats_page > 0)
+                {
+                    stats_page--;
+                    key_pressed = true;
+                }
+                else if (!key_pressed && InputSet.getInstance().getLeftDirectionalX() > 0 && stats_page < stats.Count / (PAGE_SIZE + 1))
                 {
                     stats_page++;
                     key_pressed = true;
@@ -237,6 +256,19 @@ namespace CS8803AGA.engine
                 {
                     // display results of social game
                     draw_string("Results of: " + game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                    if (stats_page > 0)
+                    {
+                        draw_string("< < More", SCREEN_W / 8 , SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
+                    }
+                    int i = 0;
+                    for (i = stats_page * PAGE_SIZE; i < stats_page * PAGE_SIZE + PAGE_SIZE && i < stats.Count; i++)
+                    {
+                        draw_string(stats[i], SCREEN_W / 8 , SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.RosyBrown);
+                    }
+                    if (stats_page < stats.Count / (PAGE_SIZE + 1))
+                    {
+                        draw_string("More > >", SCREEN_W / 8 , SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.AliceBlue);
+                    }
                 }
                 else
                 {
@@ -257,9 +289,18 @@ namespace CS8803AGA.engine
         public void draw_string(string str, int x, int y, Color color) {
             string option = str;
             int obj = -1;
+            int obj2 = -1;
             if (option.Contains("#"))
             {
-                obj = Convert.ToInt32(option.Substring(option.IndexOf('#') + 1));
+                if (!option.Contains("|"))
+                {
+                    obj = Convert.ToInt32(option.Substring(option.IndexOf('#') + 1));
+                }
+                else
+                {
+                    obj = Convert.ToInt32(option.Substring(option.IndexOf('#') + 1, option.IndexOf("|")-option.IndexOf("#")-1));
+                    obj2 = Convert.ToInt32(option.Substring(option.IndexOf('|') + 1));
+                }
                 option = option.Substring(0, option.IndexOf('#'));
             }
             FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(option, new Vector2(x, y), color, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
@@ -275,6 +316,19 @@ namespace CS8803AGA.engine
                     character.draw();
                     character.AnimationController.Scale *= 1.5f;
                     character.m_position = pos;
+                }
+                if (obj2 != -1) {
+                    character = GameplayManager.ActiveArea.getCharacter(obj2);
+                    if (character != null)
+                    {
+                        Vector2 pos = character.m_position;
+                        character.m_position = new Vector2(x + (option.Length+2) * 16, y + 16);
+                        character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
+                        character.AnimationController.Scale /= 1.5f;
+                        character.draw();
+                        character.AnimationController.Scale *= 1.5f;
+                        character.m_position = pos;
+                    }
                 }
             }
             else
