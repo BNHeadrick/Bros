@@ -89,9 +89,38 @@ namespace CS8803AGA.engine
             stats_page = 0;
             stats = new List<string>();
             // populate all stats to display
-            stats.Add("Relations " + SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).relation + "#" + victim);
-            stats.Add("Relations " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + player).relation + "#" + player);
+            stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).relation + " #" + victim);
+            stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + player).relation + " #" + player);
 
+            // add predicates
+            for (int i = 0; i < SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).predicates.Count; i++)
+            {
+                stats.Add(SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).predicates[i] + " #0");
+            }
+
+            // add personality
+            for (int i = 0; i < PersonalityDescriptions.singleton.getPersDesc("" + victim).personality.Count; i++)
+            {
+                stats.Add(PersonalityDescriptions.singleton.getPersDesc("" + victim).personality[i] + " #" + victim);
+            }
+
+            // add culture
+            foreach (KeyValuePair<string, InnerCulturalKnowledge> pair in CulturalKnowledgebase.singleton.getCulturalKnowledge(""+victim).innerCulKno)
+            {
+                stats.Add(pair.Key + ": " + pair.Value.relation + " #" + victim);
+            }
+
+            // add same things for player
+            for (int i = 0; i < PersonalityDescriptions.singleton.getPersDesc("" + player).personality.Count; i++)
+            {
+                stats.Add(PersonalityDescriptions.singleton.getPersDesc("" + player).personality[i] + " #" + player);
+            }
+
+            // add culture
+            foreach (KeyValuePair<string, InnerCulturalKnowledge> pair in CulturalKnowledgebase.singleton.getCulturalKnowledge("" + player).innerCulKno)
+            {
+                stats.Add(pair.Key + ": " + pair.Value.relation + " #" + player);
+            }
         }
 
         public override void update(GameTime gameTime)
@@ -234,15 +263,44 @@ namespace CS8803AGA.engine
                 option = option.Substring(0, option.IndexOf('#'));
             }
             FontMap.getInstance().getFont(FontEnum.Kootenay48).drawString(option, new Vector2(x, y), color, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 1.0f);
-            CharacterController character = GameplayManager.ActiveArea.getCharacter(obj);
-            if (character != null) {
-                Vector2 pos = character.m_position;
-                character.m_position = new Vector2(x + option.Length * 16, y + 16);
-                character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
-                character.AnimationController.Scale /= 1.5f;
-                character.draw();
-                character.AnimationController.Scale *= 1.5f;
-                character.m_position = pos;
+            if (obj != 0)
+            {
+                CharacterController character = GameplayManager.ActiveArea.getCharacter(obj);
+                if (character != null)
+                {
+                    Vector2 pos = character.m_position;
+                    character.m_position = new Vector2(x + option.Length * 16, y + 16);
+                    character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
+                    character.AnimationController.Scale /= 1.5f;
+                    character.draw();
+                    character.AnimationController.Scale *= 1.5f;
+                    character.m_position = pos;
+                }
+            }
+            else
+            {
+                CharacterController character = GameplayManager.ActiveArea.getCharacter(victim);
+                if (character != null)
+                {
+                    Vector2 pos = character.m_position;
+                    character.m_position = new Vector2(x + option.Length * 16, y + 16);
+                    character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
+                    character.AnimationController.Scale /= 1.5f;
+                    character.draw();
+                    character.AnimationController.Scale *= 1.5f;
+                    character.m_position = pos;
+                }
+                character = GameplayManager.ActiveArea.getCharacter(player);
+                if (character != null)
+                {
+                    Vector2 pos = character.m_position;
+                    character.m_position = new Vector2(x + (option.Length+2) * 16, y + 16);
+                    character.AnimationController.requestAnimation("down", AnimationController.AnimationCommand.Play);
+                    character.AnimationController.Scale /= 1.5f;
+                    character.draw();
+                    character.AnimationController.Scale *= 1.5f;
+                    character.m_position = pos;
+                }
             }
         }
     }

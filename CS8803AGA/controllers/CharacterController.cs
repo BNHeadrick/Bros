@@ -199,7 +199,7 @@ namespace CS8803AGA.controllers
                     }
                     else
                     { // walk torwards this thingy
-                        int travel = m_speed*2;
+                        int travel = m_speed*3;
                         int size = walk_dir < CompanionController.WALK_UP ? Area.TILE_WIDTH : Area.TILE_HEIGHT;
                         if (distance + travel > size)
                         {
