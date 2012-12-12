@@ -56,6 +56,8 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
+        private static int sss = 0;
+
         public List<string> ssR;  
         public String name;
         
@@ -138,7 +140,9 @@ namespace CS8803AGA.Knowledge
         }
 
         
-        public void run(int p1, int p2) {
+        public void run(int p1, int p2, List<string> results) {
+            sss = p1 + p2 + p3;
+
             SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation += drelation;
             if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation > InnerSocialNetwork.RELATION_MAX)
             {
@@ -157,10 +161,22 @@ namespace CS8803AGA.Knowledge
             {
                 SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation = InnerSocialNetwork.RELATION_MIN;
             }
+
+            // results
+            if (drelation != 0)
+            {
+                results.Add("Relations: " + (drelation > 0 ? "+" : "") + drelation + ", now: "+SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation+" #" + p2);
+            }
+            if (drelation_target != 0)
+            {
+                results.Add("Relations: " + (drelation_target > 0 ? "+" : "") + drelation_target + ", now: "+SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation+" #" + p1);
+            }
+
             for (int i = 0; i < predicates_add.Count; i++)
             {
                 if (!SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).predicates.Contains(predicates_add[i]))
                 {
+                    results.Add("+"+predicates_add[i] + " #0");
                     SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).predicates.Add(predicates_add[i]);
                 }
                 if (!SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).predicates.Contains(predicates_add[i]))
@@ -170,6 +186,7 @@ namespace CS8803AGA.Knowledge
             }
             for (int i = 0; i < predicates_remove.Count; i++)
             {
+                results.Add("-" + predicates_remove[i] + " #0");
                 SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).predicates.Remove(predicates_remove[i]);
                 SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).predicates.Remove(predicates_remove[i]);
             }
@@ -194,19 +211,33 @@ namespace CS8803AGA.Knowledge
                 {
                     SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation = InnerSocialNetwork.RELATION_MIN;
                 }
+
+                if (drelation_third != 0)
+                {
+                    results.Add("Relations: " + (drelation_third > 0 ? "+" : "") + drelation_third + ", now: " + SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).relation + " #" + p1 + "|" + p3);
+                }
+                if (drelation_third_target != 0)
+                {
+                    results.Add("Relations: " + (drelation_third_target > 0 ? "+" : "") + drelation_third_target + ", now: " + SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).relation + " #" + p2 + "|" + p3);
+                }
+
                 for (int i = 0; i < predicates_add_third.Count; i++)
                 {
                     if (!SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).predicates.Contains(predicates_add_third[i]))
                     {
+                        results.Add("+" + predicates_add_third[i] + " #" + p1 + "|" + p3);
                         SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).predicates.Add(predicates_add_third[i]);
                     }
                     if (!SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).predicates.Contains(predicates_add_third[i]))
                     {
+                        results.Add("+" + predicates_add_third[i] + " #" + p2+"|"+p3);
                         SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).predicates.Add(predicates_add_third[i]);
                     }
                 }
                 for (int i = 0; i < predicates_remove_third.Count; i++)
                 {
+                    results.Add("-" + predicates_remove_third[i] + " w/ me #" + p3);
+                    results.Add("-" + predicates_remove_third[i] + " w/ you #" + p3);
                     SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p3).predicates.Remove(predicates_remove_third[i]);
                     SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p3).predicates.Remove(predicates_remove_third[i]);
                 }
@@ -216,6 +247,7 @@ namespace CS8803AGA.Knowledge
             {
                 if (!PersonalityDescriptions.singleton.getPersDesc(""+p1).personality.Contains(personality_add[i]))
                 {
+                    results.Add("+" + personality_add[i] + " #" + p1);
                     PersonalityDescriptions.singleton.getPersDesc("" + p1).personality.Add(personality_add[i]);
                 }
             }
@@ -223,15 +255,18 @@ namespace CS8803AGA.Knowledge
             {
                 if (!PersonalityDescriptions.singleton.getPersDesc(""+p2).personality.Contains(personality_add_target[i]))
                 {
+                    results.Add("+" + personality_add_target[i] + " #" + p2);
                     PersonalityDescriptions.singleton.getPersDesc(""+p2).personality.Add(personality_add_target[i]);
                 }
             }
             for (int i = 0; i < personality_remove.Count; i++)
             {
+                results.Add("-" + personality_remove[i] + " #" + p1);
                 PersonalityDescriptions.singleton.getPersDesc(""+p1).personality.Remove(personality_remove[i]);
             }
             for (int i = 0; i < personality_remove_target.Count; i++)
             {
+                results.Add("-" + personality_remove_target[i] + " #" + p2);
                 PersonalityDescriptions.singleton.getPersDesc(""+p2).personality.Remove(personality_remove_target[i]);
             }
         }
@@ -259,7 +294,17 @@ namespace CS8803AGA.Knowledge
 
         public string text()
         {
-            return "This is some placeholder text";
+            switch (sss%5) {
+            case 0:
+                return "Brewtopia is way better than this party!";
+            case 1:
+                return "Dude! My precious brew!";
+            case 2:
+                   return "Come talk to me when you're older.";
+            case 3:
+                return "BBBBRRRRRRRRREEEEEEEEWWWWWWSSSSS!!!!!!!";
+            }
+            return "I'm looking for the hidden treasure here.";
         }
 
     }
