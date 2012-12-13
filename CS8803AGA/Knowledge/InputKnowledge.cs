@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CS8803AGA.dialog;
 
 namespace CS8803AGA.Knowledge
 {
@@ -10,6 +11,8 @@ namespace CS8803AGA.Knowledge
 
         public void TestInput()
         {
+            NLG.init();
+
             int[] partiers = new int[]{ Constants.PARTY_PEOPLE1,
                                         Constants.PARTY_PEOPLE2,
                                         Constants.PARTY_PEOPLE3,
@@ -88,17 +91,21 @@ namespace CS8803AGA.Knowledge
                 }
             }
 
+            SGame a = new SGame("Praise Brewtopia!");
+            a.drelation_target = 1;
+            SocialGames.singleton.addSocialGame(a);
+
             // add any social network predicates
-            addSocNetPredicates();
+            //addSocNetPredicates();
 
             // add any purse desks
-            addPersDesc();
+            //addPersDesc();
 
             // add social status rules
-            addSSRules();
+            //addSSRules();
 
             // add social games
-            addSocialGames();
+            //addSocialGames();
         }
 
         private void addSocNetPredicates()
@@ -159,12 +166,6 @@ namespace CS8803AGA.Knowledge
             a.ssR.Add("loves brewtopia");
             a.drelation = +1;
             SocialGames.singleton.addSocialGame(a);
-
-            SGame s = new SGame("Talk Smack About #" + Constants.COMPANION);
-            s.ssR.Add("hates companion");
-            s.p3 = Constants.COMPANION;
-            s.drelation_third_target = -5;
-            SocialGames.singleton.addSocialGame(s);
 
             SGame s = new SGame("Talk Smack About #" + Constants.COMPANION);
             s.ssR.Add("hates companion");
