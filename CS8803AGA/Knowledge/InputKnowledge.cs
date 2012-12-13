@@ -91,21 +91,19 @@ namespace CS8803AGA.Knowledge
                 }
             }
 
-            SGame a = new SGame("Praise Brewtopia!");
-            a.drelation_target = 1;
-            SocialGames.singleton.addSocialGame(a);
+            
 
             // add any social network predicates
-            //addSocNetPredicates();
+            addSocNetPredicates();
 
             // add any purse desks
-            //addPersDesc();
+            addPersDesc();
 
             // add social status rules
-            //addSSRules();
+            addSSRules();
 
             // add social games
-            //addSocialGames();
+            addSocialGames();
         }
 
         private void addSocNetPredicates()
@@ -146,6 +144,7 @@ namespace CS8803AGA.Knowledge
 
         private void addSSRules()
         {
+            
             SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 50, 100));
             //below; would this fire from people who also hate the companion?  How can I make it so only people who don't hate the companion have a chance to say this?
             //SocialStatusRules.singleton.addSocStatRule("loves companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "love companion", 60, 100));
@@ -154,25 +153,26 @@ namespace CS8803AGA.Knowledge
             /*
             SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 0, 100));
             */
-            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "pick on", 0, 25));
-            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "draw phallus on face", 0, 10));
-            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "sweep the leg", 0, 1));
-            
+
+            /*
+            SocialStatusRules.singleton.addSocStatRule("hates comp lots", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 25));
+            SocialStatusRules.singleton.addSocStatRule("hates comp more", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 10));
+            SocialStatusRules.singleton.addSocStatRule("hates comp most", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 1));
+            */
         }
 
         private void addSocialGames()
         {
             SGame a = new SGame("Praise Brewtopia!");
-            a.ssR.Add("loves brewtopia");
-            a.drelation = +1;
+            a.drelation_target = 1;
             SocialGames.singleton.addSocialGame(a);
-
+            /*
             SGame s = new SGame("Talk Smack About #" + Constants.COMPANION);
             s.ssR.Add("hates companion");
             s.p3 = Constants.COMPANION;
             s.drelation_third_target = -5;
             SocialGames.singleton.addSocialGame(s);
-            
+            */
         }
 
     }
