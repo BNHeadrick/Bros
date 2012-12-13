@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CS8803AGA.controllers;
+using CS8803AGA.dialog;
 
 namespace CS8803AGA.Knowledge
 {
@@ -56,7 +57,7 @@ namespace CS8803AGA.Knowledge
             charCont = cc;
         }
         */
-        private static int sss = 0;
+        private string dialog;
 
         public List<string> ssR;  
         public String name;
@@ -141,7 +142,21 @@ namespace CS8803AGA.Knowledge
 
         
         public void run(int p1, int p2, List<string> results) {
-            sss = p3+(new Random()).Next(10000, 100000)/(p1+p2);
+            int textSize = (new Random()).Next(15, 35);
+            dialog = NLG.get(textSize);
+            for (int i = 50; i < dialog.Length; i += 50)
+            {
+                while (dialog[i] != ' ')
+                {
+                    i--;
+                    if (i < 0)
+                    {
+                        i += 50;
+                        break;
+                    }
+                }
+                dialog = dialog.Insert(i + 1, "\n");
+            }
 
             SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation += drelation;
             if (SocialNetworks.singleton.getSocialNetwork("" + p1).getInnerNetwork("" + p2).relation > InnerSocialNetwork.RELATION_MAX)
@@ -294,23 +309,7 @@ namespace CS8803AGA.Knowledge
 
         public string text()
         {
-            switch (sss%8) {
-            case 0:
-                return "Brewtopia is way better than this party!";
-            case 1:
-                return "Dude! My precious brew!";
-            case 2:
-                   return "Come talk to me when you're older.";
-            case 3:
-                return "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\nRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\nEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\nWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\nSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-            case 4:
-                return "I hold the world record for eating the\nmost pennies.";
-            case 5:
-                return "Talking to you is like eating tinfoil.\nlol jk";
-            case 6:
-                return "\"HEART all right,\" said the doctor. \"Lungs all right. No \norganic disease that I can discover. Philip Lefrank,\ndon't alarm yourself. You are not going to die yet.\nThe disease you are suffering from is--overwork.\nThe remedy in your case is--rest.";
-            }
-            return "I'm looking for the hidden treasure here.";
+            return dialog;
         }
 
     }
