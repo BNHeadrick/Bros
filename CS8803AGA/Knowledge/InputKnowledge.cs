@@ -9,6 +9,9 @@ namespace CS8803AGA.Knowledge
     class InputKnowledge
     {
 
+        string[] cult_knowledge;
+        Random random;
+
         public void TestInput()
         {
             NLG.init();
@@ -48,20 +51,21 @@ namespace CS8803AGA.Knowledge
 
             };
 
-            string[] cult_knowledge = new string[] {"bears",
+            cult_knowledge = new string[] {         "brewtopia",
+                                                    "bears",
                                                     "fire bears",
                                                     "pogo sticks",
                                                     "tacos",
                                                     "brews",
-                                                    "brewtopia",
                                                     "rad shoes",
                                                     "bed sheets",
-                                                    "hate companion"
 
             };
 
+
+
             
-            Random random = new Random();
+            random = new Random();
             int[] cult_relations = new int[partiers.Length * cult_knowledge.Length];
             for (int k = 0; k < partiers.Length * cult_knowledge.Length; k++)
             {
@@ -145,20 +149,26 @@ namespace CS8803AGA.Knowledge
         private void addSSRules()
         {
             
-            SocialStatusRules.singleton.addSocStatRule("hates companion", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 50, 100));
-            //below; would this fire from people who also hate the companion?  How can I make it so only people who don't hate the companion have a chance to say this?
-            //SocialStatusRules.singleton.addSocStatRule("loves companion", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "love companion", 60, 100));
-            
             SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 5, 100));
-            /*
-            SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 0, 100));
-            */
 
-            /*
-            SocialStatusRules.singleton.addSocStatRule("hates comp lots", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 25));
-            SocialStatusRules.singleton.addSocStatRule("hates comp more", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 10));
-            SocialStatusRules.singleton.addSocStatRule("hates comp most", new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, "hate companion", 0, 1));
-            */
+
+            for (int i = 1; i < cult_knowledge.Length; i++)
+            {
+                /*
+                int rand1 = random.Next(0, 99);
+                int rand2 = random.Next(0, 100);
+                while (rand2 <= rand1)
+                {
+                    rand2 = random.Next(0, 100);
+                }
+                */
+                SocialStatusRules.singleton.addSocStatRule("p1 likes "+cult_knowledge[i], new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, cult_knowledge[i], 60, 100));
+                SocialStatusRules.singleton.addSocStatRule("p2 dislikes "+cult_knowledge[i], new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL_TARGET, cult_knowledge[i], 0, 40));
+
+                SocialStatusRules.singleton.addSocStatRule("p1 dislikes " + cult_knowledge[i], new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL, cult_knowledge[i], 0, 40));
+                SocialStatusRules.singleton.addSocStatRule("p2 likes " + cult_knowledge[i], new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL_TARGET, cult_knowledge[i], 60, 100));
+            }
+
         }
 
         private void addSocialGames()
@@ -166,13 +176,37 @@ namespace CS8803AGA.Knowledge
             SGame a = new SGame("Praise Brewtopia!");
             a.drelation_target = 1;
             SocialGames.singleton.addSocialGame(a);
-            /*
-            SGame s = new SGame("Talk Smack About #" + Constants.COMPANION);
-            s.ssR.Add("hates companion");
-            s.p3 = Constants.COMPANION;
-            s.drelation_third_target = -5;
-            SocialGames.singleton.addSocialGame(s);
-            */
+
+            for (int i = 1; i < cult_knowledge.Length; i++)
+            {
+                
+
+                SGame aGame = new SGame("Admire " + cult_knowledge[i] + "!");
+                aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
+                aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
+                aGame.drelation_target = 1;
+                SocialGames.singleton.addSocialGame(aGame);
+                
+                aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
+                aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
+                aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
+                aGame.drelation_target = 1;
+                SocialGames.singleton.addSocialGame(aGame);
+                
+                aGame = new SGame("Admire " + cult_knowledge[i] + "!");
+                aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
+                aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
+                aGame.drelation_target = -1;
+                SocialGames.singleton.addSocialGame(aGame);
+
+                aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
+                aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
+                aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
+                aGame.drelation_target = -1;
+                SocialGames.singleton.addSocialGame(aGame);
+                
+            }
+
         }
 
     }

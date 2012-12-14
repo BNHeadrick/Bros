@@ -9,6 +9,7 @@ namespace CS8803AGA.Knowledge
 {
     class SocialGames
     {
+        public static int id = 0;
         public static SocialGames singleton = new SocialGames();
         Dictionary<string, SGame> dictionary;
 
@@ -19,7 +20,8 @@ namespace CS8803AGA.Knowledge
 
         public void addSocialGame(SGame game)
         {
-            dictionary.Add(game.name, game);
+            dictionary.Add(game.name+id, game);
+            id++;
         }
 
 

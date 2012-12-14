@@ -51,15 +51,17 @@ namespace CS8803AGA.engine
                 Constants.PARTY_PEOPLE2,
                 Constants.PARTY_PEOPLE3,
                 Constants.PARTY_PEOPLE4,
+                Constants.PLAYER,
                 Constants.PARTY_PEOPLE5,
                 Constants.PARTY_PEOPLE6,
                 Constants.PARTY_PEOPLE7,
                 Constants.PARTY_PEOPLE8,
+                Constants.PLAYER,
                 Constants.PARTY_PEOPLE9,
                 Constants.PARTY_PEOPLE10,
-                Constants.PLAYER,
                 Constants.COMPANION,
                 Constants.COOK,
+                Constants.PLAYER,
                 Constants.BREW_MAIDEN
             };
             current_partier = 0;
