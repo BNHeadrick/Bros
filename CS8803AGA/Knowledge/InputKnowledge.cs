@@ -176,7 +176,7 @@ namespace CS8803AGA.Knowledge
             SGame a = new SGame("Praise Brewtopia!");
             a.drelation_target = 1;
             SocialGames.singleton.addSocialGame(a);
-
+            Random sRand = new Random();
             for (int i = 1; i < cult_knowledge.Length; i++)
             {
                 
@@ -184,25 +184,25 @@ namespace CS8803AGA.Knowledge
                 SGame aGame = new SGame("Admire " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
-                aGame.drelation_target = 1;
+                aGame.drelation_target = sRand.Next(1, 6);
                 SocialGames.singleton.addSocialGame(aGame);
                 
                 aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = 1;
+                aGame.drelation_target = sRand.Next(1, 6);
                 SocialGames.singleton.addSocialGame(aGame);
                 
                 aGame = new SGame("Admire " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = -1;
+                aGame.drelation_target = sRand.Next(-6, -1);
                 SocialGames.singleton.addSocialGame(aGame);
 
                 aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = -1;
+                aGame.drelation_target = sRand.Next(-6, -1);
                 SocialGames.singleton.addSocialGame(aGame);
                 
             }
