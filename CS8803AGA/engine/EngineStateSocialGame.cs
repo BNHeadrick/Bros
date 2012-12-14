@@ -12,6 +12,7 @@ namespace CS8803AGA.engine
 {
     class EngineStateSocialGame : AEngineState
     {
+
         public const int SCREEN_W = 960;
         public const int SCREEN_H = 600;
         public const int PAGE_SIZE = 7;
@@ -31,6 +32,8 @@ namespace CS8803AGA.engine
         public List<string> stats;
         public int stats_page;
 
+        private Boolean sim_won;
+
         /**
          * Creates a new social game results screen (no choice because not player initing
          * @param game_player the game starter
@@ -39,6 +42,7 @@ namespace CS8803AGA.engine
          */
         public EngineStateSocialGame(int game_player, int game_victim, SGame social_game): base(EngineManager.Engine)
         {
+            sim_won = false;
             game_played = false;
             player = game_player;
             victim = game_victim;
@@ -57,6 +61,11 @@ namespace CS8803AGA.engine
                 game = social_game;
 
                 game.run(player, victim, stats);
+
+                if (game.ssR.Count > 0 && SocialStatusRules.singleton.getSocialStatusRule(game.ssR[0]).type == SocialStatusRule.TYPE_END_GAME)
+                {
+                    sim_won = true;
+                }
             }
             else
             {                
@@ -74,6 +83,7 @@ namespace CS8803AGA.engine
         public EngineStateSocialGame(int game_victim)
             : base(EngineManager.Engine)
         {
+            sim_won = false;
             game_played = false;
 
             player = Constants.PLAYER;
@@ -95,6 +105,10 @@ namespace CS8803AGA.engine
             // populate all stats to display
             stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).relation + " #" + victim);
             stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + player).relation + " #" + player);
+            if (victim != Constants.COMPANION)
+            {
+                stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + Constants.COMPANION).relation + " #" + victim+"|"+Constants.COMPANION);
+            }
 
             // add predicates
             for (int i = 0; i < SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).predicates.Count; i++)
@@ -139,7 +153,7 @@ namespace CS8803AGA.engine
                     game.run(player, victim, stats);
                     game_played = true;
                 }
-                else if (results_screen || cursor == possible_games.Count-1)
+                else if ((results_screen || cursor == possible_games.Count-1) && !sim_won)
                 {
                     quit = true;
                 }
@@ -254,20 +268,28 @@ namespace CS8803AGA.engine
                 }
                 else if (results_screen)
                 {
-                    // display results of social game
-                    draw_string("Results of: " + game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
-                    if (stats_page > 0)
+                    if (!sim_won)
                     {
-                        draw_string("< < More", SCREEN_W / 8 , SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
+                        // display results of social game
+                        draw_string("Results of: " + game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                        if (stats_page > 0)
+                        {
+                            draw_string("< < More", SCREEN_W / 8, SCREEN_H / 8 + 128 - 36, Color.AliceBlue);
+                        }
+                        int i = 0;
+                        for (i = stats_page * PAGE_SIZE; i < stats_page * PAGE_SIZE + PAGE_SIZE && i < stats.Count; i++)
+                        {
+                            draw_string(stats[i], SCREEN_W / 8, SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.RosyBrown);
+                        }
+                        if (stats_page < stats.Count / (PAGE_SIZE + 1))
+                        {
+                            draw_string("More > >", SCREEN_W / 8, SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.AliceBlue);
+                        }
                     }
-                    int i = 0;
-                    for (i = stats_page * PAGE_SIZE; i < stats_page * PAGE_SIZE + PAGE_SIZE && i < stats.Count; i++)
+                    else
                     {
-                        draw_string(stats[i], SCREEN_W / 8 , SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.RosyBrown);
-                    }
-                    if (stats_page < stats.Count / (PAGE_SIZE + 1))
-                    {
-                        draw_string("More > >", SCREEN_W / 8 , SCREEN_H / 8 + 128 + 36 * (i - stats_page * PAGE_SIZE), Color.AliceBlue);
+                        draw_string("Results of: " + game.name, SCREEN_W / 8, SCREEN_H / 8 + 50, Color.AliceBlue);
+                        draw_string("You've won the game.", SCREEN_W / 8, SCREEN_H / 8 + 128 - 36, Color.RosyBrown);
                     }
                 }
                 else

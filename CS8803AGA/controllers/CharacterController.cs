@@ -230,6 +230,12 @@ namespace CS8803AGA.controllers
                         for (int j = 0; j < sgames.Count; j++)
                         {
                             total += sgames[j].ssR.Count + 1;
+                            if (sgames[j].ssR.Count > 0 && SocialStatusRules.singleton.getSocialStatusRule(sgames[j].ssR[0]).type == SocialStatusRule.TYPE_END_GAME)
+                            {
+                                victim = Constants.PLAYER;
+                                social_game = sgames[j];
+                                return false;
+                            }
                         }
                         games.Add(sgames);
                     }

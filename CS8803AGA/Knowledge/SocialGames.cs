@@ -311,7 +311,7 @@ namespace CS8803AGA.Knowledge
 
         public string text()
         {
-            return dialog;
+            return "..."+dialog+"...";
         }
 
     }
