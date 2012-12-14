@@ -10,6 +10,7 @@ namespace CS8803AGA.Knowledge
     {
 
         string[] cult_knowledge;
+        string[] personalities;
         Random random;
 
         public void TestInput()
@@ -44,7 +45,7 @@ namespace CS8803AGA.Knowledge
             /*PARTY_PEOPLE9  */            50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50, 10,
             /*PARTY_PEOPLE10 */            50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 50, 50,
             /*COOK           */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 50, 80,
-            /*BREW_MAIDEN    */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50, 90,
+            /*BREW_MAIDEN    */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 90, 90,
             /*PLAYER         */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50,
             /*COMPANION      */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0
 
@@ -59,10 +60,9 @@ namespace CS8803AGA.Knowledge
                                                     "brews",
                                                     "rad shoes",
                                                     "bed sheets",
-
             };
 
-
+            personalities = new string[] { };
 
             
             random = new Random();
@@ -150,7 +150,7 @@ namespace CS8803AGA.Knowledge
         {
             
             SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 5, 100));
-
+            SocialStatusRules.singleton.addSocStatRule("p2 trusts p1", new SocialStatusRule(SocialStatusRule.TYPE_RELATION_TARGET, "", 70, 100));
 
             for (int i = 1; i < cult_knowledge.Length; i++)
             {
@@ -169,6 +169,10 @@ namespace CS8803AGA.Knowledge
                 SocialStatusRules.singleton.addSocStatRule("p2 likes " + cult_knowledge[i], new SocialStatusRule(SocialStatusRule.TYPE_CULTURAL_TARGET, cult_knowledge[i], 60, 100));
             }
 
+            for (int i = 0; i < personalities.Length; i++)
+            {
+                SocialStatusRules.singleton.addSocStatRule("p2 "+personalities[i], new SocialStatusRule(SocialStatusRule.TYPE_PERSONALITY_TARGET, personalities[i], 0, 100));
+            }
         }
 
         private void addSocialGames()
@@ -207,6 +211,24 @@ namespace CS8803AGA.Knowledge
                 
             }
 
+            for (int i = 0; i < personalities.Length; i++)
+            {
+                string name = "He is a ";
+                if (i % 2 == 0)
+                {
+                    name += personalities[i + 1] + " #" + Constants.COMPANION;
+                }
+                else
+                {
+                    name += personalities[i - 1] + " #" + Constants.COMPANION;
+                }
+                SGame game = new SGame(name);
+                game.ssR.Add("p2 " + personalities[i]);
+                game.ssR.Add("p2 trusts p1");
+                game.p3 = Constants.COMPANION;
+                game.drelation_third_target = -random.Next(-5, 0);
+                SocialGames.singleton.addSocialGame(game);
+            }
         }
 
     }

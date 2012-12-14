@@ -63,6 +63,7 @@ namespace CS8803AGA.Knowledge
         public const int TYPE_PERSONALITY = 5;
         public const int TYPE_PERSONALITY_TARGET = 6;
         public const int TYPE_END_GAME = 7;
+        public const int TYPE_RELATION_TARGET = 8;
 
         private const int GOAL_HATERS = 5; 
 
@@ -135,6 +136,12 @@ namespace CS8803AGA.Knowledge
                         return(haters>=GOAL_HATERS);
                     }
                     return false;
+                case TYPE_RELATION_TARGET: // check the relation
+                    {
+                        // get the social network between two character
+                        int relation = SocialNetworks.singleton.getSocialNetwork("" + p2).getInnerNetwork("" + p1).relation;
+                        return (relation >= min && relation <= max);
+                    }
             }
             return false;
         }
