@@ -105,6 +105,10 @@ namespace CS8803AGA.engine
             // populate all stats to display
             stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).relation + " #" + victim);
             stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + player).relation + " #" + player);
+            if (victim != Constants.COMPANION)
+            {
+                stats.Add("Relations: " + SocialNetworks.singleton.getSocialNetwork("" + victim).getInnerNetwork("" + Constants.COMPANION).relation + " #" + victim+"|"+Constants.COMPANION);
+            }
 
             // add predicates
             for (int i = 0; i < SocialNetworks.singleton.getSocialNetwork("" + player).getInnerNetwork("" + victim).predicates.Count; i++)
