@@ -11,13 +11,14 @@ namespace CS8803AGA.Knowledge
 
         string[] cult_knowledge;
         string[] personalities;
+        int[] partiers;
         Random random;
 
         public void TestInput()
         {
             NLG.init();
 
-            int[] partiers = new int[]{ Constants.PARTY_PEOPLE1,
+            partiers = new int[]{       Constants.PARTY_PEOPLE1,
                                         Constants.PARTY_PEOPLE2,
                                         Constants.PARTY_PEOPLE3,
                                         Constants.PARTY_PEOPLE4,
@@ -62,7 +63,19 @@ namespace CS8803AGA.Knowledge
                                                     "bed sheets",
             };
 
-            personalities = new string[] { };
+            personalities = new string[]{           "hotty",
+                                                    "pickle faced freak",
+                                                    "nerd",
+                                                    "jock",
+                                                    "normy",
+                                                    "clone",
+                                                    "nasty dude",
+                                                    "nutritious guy",
+                                                    "homeless",
+                                                    "home owner",
+                                                    "aromatic dawg",
+                                                    "poo-smelling dog"
+            };
 
             
             random = new Random();
@@ -122,27 +135,22 @@ namespace CS8803AGA.Knowledge
 
         private void addPersDesc()
         {
-            PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE1);
-            PersonalityDescriptions.singleton.addPersDesc("sex-magnet", Constants.PARTY_PEOPLE2);
-            PersonalityDescriptions.singleton.addPersDesc("fire bear lover", Constants.PARTY_PEOPLE3);
-            PersonalityDescriptions.singleton.addPersDesc("fire bear slayer", Constants.PARTY_PEOPLE4);
-            
-            
-            PersonalityDescriptions.singleton.addPersDesc("sex-lexia", Constants.PARTY_PEOPLE5);
-            
-            PersonalityDescriptions.singleton.addPersDesc("sex-magnet", Constants.PARTY_PEOPLE6);
-            
-            PersonalityDescriptions.singleton.addPersDesc("fire bear lover", Constants.PARTY_PEOPLE7);
-            PersonalityDescriptions.singleton.addPersDesc("fire bear slayer", Constants.PARTY_PEOPLE8);
-            
-            PersonalityDescriptions.singleton.addPersDesc("LARP master", Constants.PARTY_PEOPLE9);
-            PersonalityDescriptions.singleton.addPersDesc("LARP hater", Constants.PARTY_PEOPLE10);
-            PersonalityDescriptions.singleton.addPersDesc("LARP master", Constants.COOK);
-            PersonalityDescriptions.singleton.addPersDesc("LARP hater", Constants.BREW_MAIDEN);
+            Random pRand = new Random();
+            int val1, val2;
+            for (int i = 0; i < partiers.Length; i++)
+            {
+                val1 = random.Next(0, 12);
+                PersonalityDescriptions.singleton.addPersDesc(personalities[val1], partiers[i]);
+                val2 = random.Next(0, 12);
 
-            PersonalityDescriptions.singleton.addPersDesc("brew-coholic", Constants.COMPANION);
+                while (val1/2 == val2/2)
+                {
+                    val2 = random.Next(0, 12);
+                }
+
+                PersonalityDescriptions.singleton.addPersDesc(personalities[val2], partiers[i]);
+            }
             
-            PersonalityDescriptions.singleton.addPersDesc("dislikes bronies", Constants.COMPANION);
             
         }
 
@@ -200,13 +208,13 @@ namespace CS8803AGA.Knowledge
                 aGame = new SGame("Admire " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(-6, -1);
+                aGame.drelation_target = sRand.Next(-5, 0);
                 SocialGames.singleton.addSocialGame(aGame);
 
                 aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(-6, -1);
+                aGame.drelation_target = sRand.Next(-5, 0);
                 SocialGames.singleton.addSocialGame(aGame);
                 
             }
@@ -226,7 +234,7 @@ namespace CS8803AGA.Knowledge
                 game.ssR.Add("p2 " + personalities[i]);
                 game.ssR.Add("p2 trusts p1");
                 game.p3 = Constants.COMPANION;
-                game.drelation_third_target = -random.Next(-5, 0);
+                game.drelation_third_target = random.Next(-5, 0);
                 SocialGames.singleton.addSocialGame(game);
             }
         }
