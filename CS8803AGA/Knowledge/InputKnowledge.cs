@@ -17,6 +17,8 @@ namespace CS8803AGA.Knowledge
         {
             NLG.init();
 
+            random = new Random();
+
             int[] partiers = new int[]{ Constants.PARTY_PEOPLE1,
                                         Constants.PARTY_PEOPLE2,
                                         Constants.PARTY_PEOPLE3,
@@ -48,9 +50,24 @@ namespace CS8803AGA.Knowledge
             /*BREW_MAIDEN    */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 90, 90,
             /*PLAYER         */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0, 50,
             /*COMPANION      */            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 0
-
-
             };
+
+            for (int i = 0; i < relations.Length; i++)
+            {
+                if (i % partiers.Length == partiers.Length - 1)
+                { // talking about companion here
+                    relations[i] = random.Next(50, 100);
+                }
+                else
+                {
+                    relations[i] = random.Next(30, 70);
+                }
+                if (i % partiers.Length == 0)
+                {
+                    Console.WriteLine("");
+                }
+                Console.Write("" + relations[i] + " ");
+            }
 
             cult_knowledge = new string[] {         "brewtopia",
                                                     "bears",
@@ -65,7 +82,6 @@ namespace CS8803AGA.Knowledge
             personalities = new string[] { };
 
             
-            random = new Random();
             int[] cult_relations = new int[partiers.Length * cult_knowledge.Length];
             for (int k = 0; k < partiers.Length * cult_knowledge.Length; k++)
             {
