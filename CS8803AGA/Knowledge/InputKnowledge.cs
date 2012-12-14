@@ -8,6 +8,9 @@ namespace CS8803AGA.Knowledge
 {
     class InputKnowledge
     {
+        private static int CHANGE_MIN = 4;
+        private static int CHANGE_MAX = 12;
+
 
         string[] cult_knowledge;
         string[] personalities;
@@ -56,7 +59,7 @@ namespace CS8803AGA.Knowledge
             {
                 if (i % partiers.Length == partiers.Length - 1)
                 { // talking about companion here
-                    relations[i] = random.Next(50, 100);
+                    relations[i] = random.Next(40, 100);
                 }
                 else
                 {
@@ -169,7 +172,8 @@ namespace CS8803AGA.Knowledge
         {
             
             SocialStatusRules.singleton.addSocStatRule("loves brewtopia", new SocialStatusRule(SocialStatusRule.TYPE_RELATION, "brewtopia", 5, 100));
-            SocialStatusRules.singleton.addSocStatRule("p2 trusts p1", new SocialStatusRule(SocialStatusRule.TYPE_RELATION_TARGET, "", 70, 100));
+            SocialStatusRules.singleton.addSocStatRule("p2 trusts p1", new SocialStatusRule(SocialStatusRule.TYPE_RELATION_TARGET, "", 50, 100));
+            SocialStatusRules.singleton.addSocStatRule("endgame", new SocialStatusRule(SocialStatusRule.TYPE_END_GAME, "", 0, 100));
 
             for (int i = 1; i < cult_knowledge.Length; i++)
             {
@@ -207,25 +211,25 @@ namespace CS8803AGA.Knowledge
                 SGame aGame = new SGame("Admire " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(1, 6);
+                aGame.drelation_target = sRand.Next(CHANGE_MIN, CHANGE_MAX);
                 SocialGames.singleton.addSocialGame(aGame);
                 
                 aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(1, 6);
+                aGame.drelation_target = sRand.Next(CHANGE_MIN, CHANGE_MAX);
                 SocialGames.singleton.addSocialGame(aGame);
                 
                 aGame = new SGame("Admire " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p1 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p2 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(-5, 0);
+                aGame.drelation_target = -sRand.Next(CHANGE_MIN, CHANGE_MAX);
                 SocialGames.singleton.addSocialGame(aGame);
 
                 aGame = new SGame("Condemn " + cult_knowledge[i] + "!");
                 aGame.ssR.Add("p2 likes " + cult_knowledge[i]);
                 aGame.ssR.Add("p1 dislikes " + cult_knowledge[i]);
-                aGame.drelation_target = sRand.Next(-5, 0);
+                aGame.drelation_target = -sRand.Next(CHANGE_MIN, CHANGE_MAX);
                 SocialGames.singleton.addSocialGame(aGame);
                 
             }
@@ -245,10 +249,13 @@ namespace CS8803AGA.Knowledge
                 game.ssR.Add("p2 " + personalities[i]);
                 game.ssR.Add("p2 trusts p1");
                 game.p3 = Constants.COMPANION;
-                game.drelation_third_target = random.Next(-5, 0);
+                game.drelation_third_target = -random.Next(CHANGE_MIN, CHANGE_MAX);
                 SocialGames.singleton.addSocialGame(game);
             }
-        }
 
+            SGame end = new SGame("Let's blow this popsicle stand!");
+            end.ssR.Add("endgame");
+            SocialGames.singleton.addSocialGame(end);
+        }
     }
 }

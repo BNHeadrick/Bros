@@ -65,7 +65,7 @@ namespace CS8803AGA.Knowledge
         public const int TYPE_END_GAME = 7;
         public const int TYPE_RELATION_TARGET = 8;
 
-        private const int GOAL_HATERS = 5; 
+        private const int GOAL_HATERS = 3; 
 
         public int type;
         public string data; /**< either the game we want, the culture to check, or the predicate to check */
