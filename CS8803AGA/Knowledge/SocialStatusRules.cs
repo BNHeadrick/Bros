@@ -62,6 +62,9 @@ namespace CS8803AGA.Knowledge
         public const int TYPE_PAST_GAME = 4;
         public const int TYPE_PERSONALITY = 5;
         public const int TYPE_PERSONALITY_TARGET = 6;
+        public const int TYPE_END_GAME = 7;
+
+        private const int GOAL_HATERS = 5; 
 
         public int type;
         public string data; /**< either the game we want, the culture to check, or the predicate to check */
@@ -119,6 +122,19 @@ namespace CS8803AGA.Knowledge
                     return PersonalityDescriptions.singleton.getPersDesc("" + p1).personality.Contains(data);
                 case TYPE_PERSONALITY_TARGET:
                     return PersonalityDescriptions.singleton.getPersDesc("" + p2).personality.Contains(data);
+                case TYPE_END_GAME:
+                    if (p1 == Constants.COMPANION && p2 == Constants.PLAYER)
+                    {
+                        int haters = 0;
+                        foreach (KeyValuePair<string, SocialNetwork> entry in SocialNetworks.singleton.dictionary)
+                        {
+                            if (    entry.Key != ""+p1 && entry.Value.getInnerNetwork(""+p1).relation < 30) {
+                                haters++;
+                            }
+                        }
+                        return(haters>=GOAL_HATERS);
+                    }
+                    return false;
             }
             return false;
         }

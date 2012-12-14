@@ -18,7 +18,7 @@ namespace CS8803AGA.Knowledge
         //this needs to have access to all NPCs and have a one to many relationship with all non-self NPCs
         //this could be done in a simple 2D array if nothing more sophisticated seems nessisary.
 
-        Dictionary<string, SocialNetwork> dictionary;
+        public Dictionary<string, SocialNetwork> dictionary;
         public static SocialNetworks singleton = new SocialNetworks();
 
         protected SocialNetworks()
@@ -69,7 +69,7 @@ namespace CS8803AGA.Knowledge
 
     public class SocialNetwork
     {
-        Dictionary<string, InnerSocialNetwork> innerSocNet;
+        public Dictionary<string, InnerSocialNetwork> innerSocNet;
 
         public SocialNetwork()
         {
